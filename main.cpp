@@ -6,6 +6,7 @@ using namespace std;
 
 vector<DefinicionCliente> vecCliente;
 
+//test
 //definicion de funciones para usar los objetos
 
 void ingresar();
