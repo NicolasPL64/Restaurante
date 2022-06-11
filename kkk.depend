@@ -1,0 +1,40 @@
+# depslib dependency file v1.0
+1654874175 source:c:\users\slayer2024\desktop\kkk\definicioncliente.cpp
+	<iostream>
+	"DefinicionCliente.h"
+
+1654900989 c:\users\slayer2024\desktop\kkk\definicioncliente.h
+	<iostream>
+
+1653950657 source:c:\users\slayer2024\desktop\kkk\main.cpp
+	<iostream>
+	"DefinicionCliente.h"
+	<vector>
+
+1654827807 source:c:\users\slayer2024\desktop\kkk\clientepreferencial.cpp
+	<iostream>
+	"ClientePreferencial.h"
+
+1654874267 c:\users\slayer2024\desktop\kkk\clientepreferencial.h
+	<iostream>
+	"DefinicionCliente.h"
+
+1654874175 source:d:\users\nicolaspl_\google drive univalle\semestre 2\ipoo\trabajo final\restaurante\definicioncliente.cpp
+	<iostream>
+	"DefinicionCliente.h"
+
+1654900989 d:\users\nicolaspl_\google drive univalle\semestre 2\ipoo\trabajo final\restaurante\definicioncliente.h
+	<iostream>
+
+1654883134 source:d:\users\nicolaspl_\google drive univalle\semestre 2\ipoo\trabajo final\restaurante\main.cpp
+	<iostream>
+	"DefinicionCliente.h"
+	<vector>
+
+1654908848 source:d:\users\nicolaspl_\google drive univalle\semestre 2\ipoo\trabajo final\restaurante\membresia.cpp
+	"membresia.h"
+	"DefinicionCliente.h"
+
+1654908848 d:\users\nicolaspl_\google drive univalle\semestre 2\ipoo\trabajo final\restaurante\membresia.h
+	"DefinicionCliente.h"
+
