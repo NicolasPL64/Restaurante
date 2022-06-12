@@ -38,3 +38,33 @@
 1654908848 d:\users\nicolaspl_\google drive univalle\semestre 2\ipoo\trabajo final\restaurante\membresia.h
 	"DefinicionCliente.h"
 
+1654874175 source:d:\users\nicolaspl_\desktop\restaurante\definicioncliente.cpp
+	<iostream>
+	"DefinicionCliente.h"
+
+1654900989 d:\users\nicolaspl_\desktop\restaurante\definicioncliente.h
+	<iostream>
+
+1654908848 source:d:\users\nicolaspl_\desktop\restaurante\membresia.cpp
+	"membresia.h"
+	"DefinicionCliente.h"
+
+1654908848 d:\users\nicolaspl_\desktop\restaurante\membresia.h
+	"DefinicionCliente.h"
+
+1654901929 source:d:\users\nicolaspl_\desktop\restaurante\usuario.cpp
+	<iostream>
+	"Usuario.h"
+
+1654901930 d:\users\nicolaspl_\desktop\restaurante\usuario.h
+	<iostream>
+
+1655051157 source:d:\users\nicolaspl_\desktop\restaurante\main.cpp
+	<iostream>
+	<vector>
+	<conio.h>
+	"fstream"
+	"sstream"
+	"DefinicionCliente.h"
+	"Usuario.h"
+
