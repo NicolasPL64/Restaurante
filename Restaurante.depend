@@ -52,14 +52,14 @@
 1654908848 d:\users\nicolaspl_\desktop\restaurante\membresia.h
 	"DefinicionCliente.h"
 
-1654901929 source:d:\users\nicolaspl_\desktop\restaurante\usuario.cpp
+1655062059 source:d:\users\nicolaspl_\desktop\restaurante\usuario.cpp
 	<iostream>
 	"Usuario.h"
 
-1654901930 d:\users\nicolaspl_\desktop\restaurante\usuario.h
+1655062086 d:\users\nicolaspl_\desktop\restaurante\usuario.h
 	<iostream>
 
-1655051157 source:d:\users\nicolaspl_\desktop\restaurante\main.cpp
+1655062798 source:d:\users\nicolaspl_\desktop\restaurante\main.cpp
 	<iostream>
 	<vector>
 	<conio.h>

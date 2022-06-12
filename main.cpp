@@ -23,11 +23,13 @@ int ENTER = 13, BACKSPACE = 8, INTENTOS = 3; //Códigos ASCII para ENTER y BACKSP
 
 
 ///Declaración de voids
-//Para el registro/logueo
+//Para el registro/logueo o menú de bienvenida
+void menuBienvenida();
 void registrarse();
 void loguearse();
+void acercaDe();
 void F5_usuarios(); /*Se usa para refrescar los usuarios (por ejemplo
-después de actualizar o registrar un usuario, etc.)*/
+después de modificar o registrar un usuario, etc.)*/
 
 //Para menú principal
 void ingresar();
@@ -37,13 +39,59 @@ void eliminarCliente();
 void menu();
 
 
-///Métodos
+///    ---- Métodos ----    ////
 
 //Para el registro/logueo
+void menuBienvenida()
+{
+    int opc;
+    do
+    {
+        cout<<"¡Bienvenido!"<<endl<<endl
+            <<"1. Iniciar sesión"<<endl
+            <<"2. Registrarse"<<endl
+            <<"3. Acerca de..."<<endl
+            <<"0. Salir"<<endl<<endl
+            <<"Seleccione una opción: ";
+        cin>>opc;
+
+        switch(opc)
+        {
+        case 1:
+            loguearse();
+            system("cls");
+            break;
+        case 2:
+            registrarse();
+            system("cls");
+            break;
+        case 3:
+            system("cls");
+            acercaDe();
+            system("pause");
+            system("cls");
+            break;
+        case 0:
+            system("cls");
+            cout<<"¡Hasta pronto!"<<endl;
+            break;
+        default:
+            system("cls");
+            cout<<"Opción incorrecta"<<endl<<endl;
+            system("pause");
+            system("cls");
+            break;
+        }
+    }
+    while(opc != 0);
+}
+
 void registrarse()
 {
+    F5_usuarios();
     bool existe = false;
-    string u, p;
+    string u, p, nom, ape;
+    long cc;
     char caracter;
     do
     {
@@ -60,7 +108,7 @@ void registrarse()
                 if (u == obj.getUser())
                 {
                     existe = true;
-                    i = vUsers.size();
+                    i = vUsers.size(); //Fuerza la salida del bucle for
                 }
                 else existe = false;
             }
@@ -89,11 +137,20 @@ void registrarse()
                 caracter = getch();
             }
 
+            cout<<endl<<"Ingrese un nombre: ";
+            getline(cin, nom);
+
+            cout<<"Ingrese un apellido: ";
+            getline(cin, ape);
+
+            cout<<"Ingrese el número de identificación (sin puntos): ";
+            cin>>cc;
+
             ofstream usuarios("usuarios.csv", ios::app); //Guardado del nuevo registro en el archivo "usuarios.csv"
             if (!usuarios) cout << "Aviso: Error al escribir en documento. No existe, se creará un nuevo archivo 'usuarios.csv'"<<endl;
             else
             {
-                usuarios<<u<<";"<<p<<endl;
+                usuarios<<u<<";"<<p<<";"<<nom<<";"<<ape<<";"<<cc<<endl;
                 usuarios.close();
             }
         }
@@ -106,6 +163,7 @@ void registrarse()
 
 void loguearse()
 {
+    F5_usuarios();
     string usuario, password;
 
     int contador = 0;
@@ -114,6 +172,7 @@ void loguearse()
     do
     {
         system("cls");
+        fflush(stdin);
         cout << "\t\t\tLOGIN DE USUARIO" << endl;
         cout << "\t\t\t----------------" << endl;
         cout << "\n\tUsuario: ";
@@ -182,6 +241,15 @@ void loguearse()
     cin.get();
 }
 
+void acercaDe(){
+    cout<<"------ Trabajo final del segundo semestre de IPOO ------"<<endl
+        <<"Realizado por: Nicolás Prado León              202160073"<<endl
+        <<"               Kevin Estiven Gil Salcedo       202159863"<<endl
+        <<"               Miguel Ángel Rueda Colonia      202159896"<<endl
+        <<"               Kevin Alexander Marín Henao     202160364"<<endl<<endl
+        <<"-------------------------------- Créditos --------------------------------"<<endl
+        <<"Código del sistema de registro y logueo adaptado de https://bit.ly/2Plcea8"<<endl<<endl;
+}
 void F5_usuarios()
 {
     vUsers.clear(); //Limpia el vector para evitar comenzar en 0, como dicen en las gasolineras jeje
@@ -190,20 +258,27 @@ void F5_usuarios()
     else
     {
         Usuario obj;
-        string registro, u, p;
+        string registro, u, p, nom, ape, cc;
         while(getline(usuarios, registro))
         {
             stringstream token(registro);
             getline(token, u, ';');
             getline(token, p, ';');
+            getline(token, nom, ';');
+            getline(token, ape, ';');
+            getline(token, cc, ';');
 
             obj.setUser(u);
             obj.setPass(p);
+            obj.setNombre(nom);
+            obj.setApellido(ape);
+            obj.setCedula(cc);
             vUsers.push_back(obj);
         }
         usuarios.close();
     }
 }
+
 
 
 
@@ -291,7 +366,6 @@ void eliminarCliente()
 
 }
 
-
 void menu()
 {
     int opc;
@@ -328,15 +402,12 @@ void menu()
     while (opc != 0);
 }
 
-//Main
+
+///Main
 int main()
 {
     setlocale(LC_ALL, ""); //Para soportar caracteres especiales
-    F5_usuarios();
 
-    registrarse();
-    F5_usuarios();
-    loguearse();
-    menu();
+    menuBienvenida();
     return 0;
 }
