@@ -36,6 +36,8 @@
 		</Compiler>
 		<Unit filename="DefinicionCliente.cpp" />
 		<Unit filename="DefinicionCliente.h" />
+		<Unit filename="Usuario.cpp" />
+		<Unit filename="Usuario.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="membresia.cpp" />
 		<Unit filename="membresia.h" />

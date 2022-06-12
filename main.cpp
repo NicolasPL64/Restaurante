@@ -3,6 +3,7 @@
 //sapo ijueputa
 
 //perro
+//Nicolas es gay
 #include <iostream>
 #include <vector>
 #include <conio.h>
