@@ -1,6 +1,5 @@
 ///Código adaptado de https://bit.ly/2Plcea8
 
-//test2ss
 
 
 #include <iostream>
