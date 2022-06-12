@@ -11,9 +11,10 @@ class Usuario
         virtual ~Usuario();
 
         ///Atributos
-        string user, pass, nombre, apellido, genero, orden, cedula;
+        string user, pass, nombre, apellido, orden;
         int puntos;
-        long total;
+        long total, cedula;
+        bool activo;
 
         ///Métodos
         //Setter
@@ -21,10 +22,10 @@ class Usuario
         void setPass(string);
         void setNombre(string);
         void setApellido(string);
-        void setCedula(string);
-        void setGenero();
+        void setCedula(long);
         void setPuntos();
         void setOrden();
+        void setActivo(bool);
         virtual void setTotalcuenta(); //Polimorfismo
 
         //Getter
@@ -32,11 +33,11 @@ class Usuario
         string getPass();
         string getNombre();
         string getApellido();
-        string getCedula();
-        string getGenero();
+        long getCedula();
         string getOrden();
         long getPuntos();
         long getTotalcuenta();
+        bool getActivo();
 
 
     protected:

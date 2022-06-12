@@ -1,7 +1,3 @@
-///Código adaptado de https://bit.ly/2Plcea8
-
-
-
 #include <iostream>
 #include <vector>
 #include <conio.h>
@@ -47,6 +43,7 @@ void menuBienvenida()
     int opc;
     do
     {
+        system("cls");
         cout<<"¡Bienvenido!"<<endl<<endl
             <<"1. Iniciar sesión"<<endl
             <<"2. Registrarse"<<endl
@@ -58,12 +55,12 @@ void menuBienvenida()
         switch(opc)
         {
         case 1:
-            loguearse();
             system("cls");
+            loguearse();
             break;
         case 2:
-            registrarse();
             system("cls");
+            registrarse();
             break;
         case 3:
             system("cls");
@@ -88,13 +85,15 @@ void menuBienvenida()
 
 void registrarse()
 {
+    fflush(stdin);
     F5_usuarios();
-    bool existe = false;
+    bool existe = false, activo = true;
     string u, p, nom, ape;
     long cc;
     char caracter;
     do
     {
+        fflush(stdin);
         Usuario obj;
         cout<<"   -- REGISTRO --"<<endl
             <<"Ingrese el usuario: ";
@@ -146,17 +145,44 @@ void registrarse()
             cout<<"Ingrese el número de identificación (sin puntos): ";
             cin>>cc;
 
-            ofstream usuarios("usuarios.csv", ios::app); //Guardado del nuevo registro en el archivo "usuarios.csv"
-            if (!usuarios) cout << "Aviso: Error al escribir en documento. No existe, se creará un nuevo archivo 'usuarios.csv'"<<endl;
+            if (vUsers.size() != 0) //Comprueba si existe mínimo un usuario
+            {
+                for (int i=0; i<vUsers.size(); i++) //Busca si el documento ingresado ya existe o no
+                {
+                    obj = vUsers.at(i);
+                    if (cc == obj.getCedula())
+                    {
+                        existe = true;
+                        i = vUsers.size(); //Fuerza la salida del bucle for
+                    }
+                    else existe = false;
+                }
+            }
+            if (!existe) //Sigue con el registro en caso de no existir
+            {
+                ofstream usuarios("usuarios.csv", ios::app); //Registro exitoso. Guardado del nuevo registro en el archivo "usuarios.csv"
+                if (!usuarios) cout << "Aviso: Error al escribir en documento. No existe, se creará un nuevo archivo 'usuarios.csv'"<<endl;
+                else
+                {
+                    usuarios<<u<<";"<<p<<";"<<nom<<";"<<ape<<";"<<cc<<";"<<boolalpha<<activo<<endl; //boolalpha fuerza el valor de un bool a true en vez de 1
+                    usuarios.close();
+                    cout<<"Usuario registrado con éxito."<<endl<<endl;
+                    system("pause");
+                }
+            }
             else
             {
-                usuarios<<u<<";"<<p<<";"<<nom<<";"<<ape<<";"<<cc<<endl;
-                usuarios.close();
+                cout<<"Ya existe un usuario registrado con el mismo documento."<<endl<<endl;
+                system("pause");
+                system("cls");
             }
         }
-        else cout<<"El usuario ya existe, pruebe un nombre diferente."<<endl<<endl;
-        system("pause");
-        system("cls");
+        else
+        {
+            cout<<"El usuario ya existe, pruebe un nombre diferente."<<endl<<endl;
+            system("pause");
+            system("cls");
+        }
     }
     while(existe == true);
 }
@@ -164,84 +190,97 @@ void registrarse()
 void loguearse()
 {
     F5_usuarios();
-    string usuario, password;
-
-    int contador = 0;
-    bool ingresa = false;
-
-    do
+    if(vUsers.size() != 0)
     {
-        system("cls");
-        fflush(stdin);
-        cout << "\t\t\tLOGIN DE USUARIO" << endl;
-        cout << "\t\t\t----------------" << endl;
-        cout << "\n\tUsuario: ";
-        getline(cin, usuario);
+        string usuario, password;
+        int contador = 0;
+        bool ingresa = false;
 
-        char caracter;
-
-        cout << "\tContraseña: ";
-        caracter = getch();
-
-        password = "";
-
-        while (caracter != ENTER)
+        do
         {
-
-            if (caracter != BACKSPACE)
+            system("cls");
+            fflush(stdin);
+            if (contador > 0)
             {
-                password.push_back(caracter);
-                cout << "*";
+                cout<<"Tiene "<<(INTENTOS-contador)<<" intentos restantes."<<endl;
             }
-            else
+
+            cout << "\t\t\tLOGIN DE USUARIO" << endl;
+            cout << "\t\t\t----------------" << endl;
+            cout << "\n\tUsuario: ";
+            getline(cin, usuario);
+
+            char caracter;
+
+            cout << "\tContraseña: ";
+            caracter = getch();
+
+            password = "";
+
+            while (caracter != ENTER)
             {
-                if (password.length() > 0)
+
+                if (caracter != BACKSPACE)
                 {
-                    cout << "\b \b";
-                    password = password.substr(0, password.length() - 1);
+                    password.push_back(caracter);
+                    cout << "*";
+                }
+                else
+                {
+                    if (password.length() > 0)
+                    {
+                        cout << "\b \b";
+                        password = password.substr(0, password.length() - 1);
+                    }
+                }
+
+                caracter = getch();
+            }
+
+            for (int i = 0; i < vUsers.size(); i++)
+            {
+                Usuario obj;
+                obj = vUsers[i];
+                if (obj.getUser() == usuario && obj.getPass() == password)
+                {
+                    ingresa = true;
+                    break;
                 }
             }
 
-            caracter = getch();
-        }
-
-        for (int i = 0; i < vUsers.size(); i++)
-        {
-            Usuario obj;
-            obj = vUsers[i];
-            if (obj.getUser() == usuario && obj.getPass() == password)
+            if (!ingresa)
             {
-                ingresa = true;
-                break;
+                cout << "\n\n\tEl usuario y/o password son incorrectos" << endl;
+                cin.get();
+                contador++;
             }
-        }
 
-        if (!ingresa)
+        }
+        while (ingresa == false && contador < INTENTOS);
+
+        if (ingresa == false)
         {
-            cout << "\n\n\tEl usuario y/o password son incorrectos" << endl;
-            cin.get();
-            contador++;
+            cout << "\n\tUsted no pudo ingresar al sistema. ADIOS" << endl;
+        }
+        else
+        {
+            cout << "\n\n\tBienvenido al sistema" << endl;
+            /*
+            Aquí va el código del programa cuando el usuario ingresa sus credenciales correctas
+            */
         }
 
-    }
-    while (ingresa == false && contador < INTENTOS);
-
-    if (ingresa == false)
-    {
-        cout << "\n\tUsted no pudo ingresar al sistema. ADIOS" << endl;
+        cin.get();
     }
     else
     {
-        cout << "\n\n\tBienvenido al sistema" << endl;
-        /*
-        Aquí va el código del programa cuando el usuario ingresa sus credenciales correctas
-        */
+        cout<<"No existen usuarios en la base de datos. Por favor, registre un nuevo usuario."<<endl<<endl;
+        system("pause");
     }
-
-    cin.get();
 }
 
-void acercaDe(){
+void acercaDe()
+{
     cout<<"------ Trabajo final del segundo semestre de IPOO ------"<<endl
         <<"Realizado por: Nicolás Prado León              202160073"<<endl
         <<"               Kevin Estiven Gil Salcedo       202159863"<<endl
@@ -254,25 +293,33 @@ void F5_usuarios()
 {
     vUsers.clear(); //Limpia el vector para evitar comenzar en 0, como dicen en las gasolineras jeje
     ifstream usuarios("usuarios.csv", ios::in);
-    if (!usuarios) cout << "Aviso: Error al escribir en documento. No existe, se creará un nuevo archivo 'usuarios.csv'"<<endl;
+    if (!usuarios) cout << "Aviso: Error al leer el documento. No existe, se creará un nuevo archivo 'usuarios.csv'"<<endl;
     else
     {
         Usuario obj;
-        string registro, u, p, nom, ape, cc;
+        string registro, u, p, nom, ape, cc, activoString;
+        bool activo;
         while(getline(usuarios, registro))
         {
             stringstream token(registro);
+
+
             getline(token, u, ';');
             getline(token, p, ';');
             getline(token, nom, ';');
             getline(token, ape, ';');
             getline(token, cc, ';');
+            getline(token, activoString, ';');
+
+            if (activoString == "true") activo = true; //Conversión de string a bool
+            else activo = false;
 
             obj.setUser(u);
             obj.setPass(p);
             obj.setNombre(nom);
             obj.setApellido(ape);
-            obj.setCedula(cc);
+            obj.setCedula(stol(cc)); //stol (string to long)
+            obj.setActivo(activo);
             vUsers.push_back(obj);
         }
         usuarios.close();
