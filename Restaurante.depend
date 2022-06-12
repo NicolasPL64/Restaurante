@@ -68,3 +68,33 @@
 	"DefinicionCliente.h"
 	"Usuario.h"
 
+1655052036 source:c:\users\usuario\documents\ipoo\restaurante\definicioncliente.cpp
+	<iostream>
+	"DefinicionCliente.h"
+
+1655052036 c:\users\usuario\documents\ipoo\restaurante\definicioncliente.h
+	<iostream>
+
+1655052036 source:c:\users\usuario\documents\ipoo\restaurante\main.cpp
+	<iostream>
+	<vector>
+	<conio.h>
+	"fstream"
+	"sstream"
+	"DefinicionCliente.h"
+	"Usuario.h"
+
+1655052036 c:\users\usuario\documents\ipoo\restaurante\usuario.h
+	<iostream>
+
+1655052036 source:c:\users\usuario\documents\ipoo\restaurante\membresia.cpp
+	"membresia.h"
+	"DefinicionCliente.h"
+
+1655052036 c:\users\usuario\documents\ipoo\restaurante\membresia.h
+	"DefinicionCliente.h"
+
+1655052036 source:c:\users\usuario\documents\ipoo\restaurante\usuario.cpp
+	<iostream>
+	"Usuario.h"
+
