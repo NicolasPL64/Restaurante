@@ -6,9 +6,9 @@ using namespace std;
 
 Usuario::Usuario()
 {
-    user = pass = nombre = apellido = orden = "-";
+    user = pass = nombre = apellido = "-";
     total = cedula = 0;
-    activo = true;
+    activo = true, admin = false;
 }
 
 Usuario::~Usuario()
@@ -43,21 +43,20 @@ void Usuario::setCedula(long _cedula)
     cedula = _cedula;
 }
 
-void Usuario::setActivo(bool _activo){
+void Usuario::setActivo(bool _activo)
+{
     activo = _activo;
+}
+
+void Usuario::setAdmin(bool _admin)
+{
+    admin = _admin;
 }
 
 void Usuario::setTotalcuenta()
 {
     cout<<"Ingrese el valor de compra: "<<endl;
     cin>>total;
-}
-
-void Usuario::setOrden()
-{
-    fflush(stdin);
-    cout<<"Ingrese la orden del cliente: "<<endl;
-    getline(cin, orden);
 }
 
 
@@ -87,18 +86,21 @@ long Usuario::getCedula()
     return cedula;
 }
 
-bool Usuario::getActivo(){
+bool Usuario::getActivo()
+{
     return activo;
 }
 
-string Usuario::getOrden()
+bool Usuario::getAdmin()
 {
-    return orden;
+    return admin;
 }
 
 long Usuario::getTotalcuenta()
 {
     return total;
 }
+
+
 
 
