@@ -4,23 +4,22 @@
 #include "fstream"
 #include "sstream"
 
-#include "DefinicionCliente.h"
 #include "Usuario.h"
 #include "Cliente.h"
 #include "Admin.h"
+#include "Comidas.h"
 
 
 using namespace std;
 
-vector <DefinicionCliente> vecCliente;
+vector <Comidas> vComidas; //Vector comidas
 vector <Usuario> vUsers; //Vector usuarios
 
 int ENTER = 13, BACKSPACE = 8, INTENTOS = 3; //Códigos ASCII para ENTER y BACKSPACE. Cantidad de intentos para INTENTOS.
 
 
 
-
-///Declaración de voids
+///    ---- Declaración de voids ----    ////
 void F5_usuarios(); /*Se usa para refrescar los usuarios (por ejemplo
 después de modificar o registrar un usuario, etc.)*/
 
@@ -36,6 +35,13 @@ void menuUser(Usuario _user);
 //Menú admin
 void menuAdmin(Usuario _user);
 
+//Comidas
+void submenu_comidas(Usuario _user);
+void agregarComida();
+void F5_comidas(); /*Se usa para refrescar las comidas (por ejemplo
+después de modificar o registrar una comida, etc.)*/
+void imprimir_menu();
+
 
 //Para menú principal morbid
 void ingresar();
@@ -46,6 +52,81 @@ void menu();
 
 
 ///    ---- Métodos ----    ////
+//Comidas
+void agregarComida()
+{
+    fflush(stdin);
+    string nombre, ingredientes;
+    int precio;
+    fflush(stdin);
+    Comidas obj;
+
+    cout<<"   -- AGREGAR MENÚ --"<<endl
+        <<"Ingrese el nombre del menú: ";
+    getline(cin, nombre);
+
+    cout<<endl<<"Ingrese los ingredientes (separados por comas y un espacio): ";
+    getline(cin, ingredientes);
+
+    cout<<"Ingrese el precio: ";
+    cin>>precio;
+    fflush(stdin);
+
+    ofstream comidas("comidas.csv", ios::app); //Registro exitoso. Guardado del nuevo registro en el archivo "comidas.csv"
+    if (!comidas) cout << "Aviso: Error al escribir en documento. No existe, se creará un nuevo archivo 'comidas.csv'"<<endl;
+    else
+    {
+        comidas<<nombre<<";"<<ingredientes<<";"<<precio<<endl;
+        comidas.close();
+        cout<<"Comida agregada con éxito."<<endl<<endl;
+        system("pause");
+    }
+}
+
+void F5_comidas()
+{
+    vComidas.clear(); //Limpia el vector para comenzar en 0, como dicen en las gasolineras jeje
+    ifstream comidas("comidas.csv", ios::in);
+    if (!comidas) cout << "Aviso: Error al leer el documento. No existe, se creará un nuevo archivo 'comidas.csv'"<<endl;
+    else
+    {
+        Comidas obj;
+        string registroComidas, nombre, ingredientes, precio;
+        while(getline(comidas, registroComidas))
+        {
+            stringstream token(registroComidas);
+
+            getline(token, nombre, ';');
+            getline(token, ingredientes, ';');
+            getline(token, precio, ';');
+
+            stringstream ss(ingredientes); //Para separar los ingredientes por comas en un vector
+            while(ss.good()) //.good() corre el código hasta que llegue al final del string
+            {
+                string sub;
+                getline(ss, sub, ',');
+                obj.setIngrediente(sub);
+            }
+            obj.setNombre(nombre);
+            obj.setPrecio(stoi(precio)); //stoi (String to int)
+            vComidas.push_back(obj);
+        }
+        comidas.close();
+    }
+}
+
+void imprimir_menu(){
+    F5_comidas();
+    Comidas obj;
+    for (int i=0; i<vComidas.size(); i++){
+        obj = vComidas.at(i);
+
+        cout<<obj.getNombre()<<endl
+            <<obj.getIngrediente()<<endl
+            <<obj.getPrecio()<<"$"<<endl<<endl;
+    }
+    system("pause");
+}
 
 //Misc
 void acercaDe()
@@ -58,7 +139,8 @@ void acercaDe()
         <<"               Kevin Alexander Marín Henao     202160364"<<endl<<endl
 
         <<"-------------------------------- Créditos --------------------------------"<<endl
-        <<"Código del sistema de registro y logueo adaptado de https://bit.ly/2Plcea8"<<endl<<endl;
+        <<"Código del sistema de registro y logueo adaptado de https://bit.ly/2Plcea8"<<endl
+        <<"Separar strings por caracter https://java2blog.com/cpp-split-string-by-comma/"<<endl<<endl;
 }
 
 void F5_usuarios()
@@ -182,7 +264,7 @@ void registrarse()
                 if (u == obj.getUser())
                 {
                     existe = true;
-                    i = vUsers.size(); //Fuerza la salida del bucle for
+                    break; //Fuerza la salida del bucle for
                 }
                 else existe = false;
             }
@@ -228,7 +310,7 @@ void registrarse()
                     if (cc == obj.getCedula())
                     {
                         existe = true;
-                        i = vUsers.size(); //Fuerza la salida del bucle for
+                        break; //Fuerza la salida del bucle for
                     }
                     else existe = false;
                 }
@@ -344,7 +426,7 @@ void loguearse()
             Aquí va el código del programa cuando el usuario ingresa sus credenciales correctas
             */
             if (obj.getAdmin() == true) menuAdmin(obj);
-            //else VOID MENU NORMAL
+            else menuUser(obj);
         }
 
         cin.get();
@@ -370,6 +452,7 @@ void menuUser(Usuario _user)
         cout<<"¡Bienvenido, "<<obj.getUser()<<"! ¿Qué desea hacer?"<<endl<<endl
             <<"1. Ver el menú"<<endl
             <<"2. Hacer un pedido"<<endl
+            <<"3. Modificar mi información..."<<endl
             <<"0. Cerrar sesión"<<endl<<endl
             <<"Seleccione una opción: ";
         cin>>opc;
@@ -378,15 +461,18 @@ void menuUser(Usuario _user)
         {
         case 1:
             system("cls");
-            //loguearse();
+            imprimir_menu();
             break;
         case 2:
             system("cls");
             //registrarse();
             break;
+        case 3:
+            system("cls");
+            //modificar();
+            break;
         case 0:
             system("cls");
-            cout<<"¡Hasta pronto!"<<endl;
             break;
         default:
             system("cls");
@@ -426,11 +512,50 @@ void menuAdmin(Usuario _user)
             break;
         case 2:
             system("cls");
+            submenu_comidas(obj);
+            break;
+        case 0:
+            system("cls");
+            break;
+        default:
+            system("cls");
+            cout<<"Opción incorrecta"<<endl<<endl;
+            system("pause");
+            system("cls");
+            break;
+        }
+    }
+    while(opc != 0);
+}
+
+void submenu_comidas(Usuario _user)
+{
+    Usuario obj;
+    obj = _user;
+
+    int opc;
+    do
+    {
+        system("cls");
+        cout<<"¡Bienvenido, "<<obj.getUser()<<"! ¿Qué desea hacer?"<<endl<<endl
+            <<"1. Agregar comida"<<endl
+            <<"2. ..."<<endl
+            <<"0. Salir"<<endl<<endl
+            <<"Seleccione una opción: ";
+        cin>>opc;
+
+        switch(opc)
+        {
+        case 1:
+            system("cls");
+            agregarComida();
+            break;
+        case 2:
+            system("cls");
             //registrarse();
             break;
         case 0:
             system("cls");
-            cout<<"¡Hasta pronto!"<<endl;
             break;
         default:
             system("cls");
@@ -444,10 +569,45 @@ void menuAdmin(Usuario _user)
 }
 
 
+void prueba_jartadera()
+{
+    Comidas obj;
+    string ingrediente;
+    int seguir=0;
+    do
+    {
+        cout<<"Ingrese un ingrediente: ";
+        getline(cin,ingrediente);
+
+        obj.setIngrediente(ingrediente);
+        cout<<"seguir?"<<endl;
+        cin>>seguir;
+        fflush(stdin);
+
+    }
+    while(seguir != 0);
+
+    cout<<obj.getIngrediente();
+}
 
 
 
 
+
+///Main
+int main()
+{
+    setlocale(LC_ALL, ""); //Para soportar caracteres especiales
+
+    //agregarComida();
+    //F5_comidas();
+    //imprimir_menu();
+    //prueba_jartadera();
+    menuBienvenida();
+    return 0;
+}
+
+/*
 //test
 //definicion de funciones para usar los objetos
 
@@ -562,14 +722,4 @@ void menu()
     }
     while (opc != 0);
 }
-
-
-
-///Main
-int main()
-{
-    setlocale(LC_ALL, ""); //Para soportar caracteres especiales
-
-    menuBienvenida();
-    return 0;
-}
+*/

@@ -2,14 +2,24 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
-	<File name="DefinicionCliente.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="6" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1029" topLine="14" />
-		</Cursor>
-	</File>
 	<File name="Usuario.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="4" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="310" topLine="9" />
+			<Cursor1 position="361" topLine="15" />
+		</Cursor>
+	</File>
+	<File name="Comidas.cpp" open="1" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="6" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="898" topLine="28" />
+		</Cursor>
+	</File>
+	<File name="Cliente.cpp" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="5" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="268" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="Usuario.cpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="4" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1168" topLine="43" />
 		</Cursor>
 	</File>
 	<File name="DefinicionCliente.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="6" zoom_2="0">
@@ -17,14 +27,27 @@
 			<Cursor1 position="2968" topLine="86" />
 		</Cursor>
 	</File>
-	<File name="Usuario.cpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="4" zoom_2="0">
+	<File name="main.cpp" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="4" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1225" topLine="24" />
+			<Cursor1 position="1633" topLine="64" />
+		</Cursor>
+		<Folding>
+			<Collapse line="77" />
+			<Collapse line="86" />
+			<Collapse line="91" />
+			<Collapse line="95" />
+			<Collapse line="104" />
+			<Collapse line="132" />
+		</Folding>
+	</File>
+	<File name="Admin.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="5" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="0" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="main.cpp" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="6" zoom_2="0">
+	<File name="DefinicionCliente.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="6" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="320" topLine="0" />
+			<Cursor1 position="1029" topLine="14" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

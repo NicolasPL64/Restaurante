@@ -59,16 +59,16 @@
 1655301540 d:\users\nicolaspl_\desktop\restaurante\usuario.h
 	<iostream>
 
-1655309921 source:d:\users\nicolaspl_\desktop\restaurante\main.cpp
+1655319387 source:d:\users\nicolaspl_\desktop\restaurante\main.cpp
 	<iostream>
 	<vector>
 	<conio.h>
 	"fstream"
 	"sstream"
-	"DefinicionCliente.h"
 	"Usuario.h"
 	"Cliente.h"
 	"Admin.h"
+	"Comidas.h"
 
 1655052036 source:c:\users\usuario\documents\ipoo\restaurante\definicioncliente.cpp
 	<iostream>
@@ -115,4 +115,12 @@
 1655301413 d:\users\nicolaspl_\desktop\restaurante\admin.h
 	<iostream>
 	"Usuario.h"
+
+1655318551 source:d:\users\nicolaspl_\desktop\restaurante\comidas.cpp
+	<iostream>
+	"Comidas.h"
+
+1655317376 d:\users\nicolaspl_\desktop\restaurante\comidas.h
+	<iostream>
+	"vector"
 

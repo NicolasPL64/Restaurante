@@ -34,6 +34,12 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="Admin.cpp" />
+		<Unit filename="Admin.h" />
+		<Unit filename="Cliente.cpp" />
+		<Unit filename="Cliente.h" />
+		<Unit filename="Comidas.cpp" />
+		<Unit filename="Comidas.h" />
 		<Unit filename="DefinicionCliente.cpp" />
 		<Unit filename="DefinicionCliente.h" />
 		<Unit filename="Usuario.cpp" />
