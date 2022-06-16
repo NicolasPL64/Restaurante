@@ -4,7 +4,7 @@ using namespace std;
 
 Cliente::Cliente()
 {
-    puntos = orden = 0;
+    puntos = orden = total = 0;
 }
 
 Cliente::~Cliente()
@@ -20,6 +20,11 @@ void Cliente::setPuntos(long _puntos)
 
 void Cliente::setOrden()
 {
+
+}
+
+void Cliente::setTotalcuenta(){
+
 }
 
 //Getters
@@ -31,4 +36,8 @@ long Cliente::getPuntos()
 int Cliente::getOrden()
 {
     return orden;
+}
+
+long Cliente::getTotalcuenta(){
+    return total;
 }

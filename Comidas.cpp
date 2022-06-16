@@ -5,7 +5,7 @@ using namespace std;
 Comidas::Comidas()
 {
     ingrediente = nombre = "-";
-    precio = 0;
+    precio = posicion = 0;
     vIngredientes.clear();
 }
 
@@ -29,6 +29,11 @@ void Comidas::setNombre(string _nombre)
 void Comidas::setPrecio(int _precio)
 {
     precio = _precio;
+}
+
+void Comidas::setPosicion(int _posicion)
+{
+    posicion = _posicion;
 }
 
 //Getter
@@ -58,4 +63,9 @@ string Comidas::getNombre()
 int Comidas::getPrecio()
 {
     return precio;
+}
+
+int Comidas::getPosicion()
+{
+    return posicion;
 }

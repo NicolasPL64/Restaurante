@@ -12,8 +12,8 @@ class Usuario
 
         ///Atributos
         string user, pass, nombre, apellido;
-        long total, cedula;
-        bool activo, admin;
+        long cedula;
+        bool activo;
 
         ///Métodos
         //Setter
@@ -23,8 +23,6 @@ class Usuario
         void setApellido(string);
         void setCedula(long);
         void setActivo(bool);
-        void setAdmin(bool);
-        virtual void setTotalcuenta(); //Polimorfismo
 
         //Getter
         string getUser();
@@ -32,10 +30,7 @@ class Usuario
         string getNombre();
         string getApellido();
         long getCedula();
-        long getTotalcuenta();
         bool getActivo();
-        bool getAdmin();
-
 
     protected:
         //bool modificar;

@@ -12,7 +12,7 @@ class Comidas
 
         ///Atributos
         string ingrediente, nombre;
-        int precio;
+        int precio, posicion;
         vector <string> vIngredientes;
 
         ///Métodos
@@ -20,12 +20,14 @@ class Comidas
         void setIngrediente(string);
         void setNombre(string);
         void setPrecio(int);
+        void setPosicion(int);
 
 
         //Getter
         string getIngrediente();
         string getNombre();
         int getPrecio();
+        int getPosicion();
 
     protected:
 

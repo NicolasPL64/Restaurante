@@ -12,18 +12,22 @@ class Cliente : public Usuario
         virtual ~Cliente();
 
         ///Atributos
-        long puntos;
+        long puntos, total;
         int orden;
+        string direccion;
 
         ///Métodos
         //Setter
         void setPuntos(long);
         void setOrden();
+        void setDireccion(string);
+        virtual void setTotalcuenta(); //Polimorfismo
 
         //Getter
         long getPuntos();
         int getOrden();
-
+        string setDireccion();
+        long getTotalcuenta();
 
     protected:
 
