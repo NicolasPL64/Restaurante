@@ -38,6 +38,7 @@ class Usuario
 
 
     protected:
+        //bool modificar;
 
     private:
 };

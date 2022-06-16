@@ -14,6 +14,10 @@ class Admin : public Usuario
     protected:
 
     private:
+      // void modificar();
+
+
+
 };
 
 #endif // ADMIN_H
