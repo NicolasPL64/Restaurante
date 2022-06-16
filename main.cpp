@@ -644,6 +644,84 @@ void prueba_jartadera()
 }
 
 
+void modificar(){
+    ifstream archivo("usuarios.csv", ios::in);
+    if(!archivo){
+        cout<<"Error en tratar de abrir el archivo 'usuarios.csv'"<<endl<<endl;
+    }else{
+        vector <string> registros;
+        string registro;
+        string user, pass, nom, ape, cc, activoString, puntos, adminString;
+        string cedula_buscar;
+        cout<<"Ingrese la cedula a buscar: ";
+        cin>>cedula_buscar;
+        bool existe = false, mod = false;
+        int opc = 0;
+
+        while(getline(archivo, registro)){
+            //cout<<registro<<endl;
+            stringstream token(registro);
+
+            getline(token, user, ';');
+            getline(token, pass, ';');
+            getline(token, nom, ';');
+            getline(token, ape, ';');
+            getline(token, cc, ';');
+            getline(token, activoString, ';');
+            getline(token, puntos, ';');
+            getline(token, adminString, ';');
+
+            if(cedula_buscar.compare(cc) == 0){
+                existe = true;
+                cout<<"Datos del usuario: "<<endl;
+                cout<<"Numero de cedula: "<<cc<<endl;
+                cout<<"1.Apellido: "<<ape<<endl;
+                cout<<"2.Nombre: "<<nom<<endl;
+                //cout<<ciudad<<" "<<correo<<endl;
+                cout<<"3.Admin: "<<adminString<<endl;
+                cout<<"4.Ninguno"<<endl;
+
+                do{
+                    cout<<"Seleccione el dato a modificar: "<<endl;
+                    cin>>opc;
+
+                }while(opc <0 || opc > 4 );
+                fflush (stdin);
+
+                switch (opc){
+                    case 1: mod = true;
+                        cout<<"Ingrese el nuevo apellido: " ;
+                        getline(cin, ape);break;
+
+                    case 2: mod = true;
+                        cout<<"Ingrese el nuevo nombre: " ;
+                        getline(cin, nom);break;
+
+                    case 3: mod = true;
+                        cout<<"¿Admin?: " ;
+                        getline(cin, adminString);break;
+                }
+                registros.push_back(cc + "," + ape + "," + nom + "," + adminString);
+            }else registros.push_back(registro);
+        }//fin del while
+        archivo.close();
+        if(existe){//if(existe == true)
+                if(mod){
+                    ofstream nuevo ("usuarios.csv");
+                    for(int i =0; i < int(registros.size()); i++){
+                        string tmp = registros.at(i);
+                            nuevo<<tmp<<endl;
+                }
+                nuevo.close();
+                cout<<"La informacion del usuario se ha modificado correctamente"<<endl<<endl;
+            }
+
+                }else {cout<<"El cliente con numero de ID "<<cedula_buscar<<
+                  " no existe en el archivo"<<endl<<endl;
+        }
+    }
+}
+
 
 
 
@@ -657,6 +735,7 @@ int main()
     //imprimir_menu();
     //prueba_jartadera();
     menuBienvenida();
+    //modificar();
     return 0;
 }
 
@@ -697,6 +776,7 @@ void lista()
             //obj.getEdad()<<" años de edad"<<
             obj.getOrden()<<" "<<
             obj.getTotalcuenta()<<" "<<endl<<endl;
+            fflush(stdin);
 
     }
 }

@@ -33,6 +33,7 @@ class Usuario
         bool getActivo();
 
     protected:
+        //bool modificar;
 
     private:
 };

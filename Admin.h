@@ -24,6 +24,10 @@ class Admin : public Cliente
     protected:
 
     private:
+      // void modificar();
+
+
+
 };
 
 #endif // ADMIN_H
