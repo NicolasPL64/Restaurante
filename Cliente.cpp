@@ -5,7 +5,6 @@ using namespace std;
 Cliente::Cliente()
 {
     puntos = orden = total = 0;
-    direccion = "-";
 }
 
 Cliente::~Cliente()
@@ -28,11 +27,6 @@ void Cliente::setTotalcuenta(){
 
 }
 
-void Cliente::setDireccion(string _direccion){
-    direccion = _direccion;
-}
-
-
 //Getters
 long Cliente::getPuntos()
 {
@@ -46,8 +40,4 @@ int Cliente::getOrden()
 
 long Cliente::getTotalcuenta(){
     return total;
-}
-
-string Cliente::setDireccion(){
-    return direccion;;
 }
