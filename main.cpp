@@ -161,13 +161,13 @@ void F5_usuarios()
     {
         cout << "Aviso: Error al leer el documento. No existe, se creará un nuevo archivo 'usuarios.csv'"<<endl;
         //Si no existe ningún usuario, se creará un admin automáticamente:
-        usuariosAdmin<<"admin"<<";"<<"admin"<<";"<<"admin"<<";"<<"admin"<<";"<<0<<";"<<boolalpha<<true<<";"<<-1<<";"<<true<<endl;
+        usuariosAdmin<<"admin"<<";"<<"admin"<<";"<<"admin"<<";"<<"admin"<<";"<<0<<";"<<boolalpha<<true<<";"<<-1<<";"<<true<<";"<<"admin"<<endl;
         usuariosAdmin.close();
     }
     else
     {
         Admin obj;
-        string registro, user, pass, nom, ape, cc, activoString, puntos, adminString;
+        string registro, user, pass, nom, ape, cc, activoString, puntos, adminString, direccion;
         bool activo, admin;
         while(getline(usuarios, registro))
         {
@@ -181,6 +181,7 @@ void F5_usuarios()
             getline(token, activoString, ';');
             getline(token, puntos, ';');
             getline(token, adminString, ';');
+            getline(token, direccion, ';');
 
             if (activoString == "true") activo = true; //Conversión de string a bool
             else activo = false;
@@ -196,6 +197,7 @@ void F5_usuarios()
             obj.setActivo(activo);
             obj.setPuntos(stol(puntos));
             obj.setAdmin(admin);
+            obj.setDireccion(direccion);
             vUsers.push_back(obj);
         }
         usuarios.close();
@@ -254,7 +256,7 @@ void registrarse()
     fflush(stdin);
     F5_usuarios();
     bool existe = false, activo = true, admin = false;
-    string u, p, nom, ape;
+    string u, p, nom, ape, dir;
     long cc, puntos=0;
     char caracter;
     do
@@ -326,11 +328,14 @@ void registrarse()
             }
             if (!existe) //Sigue con el registro en caso de no existir
             {
+                cout<<"Ingrese su dirección: ";
+                getline(cin, dir);
+
                 ofstream usuarios("usuarios.csv", ios::app); //Registro exitoso. Guardado del nuevo registro en el archivo "usuarios.csv"
                 if (!usuarios) cout << "Aviso: Error al escribir en documento. No existe, se creará un nuevo archivo 'usuarios.csv'"<<endl;
                 else
                 {
-                    usuarios<<u<<";"<<p<<";"<<nom<<";"<<ape<<";"<<cc<<";"<<boolalpha<<activo<<";"<<puntos<<";"<<admin<<endl; //boolalpha fuerza el valor de un bool a true en vez de 1
+                    usuarios<<u<<";"<<p<<";"<<nom<<";"<<ape<<";"<<cc<<";"<<boolalpha<<activo<<";"<<puntos<<";"<<admin<<"-"<<dir<<endl; //boolalpha fuerza el valor de un bool a true en vez de 1
                     usuarios.close();
                     cout<<"Usuario registrado con éxito."<<endl<<endl;
                     system("pause");

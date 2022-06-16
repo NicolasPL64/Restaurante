@@ -59,7 +59,7 @@
 1655344207 d:\users\nicolaspl_\desktop\restaurante\usuario.h
 	<iostream>
 
-1655345128 source:d:\users\nicolaspl_\desktop\restaurante\main.cpp
+1655392465 source:d:\users\nicolaspl_\desktop\restaurante\main.cpp
 	<iostream>
 	<vector>
 	<conio.h>
@@ -101,7 +101,7 @@
 	<iostream>
 	"Usuario.h"
 
-1655301296 source:d:\users\nicolaspl_\desktop\restaurante\cliente.cpp
+1655392037 source:d:\users\nicolaspl_\desktop\restaurante\cliente.cpp
 	<iostream>
 	"Cliente.h"
 
