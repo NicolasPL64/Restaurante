@@ -24,9 +24,6 @@ class Admin : public Cliente
     protected:
 
     private:
-      // void modificar();
-
-
 
 };
 

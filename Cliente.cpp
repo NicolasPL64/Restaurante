@@ -48,6 +48,6 @@ long Cliente::getTotalcuenta(){
     return total;
 }
 
-string Cliente::setDireccion(){
+string Cliente::getDireccion(){
     return direccion;;
 }

@@ -6,8 +6,7 @@ using namespace std;
 
 Usuario::Usuario()
 {
-    user = pass = nombre = apellido = "-";
-    cedula = 0;
+    user = pass = nombre = apellido = cedula = "-";
     activo = true;
 }
 
@@ -38,7 +37,7 @@ void Usuario::setApellido(string _apellido)
     apellido = _apellido;
 }
 
-void Usuario::setCedula(long _cedula)
+void Usuario::setCedula(string _cedula)
 {
     cedula = _cedula;
 }
@@ -70,7 +69,7 @@ string Usuario::getApellido()
     return apellido;
 }
 
-long Usuario::getCedula()
+string Usuario::getCedula()
 {
     return cedula;
 }

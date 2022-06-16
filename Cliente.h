@@ -26,7 +26,7 @@ class Cliente : public Usuario
         //Getter
         long getPuntos();
         int getOrden();
-        string setDireccion();
+        string getDireccion();
         long getTotalcuenta();
 
     protected:

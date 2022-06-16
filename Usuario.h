@@ -11,8 +11,7 @@ class Usuario
         virtual ~Usuario();
 
         ///Atributos
-        string user, pass, nombre, apellido;
-        long cedula;
+        string user, pass, nombre, apellido, cedula;
         bool activo;
 
         ///Métodos
@@ -21,7 +20,7 @@ class Usuario
         void setPass(string);
         void setNombre(string);
         void setApellido(string);
-        void setCedula(long);
+        void setCedula(string);
         void setActivo(bool);
 
         //Getter
@@ -29,11 +28,10 @@ class Usuario
         string getPass();
         string getNombre();
         string getApellido();
-        long getCedula();
+        string getCedula();
         bool getActivo();
 
     protected:
-        //bool modificar;
 
     private:
 };

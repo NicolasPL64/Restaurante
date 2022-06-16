@@ -36,6 +36,8 @@ void hacer_pedido(Admin _user);
 
 //Menú admin
 void menuAdmin(Admin _user);
+void submenu_usuarios(Admin _user);
+void modificar();
 
 //Comidas
 void submenu_comidas(Admin _user);
@@ -193,9 +195,9 @@ void F5_usuarios()
             obj.setPass(pass);
             obj.setNombre(nom);
             obj.setApellido(ape);
-            obj.setCedula(stol(cc)); //stol (string to long)
+            obj.setCedula(cc);
             obj.setActivo(activo);
-            obj.setPuntos(stol(puntos));
+            obj.setPuntos(stol(puntos)); //stol (string to long)
             obj.setAdmin(admin);
             obj.setDireccion(direccion);
             vUsers.push_back(obj);
@@ -256,8 +258,8 @@ void registrarse()
     fflush(stdin);
     F5_usuarios();
     bool existe = false, activo = true, admin = false;
-    string u, p, nom, ape, dir;
-    long cc, puntos=0;
+    string u, p, nom, ape, dir, cc;
+    long puntos=0;
     char caracter;
     do
     {
@@ -335,7 +337,7 @@ void registrarse()
                 if (!usuarios) cout << "Aviso: Error al escribir en documento. No existe, se creará un nuevo archivo 'usuarios.csv'"<<endl;
                 else
                 {
-                    usuarios<<u<<";"<<p<<";"<<nom<<";"<<ape<<";"<<cc<<";"<<boolalpha<<activo<<";"<<puntos<<";"<<admin<<"-"<<dir<<endl; //boolalpha fuerza el valor de un bool a true en vez de 1
+                    usuarios<<u<<";"<<p<<";"<<nom<<";"<<ape<<";"<<cc<<";"<<boolalpha<<activo<<";"<<puntos<<";"<<admin<<";"<<dir<<endl; //boolalpha fuerza el valor de un bool a true en vez de 1
                     usuarios.close();
                     cout<<"Usuario registrado con éxito."<<endl<<endl;
                     system("pause");
@@ -520,18 +522,18 @@ void hacer_pedido(Admin _user)
         opc = _getch();
         switch(opc)
         {
-            case 's':
-            case 'S':
-            {
-                sigue = true;
-                break;
-            }
-            case 'n':
-            case 'N':
-            {
-                sigue = false;
-                break;
-            }
+        case 's':
+        case 'S':
+        {
+            sigue = true;
+            break;
+        }
+        case 'n':
+        case 'N':
+        {
+            sigue = false;
+            break;
+        }
         }
     }
     while(sigue == true);
@@ -560,11 +562,56 @@ void menuAdmin(Admin _user)
         {
         case 1:
             system("cls");
-            //loguearse();
+            submenu_usuarios(obj);
             break;
         case 2:
             system("cls");
             submenu_comidas(obj);
+            break;
+        case 0:
+            system("cls");
+            break;
+        default:
+            system("cls");
+            cout<<"Opción incorrecta"<<endl<<endl;
+            system("pause");
+            system("cls");
+            break;
+        }
+    }
+    while(opc != 0);
+}
+
+void submenu_usuarios(Admin _user)
+{
+    Admin obj;
+    obj = _user;
+
+    int opc;
+    do
+    {
+        system("cls");
+        cout<<"¡Bienvenido, "<<obj.getUser()<<"! ¿Qué desea hacer?"<<endl<<endl
+            <<"1. Listado general"<<endl
+            <<"2. Listado por cédula"<<endl
+            <<"3. Modificar un usuario"<<endl
+            <<"0. Salir"<<endl<<endl
+            <<"Seleccione una opción: ";
+        cin>>opc;
+
+        switch(opc)
+        {
+        case 1:
+            system("cls");
+            //agregarComida();
+            break;
+        case 2:
+            system("cls");
+            //registrarse();
+            break;
+        case 3:
+            system("cls");
+            modificar();
             break;
         case 0:
             system("cls");
@@ -643,85 +690,117 @@ void prueba_jartadera()
     cout<<obj.getIngrediente();
 }
 
+void modificar()
+{
+    F5_usuarios();
 
-void modificar(){
-    ifstream archivo("usuarios.csv", ios::in);
-    if(!archivo){
-        cout<<"Error en tratar de abrir el archivo 'usuarios.csv'"<<endl<<endl;
-    }else{
-        vector <string> registros;
-        string registro;
-        string user, pass, nom, ape, cc, activoString, puntos, adminString;
-        string cedula_buscar;
-        cout<<"Ingrese la cedula a buscar: ";
-        cin>>cedula_buscar;
-        bool existe = false, mod = false;
-        int opc = 0;
+    int opc = 0;
+    bool existe = false, mod = false;
+    string cedula_buscar;
+    cout<<"Ingrese la cedula a buscar: ";
+    cin>>cedula_buscar;
 
-        while(getline(archivo, registro)){
-            //cout<<registro<<endl;
-            stringstream token(registro);
-
-            getline(token, user, ';');
-            getline(token, pass, ';');
-            getline(token, nom, ';');
-            getline(token, ape, ';');
-            getline(token, cc, ';');
-            getline(token, activoString, ';');
-            getline(token, puntos, ';');
-            getline(token, adminString, ';');
-
-            if(cedula_buscar.compare(cc) == 0){
-                existe = true;
-                cout<<"Datos del usuario: "<<endl;
-                cout<<"Numero de cedula: "<<cc<<endl;
-                cout<<"1.Apellido: "<<ape<<endl;
-                cout<<"2.Nombre: "<<nom<<endl;
-                //cout<<ciudad<<" "<<correo<<endl;
-                cout<<"3.Admin: "<<adminString<<endl;
-                cout<<"4.Ninguno"<<endl;
-
-                do{
-                    cout<<"Seleccione el dato a modificar: "<<endl;
-                    cin>>opc;
-
-                }while(opc <0 || opc > 4 );
-                fflush (stdin);
-
-                switch (opc){
-                    case 1: mod = true;
-                        cout<<"Ingrese el nuevo apellido: " ;
-                        getline(cin, ape);break;
-
-                    case 2: mod = true;
-                        cout<<"Ingrese el nuevo nombre: " ;
-                        getline(cin, nom);break;
-
-                    case 3: mod = true;
-                        cout<<"¿Admin?: " ;
-                        getline(cin, adminString);break;
-                }
-                registros.push_back(cc + "," + ape + "," + nom + "," + adminString);
-            }else registros.push_back(registro);
-        }//fin del while
-        archivo.close();
-        if(existe){//if(existe == true)
-                if(mod){
-                    ofstream nuevo ("usuarios.csv");
-                    for(int i =0; i < int(registros.size()); i++){
-                        string tmp = registros.at(i);
-                            nuevo<<tmp<<endl;
-                }
-                nuevo.close();
-                cout<<"La informacion del usuario se ha modificado correctamente"<<endl<<endl;
-            }
-
-                }else {cout<<"El cliente con numero de ID "<<cedula_buscar<<
-                  " no existe en el archivo"<<endl<<endl;
+    int i;
+    Admin obj;
+    for (i=0; i<vUsers.size(); i++) //Busca si existe un usuario con dicha cédula
+    {
+        obj = vUsers.at(i);
+        if(cedula_buscar.compare(obj.getCedula()) == 0)
+        {
+            existe = true;
+            break; //Sale del bucle
         }
     }
-}
+    if (existe == true) //Si existe, pregunta qué desea cambiar
+    {
+        do
+        {
+            cout<<"Datos del usuario: "<<endl;
+            cout<<"Numero de cedula: "<<obj.getCedula()<<endl;
+            cout<<"1. Nombre: "<<obj.getNombre()<<endl;
+            cout<<"2. Apellido: "<<obj.getApellido()<<endl;
+            cout<<"3. Admin: "<<boolalpha<<obj.getAdmin()<<endl;
+            cout<<"0. Salir"<<endl<<endl;
 
+            cout<<"Seleccione el dato a modificar: ";
+            cin>>opc;
+            fflush (stdin);
+
+            string nom, ape;
+            char admin;
+
+
+            switch (opc)
+            {
+            case 1:
+                mod = true;
+                cout<<"Ingrese el nuevo nombre: ";
+                getline(cin, nom);
+                obj.setNombre(nom);
+                system("cls");
+                break;
+
+            case 2:
+                mod = true;
+                cout<<"Ingrese el nuevo apellido: ";
+                getline(cin, ape);
+                obj.setApellido(ape);
+                system("cls");
+                break;
+
+            case 3:
+                mod = true;
+                cout<<"¿Admin? (s/n)";
+                admin = _getch();
+
+                switch(admin)
+                {
+                case 's':
+                case 'S':
+                {
+                    obj.setAdmin(true);
+                    break;
+                }
+                case 'n':
+                case 'N':
+                {
+                    obj.setAdmin(false);
+                    break;
+                }
+                }
+                system("cls");
+                break;
+            }
+            vUsers.at(i) = obj;
+        }
+        while(opc != 0);
+    }
+    else cout<<"El cliente con CC "<<cedula_buscar<<" no existe en el archivo"<<endl<<endl;
+
+    if (mod == true)
+    {
+        ofstream usuarios("usuarios.csv");
+
+        if (!usuarios) cout << "Aviso: Error #1 al escribir en documento. No existe, se creará un nuevo archivo 'usuarios.csv'"<<endl;
+        else
+        {
+            usuarios.open("usuarios.csv", ofstream::out | ofstream::trunc);
+            ofstream usuarios("usuarios.csv", ios::app);
+            for (i=0; i<vUsers.size(); i++)
+            {
+                obj = vUsers.at(i);
+
+                //boolalpha fuerza el valor de un bool a true en vez de 1
+                usuarios<<obj.getUser()<<";"<<obj.getPass()<<";"<<obj.getNombre()<<";"<<obj.getApellido()<<";"<<obj.getCedula()<<";"
+                        <<boolalpha<<obj.getActivo()<<";"<<obj.getPuntos()<<";"<<obj.getAdmin()<<";"<<obj.getDireccion()<<endl;
+            }
+            usuarios.close();
+            system("cls");
+            cout<<"Usuario modificado con éxito."<<endl<<endl;
+        }
+    }
+    system("pause");
+}
 
 
 
@@ -739,27 +818,10 @@ int main()
     return 0;
 }
 
+
 /*
 //test
 //definicion de funciones para usar los objetos
-
-void ingresar() //ingresar estudiantes
-{
-    system("cls");
-    cout<<"Informacion del cliente: "<<endl<<endl;
-    DefinicionCliente obj;
-
-    obj.setCedula();
-    obj.setNombre();
-    obj.setApellido();
-    obj.setGenero();
-    obj.setEdad();
-    obj.setOrden();
-    obj.setTotalcuenta();
-    vecCliente.push_back(obj);
-    system ("pause");
-    system("cls");
-}
 
 void lista()
 {
@@ -780,6 +842,7 @@ void lista()
 
     }
 }
+
 
 void buscarCliente()
 {
@@ -815,44 +878,4 @@ void buscarCliente()
     }
 }
 
-void eliminarCliente()
-{
-
-}
-
-void menu()
-{
-    int opc;
-    do
-    {
-        cout<<"1. Ingrese un nuevo cliente"<<endl;
-        cout<<"2. Listado de clientes"<<endl;
-        cout<<"3. Buscar cliente"<<endl;
-        cout<<"4. Eliminar cliente"<<endl;
-        cout<<"0. Salir"<<endl;
-        cout<<"Seleccione una opcion: ";
-        cin>>opc;
-
-        switch(opc)
-        {
-        case 1:
-            ingresar();
-            break;
-        case 2:
-            lista();
-            break;
-        case 3:
-            buscarCliente();
-            break;
-        case 4:
-            eliminarCliente();
-            break;
-        case 0:
-            break;
-        default:
-            cout<<"Ingrese una opcion correcta"<<endl<<endl;
-        }
-    }
-    while (opc != 0);
-}
 */
