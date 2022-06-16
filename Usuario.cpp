@@ -7,8 +7,8 @@ using namespace std;
 Usuario::Usuario()
 {
     user = pass = nombre = apellido = "-";
-    total = cedula = 0;
-    activo = true, admin = false;
+    cedula = 0;
+    activo = true;
 }
 
 Usuario::~Usuario()
@@ -48,17 +48,6 @@ void Usuario::setActivo(bool _activo)
     activo = _activo;
 }
 
-void Usuario::setAdmin(bool _admin)
-{
-    admin = _admin;
-}
-
-void Usuario::setTotalcuenta()
-{
-    cout<<"Ingrese el valor de compra: "<<endl;
-    cin>>total;
-}
-
 
 //Getter
 string Usuario::getUser()
@@ -90,17 +79,6 @@ bool Usuario::getActivo()
 {
     return activo;
 }
-
-bool Usuario::getAdmin()
-{
-    return admin;
-}
-
-long Usuario::getTotalcuenta()
-{
-    return total;
-}
-
 
 
 

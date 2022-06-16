@@ -3,6 +3,7 @@
 #include <conio.h>
 #include "fstream"
 #include "sstream"
+#include "algorithm"
 
 #include "Usuario.h"
 #include "Cliente.h"
@@ -13,7 +14,7 @@
 using namespace std;
 
 vector <Comidas> vComidas; //Vector comidas
-vector <Usuario> vUsers; //Vector usuarios
+vector <Admin> vUsers; //Vector usuarios
 
 int ENTER = 13, BACKSPACE = 8, INTENTOS = 3; //Códigos ASCII para ENTER y BACKSPACE. Cantidad de intentos para INTENTOS.
 
@@ -30,13 +31,14 @@ void loguearse();
 void acercaDe();
 
 //Menú usuario normal
-void menuUser(Usuario _user);
+void menuUser(Admin _user);
+void hacer_pedido(Admin _user);
 
 //Menú admin
-void menuAdmin(Usuario _user);
+void menuAdmin(Admin _user);
 
 //Comidas
-void submenu_comidas(Usuario _user);
+void submenu_comidas(Admin _user);
 void agregarComida();
 void F5_comidas(); /*Se usa para refrescar las comidas (por ejemplo
 después de modificar o registrar una comida, etc.)*/
@@ -55,9 +57,10 @@ void menu();
 //Comidas
 void agregarComida()
 {
+    F5_comidas();
     fflush(stdin);
     string nombre, ingredientes;
-    int precio;
+    int precio, posicion = vComidas.size()+1;
     fflush(stdin);
     Comidas obj;
 
@@ -67,6 +70,7 @@ void agregarComida()
 
     cout<<endl<<"Ingrese los ingredientes (separados por comas y un espacio): ";
     getline(cin, ingredientes);
+    transform(ingredientes.begin(), ingredientes.end(),ingredientes.begin(), ::tolower);
 
     cout<<"Ingrese el precio: ";
     cin>>precio;
@@ -76,7 +80,7 @@ void agregarComida()
     if (!comidas) cout << "Aviso: Error al escribir en documento. No existe, se creará un nuevo archivo 'comidas.csv'"<<endl;
     else
     {
-        comidas<<nombre<<";"<<ingredientes<<";"<<precio<<endl;
+        comidas<<posicion<<";"<<nombre<<";"<<ingredientes<<";"<<precio<<endl;
         comidas.close();
         cout<<"Comida agregada con éxito."<<endl<<endl;
         system("pause");
@@ -91,15 +95,18 @@ void F5_comidas()
     else
     {
         Comidas obj;
-        string registroComidas, nombre, ingredientes, precio;
+        string registroComidas, posicion, nombre, ingredientes, precio;
         while(getline(comidas, registroComidas))
         {
             stringstream token(registroComidas);
+            obj.vIngredientes.clear();
 
+            getline(token, posicion, ';');
             getline(token, nombre, ';');
             getline(token, ingredientes, ';');
             getline(token, precio, ';');
 
+            obj.setPosicion(stoi(posicion));
             stringstream ss(ingredientes); //Para separar los ingredientes por comas en un vector
             while(ss.good()) //.good() corre el código hasta que llegue al final del string
             {
@@ -115,17 +122,19 @@ void F5_comidas()
     }
 }
 
-void imprimir_menu(){
+void imprimir_menu()
+{
     F5_comidas();
     Comidas obj;
-    for (int i=0; i<vComidas.size(); i++){
+    for (int i=0; i<vComidas.size(); i++)
+    {
         obj = vComidas.at(i);
 
-        cout<<obj.getNombre()<<endl
-            <<obj.getIngrediente()<<endl
-            <<obj.getPrecio()<<"$"<<endl<<endl;
+        cout<<obj.getPosicion()<<". "<<obj.getNombre()<<endl
+            <<"Ingredientes: "<<obj.getIngrediente()<<endl
+            <<"Precio: "<<obj.getPrecio()<<"$"<<endl
+            <<"----------------------------"<<endl<<endl;
     }
-    system("pause");
 }
 
 //Misc
@@ -157,7 +166,7 @@ void F5_usuarios()
     }
     else
     {
-        Cliente obj;
+        Admin obj;
         string registro, user, pass, nom, ape, cc, activoString, puntos, adminString;
         bool activo, admin;
         while(getline(usuarios, registro))
@@ -251,7 +260,7 @@ void registrarse()
     do
     {
         fflush(stdin);
-        Usuario obj;
+        Admin obj;
         cout<<"   -- REGISTRO --"<<endl
             <<"Ingrese el usuario: ";
         getline(cin, u);
@@ -347,7 +356,7 @@ void registrarse()
 void loguearse()
 {
     F5_usuarios();
-    Usuario obj;
+    Admin obj;
     if(vUsers.size() != 0)
     {
         string usuario, password;
@@ -440,9 +449,9 @@ void loguearse()
 
 
 //Menú usuario normal
-void menuUser(Usuario _user)
+void menuUser(Admin _user)
 {
-    Usuario obj;
+    Admin obj;
     obj = _user;
 
     int opc;
@@ -462,10 +471,11 @@ void menuUser(Usuario _user)
         case 1:
             system("cls");
             imprimir_menu();
+            system("pause");
             break;
         case 2:
             system("cls");
-            //registrarse();
+            hacer_pedido(obj);
             break;
         case 3:
             system("cls");
@@ -485,12 +495,49 @@ void menuUser(Usuario _user)
     while(opc != 0);
 }
 
+void hacer_pedido(Admin _user)
+{
+    Admin obj;
+    obj = _user;
+    vector <int> vPedidos;
+    vPedidos.clear();
+    int pedido;
+    char opc;
+    bool sigue=true;
+
+    imprimir_menu();
+    do
+    {
+        cout<<endl<<"Seleccione una comida: ";
+        cin>>pedido;
+        vPedidos.push_back(pedido);
+        cout<<"¿Desea agregar algo más? (s/n) ";
+        opc = _getch();
+        switch(opc)
+        {
+            case 's':
+            case 'S':
+            {
+                sigue = true;
+                break;
+            }
+            case 'n':
+            case 'N':
+            {
+                sigue = false;
+                break;
+            }
+        }
+    }
+    while(sigue == true);
+    //Crear archivo con pedidos, nombre de la persona y total, decir precios totales, domicilios y descuentos preferencial
+}
 
 
 //Menú admin
-void menuAdmin(Usuario _user)
+void menuAdmin(Admin _user)
 {
-    Usuario obj;
+    Admin obj;
     obj = _user;
 
     int opc;
@@ -528,9 +575,9 @@ void menuAdmin(Usuario _user)
     while(opc != 0);
 }
 
-void submenu_comidas(Usuario _user)
+void submenu_comidas(Admin _user)
 {
-    Usuario obj;
+    Admin obj;
     obj = _user;
 
     int opc;
@@ -539,7 +586,8 @@ void submenu_comidas(Usuario _user)
         system("cls");
         cout<<"¡Bienvenido, "<<obj.getUser()<<"! ¿Qué desea hacer?"<<endl<<endl
             <<"1. Agregar comida"<<endl
-            <<"2. ..."<<endl
+            <<"2. Modificar una comida"<<endl
+            <<"3. Modificar un menú"<<endl
             <<"0. Salir"<<endl<<endl
             <<"Seleccione una opción: ";
         cin>>opc;

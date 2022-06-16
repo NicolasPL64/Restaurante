@@ -52,19 +52,20 @@
 1654908848 d:\users\nicolaspl_\desktop\restaurante\membresia.h
 	"DefinicionCliente.h"
 
-1655301645 source:d:\users\nicolaspl_\desktop\restaurante\usuario.cpp
+1655344768 source:d:\users\nicolaspl_\desktop\restaurante\usuario.cpp
 	<iostream>
 	"Usuario.h"
 
-1655301540 d:\users\nicolaspl_\desktop\restaurante\usuario.h
+1655344207 d:\users\nicolaspl_\desktop\restaurante\usuario.h
 	<iostream>
 
-1655319387 source:d:\users\nicolaspl_\desktop\restaurante\main.cpp
+1655345128 source:d:\users\nicolaspl_\desktop\restaurante\main.cpp
 	<iostream>
 	<vector>
 	<conio.h>
 	"fstream"
 	"sstream"
+	"algorithm"
 	"Usuario.h"
 	"Cliente.h"
 	"Admin.h"
@@ -104,23 +105,23 @@
 	<iostream>
 	"Cliente.h"
 
-1655300949 d:\users\nicolaspl_\desktop\restaurante\cliente.h
+1655344211 d:\users\nicolaspl_\desktop\restaurante\cliente.h
 	<iostream>
 	"Usuario.h"
 
-1655301391 source:d:\users\nicolaspl_\desktop\restaurante\admin.cpp
+1655344742 source:d:\users\nicolaspl_\desktop\restaurante\admin.cpp
 	<iostream>
 	"Admin.h"
 
-1655301413 d:\users\nicolaspl_\desktop\restaurante\admin.h
+1655344100 d:\users\nicolaspl_\desktop\restaurante\admin.h
 	<iostream>
-	"Usuario.h"
+	"Cliente.h"
 
-1655318551 source:d:\users\nicolaspl_\desktop\restaurante\comidas.cpp
+1655339626 source:d:\users\nicolaspl_\desktop\restaurante\comidas.cpp
 	<iostream>
 	"Comidas.h"
 
-1655317376 d:\users\nicolaspl_\desktop\restaurante\comidas.h
+1655338991 d:\users\nicolaspl_\desktop\restaurante\comidas.h
 	<iostream>
 	"vector"
 
