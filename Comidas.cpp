@@ -7,6 +7,7 @@ Comidas::Comidas()
     ingrediente = nombre = "-";
     precio = posicion = 0;
     vIngredientes.clear();
+    activo = true;
 }
 
 Comidas::~Comidas()
@@ -35,6 +36,11 @@ void Comidas::setPosicion(int _posicion)
 {
     posicion = _posicion;
 }
+
+void Comidas::setActivo(bool _activo){
+    activo = _activo;
+}
+
 
 //Getter
 string Comidas::getIngrediente()
@@ -68,4 +74,8 @@ int Comidas::getPrecio()
 int Comidas::getPosicion()
 {
     return posicion;
+}
+
+bool Comidas::getActivo(){
+    return activo;
 }

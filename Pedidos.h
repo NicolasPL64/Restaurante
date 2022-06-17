@@ -33,6 +33,7 @@ class Pedidos
         string getDireccion();
         long getTotal();
 
+
     protected:
 
     private:

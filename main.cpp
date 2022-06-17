@@ -156,7 +156,8 @@ void F5_comidas()
     else
     {
         Comidas obj;
-        string registroComidas, posicion, nombre, ingredientes, precio;
+        string registroComidas, posicion, nombre, ingredientes, precio, activoString;
+        bool activo;
         while(getline(comidas, registroComidas))
         {
             stringstream token(registroComidas);
@@ -166,6 +167,7 @@ void F5_comidas()
             getline(token, nombre, ';');
             getline(token, ingredientes, ';');
             getline(token, precio, ';');
+            getline(token, activoString, ';');
 
             obj.setPosicion(stoi(posicion));
             stringstream ss(ingredientes); //Para separar los ingredientes por coma en un vector
@@ -176,7 +178,12 @@ void F5_comidas()
                 obj.setIngrediente(sub);
             }
             obj.setNombre(nombre);
-            obj.setPrecio(stoi(precio)); //stoi (String to int)
+            obj.setPrecio(stoi(precio)); //stoi (String to int
+
+            if (activoString == "true") activo = true; //Conversión de string a bool
+            else activo = false;
+
+            obj.setActivo(activo);
             vComidas.push_back(obj);
         }
         comidas.close();
@@ -253,7 +260,7 @@ void agregarComida()
         <<"Ingrese el nombre del menú: ";
     getline(cin, nombre);
 
-    cout<<endl<<"Ingrese los ingredientes (separados por comas y un espacio): ";
+    cout<<"Ingrese los ingredientes (separados por comas y un espacio): ";
     getline(cin, ingredientes);
     transform(ingredientes.begin(), ingredientes.end(),ingredientes.begin(), ::tolower);
 
@@ -265,7 +272,7 @@ void agregarComida()
     if (!comidas) cout << "Aviso: Error al escribir en documento. No existe, se creará un nuevo archivo 'comidas.csv'"<<endl;
     else
     {
-        comidas<<posicion<<";"<<nombre<<";"<<ingredientes<<";"<<precio<<endl;
+        comidas<<posicion<<";"<<nombre<<";"<<ingredientes<<";"<<precio<<";"<<boolalpha<<true<<endl;
         comidas.close();
         cout<<"Comida agregada con éxito."<<endl<<endl;
         system("pause");
@@ -304,6 +311,7 @@ void menuBienvenida()
             <<"Seleccione una opción: ";
         opc = getch();
 
+
         switch(opc)
         {
         case '1':
@@ -339,7 +347,7 @@ void registrarse()
 {
     fflush(stdin);
     F5_usuarios();
-    bool existe = false, activo = true, admin = false;
+    bool existe = false;
     string u, p, nom, ape, dir, cc;
     long puntos=0;
     char caracter;
@@ -419,7 +427,7 @@ void registrarse()
                 if (!usuarios) cout << "Aviso: Error al escribir en documento. No existe, se creará un nuevo archivo 'usuarios.csv'"<<endl;
                 else
                 {
-                    usuarios<<u<<";"<<p<<";"<<nom<<";"<<ape<<";"<<cc<<";"<<boolalpha<<activo<<";"<<puntos<<";"<<admin<<";"<<dir<<endl; //boolalpha fuerza el valor de un bool a true en vez de 1
+                    usuarios<<u<<";"<<p<<";"<<nom<<";"<<ape<<";"<<cc<<";"<<boolalpha<<true<<";"<<puntos<<";"<<false<<";"<<dir<<endl; //boolalpha fuerza el valor de un bool a true en vez de 1
                     usuarios.close();
                     cout<<"Usuario registrado con éxito."<<endl<<endl;
                     system("pause");
@@ -534,8 +542,6 @@ void loguearse()
                 else menuUser(obj);
             }
         }
-
-        cin.get();
     }
     else
     {

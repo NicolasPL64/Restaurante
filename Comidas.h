@@ -14,6 +14,7 @@ class Comidas
         string ingrediente, nombre;
         int precio, posicion;
         vector <string> vIngredientes;
+        bool activo;
 
         ///Métodos
         //Setter
@@ -21,6 +22,7 @@ class Comidas
         void setNombre(string);
         void setPrecio(int);
         void setPosicion(int);
+        void setActivo(bool);
 
 
         //Getter
@@ -28,6 +30,7 @@ class Comidas
         string getNombre();
         int getPrecio();
         int getPosicion();
+        bool getActivo();
 
     protected:
 
