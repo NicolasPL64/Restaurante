@@ -3,7 +3,7 @@ using namespace std;
 #ifndef CLIENTE_H
 #define CLIENTE_H
 #include "Usuario.h"
-
+#include "vector"
 
 class Cliente : public Usuario
 {
@@ -13,21 +13,24 @@ class Cliente : public Usuario
 
         ///Atributos
         long puntos, total;
-        int orden;
-        string direccion;
+        vector <string> vPedidosClase;
+        string orden, direccion, numOrden;
 
         ///Métodos
         //Setter
         void setPuntos(long);
-        void setOrden();
+        void setOrden(string);
         void setDireccion(string);
-        virtual void setTotalcuenta(); //Polimorfismo
+
+        void setNumOrden(string);
+        virtual void setTotalcuenta(long); //Polimorfismo
 
         //Getter
         long getPuntos();
-        int getOrden();
+        string getOrden();
         string getDireccion();
         long getTotalcuenta();
+        string getNumOrden();
 
     protected:
 

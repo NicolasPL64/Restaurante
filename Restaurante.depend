@@ -59,17 +59,19 @@
 1655397585 d:\users\nicolaspl_\desktop\restaurante\usuario.h
 	<iostream>
 
-1655400818 source:d:\users\nicolaspl_\desktop\restaurante\main.cpp
+1655433680 source:d:\users\nicolaspl_\desktop\restaurante\main.cpp
 	<iostream>
 	<vector>
 	<conio.h>
 	"fstream"
 	"sstream"
 	"algorithm"
+	"ctime"
 	"Usuario.h"
 	"Cliente.h"
 	"Admin.h"
 	"Comidas.h"
+	"Pedidos.h"
 
 1655052036 source:c:\users\usuario\documents\ipoo\restaurante\definicioncliente.cpp
 	<iostream>
@@ -101,13 +103,14 @@
 	<iostream>
 	"Usuario.h"
 
-1655400053 source:d:\users\nicolaspl_\desktop\restaurante\cliente.cpp
+1655427728 source:d:\users\nicolaspl_\desktop\restaurante\cliente.cpp
 	<iostream>
 	"Cliente.h"
 
-1655400048 d:\users\nicolaspl_\desktop\restaurante\cliente.h
+1655423855 d:\users\nicolaspl_\desktop\restaurante\cliente.h
 	<iostream>
 	"Usuario.h"
+	"vector"
 
 1655395709 source:d:\users\nicolaspl_\desktop\restaurante\admin.cpp
 	<iostream>
@@ -117,7 +120,7 @@
 	<iostream>
 	"Cliente.h"
 
-1655339626 source:d:\users\nicolaspl_\desktop\restaurante\comidas.cpp
+1655425319 source:d:\users\nicolaspl_\desktop\restaurante\comidas.cpp
 	<iostream>
 	"Comidas.h"
 
@@ -180,4 +183,11 @@
 	"Cliente.h"
 	"Admin.h"
 	"Comidas.h"
+
+1655428641 source:d:\users\nicolaspl_\desktop\restaurante\pedidos.cpp
+	<iostream>
+	"Pedidos.h"
+
+1655429404 d:\users\nicolaspl_\desktop\restaurante\pedidos.h
+	<iostream>
 

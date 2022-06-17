@@ -4,8 +4,10 @@ using namespace std;
 
 Cliente::Cliente()
 {
-    puntos = orden = total = 0;
-    direccion = "-";
+    puntos = total = 0;
+    direccion = numOrden = "-";
+    orden = "";
+    vPedidosClase.clear();
 }
 
 Cliente::~Cliente()
@@ -19,19 +21,25 @@ void Cliente::setPuntos(long _puntos)
     puntos = _puntos;
 }
 
-void Cliente::setOrden()
+void Cliente::setTotalcuenta(long _total)
 {
-
+    total = _total;
 }
 
-void Cliente::setTotalcuenta(){
-
-}
-
-void Cliente::setDireccion(string _direccion){
+void Cliente::setDireccion(string _direccion)
+{
     direccion = _direccion;
 }
 
+void Cliente::setOrden(string _orden)
+{
+    vPedidosClase.push_back(_orden);
+}
+
+void Cliente::setNumOrden(string _numOrden)
+{
+    numOrden = "#" + _numOrden;
+}
 
 //Getters
 long Cliente::getPuntos()
@@ -39,15 +47,33 @@ long Cliente::getPuntos()
     return puntos;
 }
 
-int Cliente::getOrden()
+string Cliente::getOrden() //Condensa todos los pedidos del vector en un string
 {
+    for (int i=0; i < vPedidosClase.size(); i++)
+    {
+        if (i == vPedidosClase.size()-1) //Condicional para agregar o no una coma
+        {
+            orden += vPedidosClase.at(i);
+        }
+        else
+        {
+            orden += vPedidosClase.at(i) + ", ";
+        }
+    }
     return orden;
 }
 
-long Cliente::getTotalcuenta(){
+long Cliente::getTotalcuenta()
+{
     return total;
 }
 
-string Cliente::getDireccion(){
+string Cliente::getDireccion()
+{
     return direccion;;
+}
+
+string Cliente::getNumOrden()
+{
+    return numOrden;
 }

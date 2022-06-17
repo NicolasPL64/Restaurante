@@ -42,6 +42,8 @@
 		<Unit filename="Comidas.h" />
 		<Unit filename="DefinicionCliente.cpp" />
 		<Unit filename="DefinicionCliente.h" />
+		<Unit filename="Pedidos.cpp" />
+		<Unit filename="Pedidos.h" />
 		<Unit filename="Usuario.cpp" />
 		<Unit filename="Usuario.h" />
 		<Unit filename="main.cpp" />

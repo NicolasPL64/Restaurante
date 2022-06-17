@@ -4,25 +4,33 @@
 #include "fstream"
 #include "sstream"
 #include "algorithm"
+#include "ctime"
 
 #include "Usuario.h"
 #include "Cliente.h"
 #include "Admin.h"
 #include "Comidas.h"
+#include "Pedidos.h"
 
 
 using namespace std;
 
 vector <Comidas> vComidas; //Vector comidas
 vector <Admin> vUsers; //Vector usuarios
+vector <Pedidos> vPedidos; //Vector pedidos
 
 int ENTER = 13, BACKSPACE = 8, INTENTOS = 3; //Códigos ASCII para ENTER y BACKSPACE. Cantidad de intentos para INTENTOS.
 
 
 
 ///    ---- Declaración de voids ----    ////
+//Misc
 void F5_usuarios(); /*Se usa para refrescar los usuarios (por ejemplo
 después de modificar o registrar un usuario, etc.)*/
+void F5_comidas(); /*Se usa para refrescar los menús (por ejemplo
+después de modificar o añadir un menú, etc.)*/
+void F5_pedidos(); /*Se usa para refrescar los pedidos (por ejemplo
+después de eliminar o hacer un pedido, etc.)*/
 
 //Para el registro/logueo o menú de bienvenida
 void menuBienvenida();
@@ -42,8 +50,6 @@ void modificar();
 //Comidas
 void submenu_comidas(Admin _user);
 void agregarComida();
-void F5_comidas(); /*Se usa para refrescar las comidas (por ejemplo
-después de modificar o registrar una comida, etc.)*/
 void imprimir_menu();
 
 
@@ -56,6 +62,155 @@ void menu();
 
 
 ///    ---- Métodos ----    ////
+//Misc
+void acercaDe()
+{
+
+    cout<<"------ Trabajo final del segundo semestre de IPOO ------"<<endl
+        <<"Realizado por: Nicolás Prado León              202160073"<<endl
+        <<"               Kevin Estiven Gil Salcedo       202159863"<<endl
+        <<"               Miguel Ángel Rueda Colonia      202159896"<<endl
+        <<"               Kevin Alexander Marín Henao     202160364"<<endl<<endl
+
+        <<"-------------------------------- Créditos -----------------------------------"<<endl
+        <<"Código del sistema de registro y logueo adaptado de https://bit.ly/2Plcea8"<<endl
+        <<"Separar strings por caracter https://java2blog.com/cpp-split-string-by-comma/"<<endl
+        <<"Código para sacar fecha usando strftime() adaptado de https://bit.ly/3tC0cdq"<<endl<<endl;
+}
+
+void F5_usuarios()
+{
+    vUsers.clear(); //Limpia el vector para comenzar en 0, como dicen en las gasolineras jeje
+    ifstream usuarios("usuarios.csv", ios::in);
+    ofstream usuariosAdmin("usuarios.csv", ios::app);
+    if (!usuarios)
+    {
+        cout << "Aviso: Error al leer el documento. No existe, se creará un nuevo archivo 'usuarios.csv'"<<endl;
+        //Si no existe 'usuarios.csv', se creará un admin automáticamente:
+        usuariosAdmin<<"admin"<<";"<<"admin"<<";"<<"admin"<<";"<<"admin"<<";"<<0<<";"<<boolalpha<<true<<";"<<-1<<";"<<true<<";"<<"admin"<<endl;
+        usuariosAdmin.close();
+    }
+    else
+    {
+        Admin obj;
+        string registro, user, pass, nom, ape, cc, activoString, puntos, adminString, direccion;
+        bool activo, admin, existeAdmin = false;
+        while(getline(usuarios, registro))
+        {
+            stringstream token(registro);
+
+            getline(token, user, ';');
+            getline(token, pass, ';');
+            getline(token, nom, ';');
+            getline(token, ape, ';');
+            getline(token, cc, ';');
+            getline(token, activoString, ';');
+            getline(token, puntos, ';');
+            getline(token, adminString, ';');
+            getline(token, direccion, ';');
+
+            if (activoString == "true") activo = true; //Conversión de string a bool
+            else activo = false;
+
+            if (adminString == "true") admin = true; //Conversión de string a bool
+            else admin = false;
+
+            //Comprueba si ya existe 'admin' o no
+            if (user=="admin" && pass=="admin" && nom=="admin" && ape=="admin" && cc=="0" && activo==true && puntos=="-1" && admin==true && direccion=="admin")
+            {
+                existeAdmin = true;
+            }
+
+            obj.setUser(user);
+            obj.setPass(pass);
+            obj.setNombre(nom);
+            obj.setApellido(ape);
+            obj.setCedula(cc);
+            obj.setActivo(activo);
+            obj.setPuntos(stol(puntos)); //stol (string to long)
+            obj.setAdmin(admin);
+            obj.setDireccion(direccion);
+            vUsers.push_back(obj);
+        }
+        usuarios.close();
+        if (!existeAdmin)
+        {
+            //Crea un usuario 'admin'. Esto se ejecuta cuando no hay usuarios pero el archivo 'usuarios.csv' ya existe.
+            ofstream usuariosAdmin("usuarios.csv", ios::app);
+            usuariosAdmin<<"admin"<<";"<<"admin"<<";"<<"admin"<<";"<<"admin"<<";"<<0<<";"<<boolalpha<<true<<";"<<-1<<";"<<true<<";"<<"admin"<<endl;
+            usuariosAdmin.close();
+        }
+    }
+}
+
+void F5_comidas()
+{
+    vComidas.clear(); //Limpia el vector para comenzar en 0, como dicen en las gasolineras jeje
+    ifstream comidas("comidas.csv", ios::in);
+    if (!comidas) cout << "Aviso: Error al leer el documento. No existe, se creará un nuevo archivo 'comidas.csv'"<<endl;
+    else
+    {
+        Comidas obj;
+        string registroComidas, posicion, nombre, ingredientes, precio;
+        while(getline(comidas, registroComidas))
+        {
+            stringstream token(registroComidas);
+            obj.vIngredientes.clear();
+
+            getline(token, posicion, ';');
+            getline(token, nombre, ';');
+            getline(token, ingredientes, ';');
+            getline(token, precio, ';');
+
+            obj.setPosicion(stoi(posicion));
+            stringstream ss(ingredientes); //Para separar los ingredientes por coma en un vector
+            while(ss.good()) //.good() corre el código hasta que llegue al final del string
+            {
+                string sub;
+                getline(ss, sub, ',');
+                obj.setIngrediente(sub);
+            }
+            obj.setNombre(nombre);
+            obj.setPrecio(stoi(precio)); //stoi (String to int)
+            vComidas.push_back(obj);
+        }
+        comidas.close();
+    }
+}
+
+void F5_pedidos()
+{
+    vPedidos.clear(); //Limpia el vector para comenzar en 0, como dicen en las gasolineras jeje
+    ifstream pedidos("pedidos.csv", ios::in);
+    if (!pedidos) cout << "Aviso: Error al leer el documento. No existe, se creará un nuevo archivo 'pedidos.csv'"<<endl;
+    else
+    {
+        Pedidos obj;
+        string registroPedidos, numPedido, ordenes, nombreFull, cedula, direccion, total;
+        while(getline(pedidos, registroPedidos))
+        {
+            stringstream token(registroPedidos);
+
+            getline(token, numPedido, ';');
+            getline(token, ordenes, ';');
+            getline(token, nombreFull, ';');
+            getline(token, cedula, ';');
+            getline(token, direccion, ';');
+            getline(token, total, ';');
+
+            obj.setNumPedido(numPedido);
+            obj.setOrdenes(ordenes);
+            obj.setNombreFull(nombreFull);
+            obj.setCedula(cedula);
+            obj.setDireccion(direccion);
+            obj.setTotal(stol(total)); //stol (String to long)
+            vPedidos.push_back(obj);
+        }
+        pedidos.close();
+    }
+}
+
+
 //Comidas
 void agregarComida()
 {
@@ -89,41 +244,6 @@ void agregarComida()
     }
 }
 
-void F5_comidas()
-{
-    vComidas.clear(); //Limpia el vector para comenzar en 0, como dicen en las gasolineras jeje
-    ifstream comidas("comidas.csv", ios::in);
-    if (!comidas) cout << "Aviso: Error al leer el documento. No existe, se creará un nuevo archivo 'comidas.csv'"<<endl;
-    else
-    {
-        Comidas obj;
-        string registroComidas, posicion, nombre, ingredientes, precio;
-        while(getline(comidas, registroComidas))
-        {
-            stringstream token(registroComidas);
-            obj.vIngredientes.clear();
-
-            getline(token, posicion, ';');
-            getline(token, nombre, ';');
-            getline(token, ingredientes, ';');
-            getline(token, precio, ';');
-
-            obj.setPosicion(stoi(posicion));
-            stringstream ss(ingredientes); //Para separar los ingredientes por comas en un vector
-            while(ss.good()) //.good() corre el código hasta que llegue al final del string
-            {
-                string sub;
-                getline(ss, sub, ',');
-                obj.setIngrediente(sub);
-            }
-            obj.setNombre(nombre);
-            obj.setPrecio(stoi(precio)); //stoi (String to int)
-            vComidas.push_back(obj);
-        }
-        comidas.close();
-    }
-}
-
 void imprimir_menu()
 {
     F5_comidas();
@@ -139,72 +259,6 @@ void imprimir_menu()
     }
 }
 
-//Misc
-void acercaDe()
-{
-
-    cout<<"------ Trabajo final del segundo semestre de IPOO ------"<<endl
-        <<"Realizado por: Nicolás Prado León              202160073"<<endl
-        <<"               Kevin Estiven Gil Salcedo       202159863"<<endl
-        <<"               Miguel Ángel Rueda Colonia      202159896"<<endl
-        <<"               Kevin Alexander Marín Henao     202160364"<<endl<<endl
-
-        <<"-------------------------------- Créditos -----------------------------------"<<endl
-        <<"Código del sistema de registro y logueo adaptado de https://bit.ly/2Plcea8"<<endl
-        <<"Separar strings por caracter https://java2blog.com/cpp-split-string-by-comma/"<<endl<<endl;
-}
-
-void F5_usuarios()
-{
-    vUsers.clear(); //Limpia el vector para comenzar en 0, como dicen en las gasolineras jeje
-    ifstream usuarios("usuarios.csv", ios::in);
-    ofstream usuariosAdmin("usuarios.csv", ios::app);
-    if (!usuarios)
-    {
-        cout << "Aviso: Error al leer el documento. No existe, se creará un nuevo archivo 'usuarios.csv'"<<endl;
-        //Si no existe ningún usuario, se creará un admin automáticamente:
-        usuariosAdmin<<"admin"<<";"<<"admin"<<";"<<"admin"<<";"<<"admin"<<";"<<0<<";"<<boolalpha<<true<<";"<<-1<<";"<<true<<";"<<"admin"<<endl;
-        usuariosAdmin.close();
-    }
-    else
-    {
-        Admin obj;
-        string registro, user, pass, nom, ape, cc, activoString, puntos, adminString, direccion;
-        bool activo, admin;
-        while(getline(usuarios, registro))
-        {
-            stringstream token(registro);
-
-            getline(token, user, ';');
-            getline(token, pass, ';');
-            getline(token, nom, ';');
-            getline(token, ape, ';');
-            getline(token, cc, ';');
-            getline(token, activoString, ';');
-            getline(token, puntos, ';');
-            getline(token, adminString, ';');
-            getline(token, direccion, ';');
-
-            if (activoString == "true") activo = true; //Conversión de string a bool
-            else activo = false;
-
-            if (adminString == "true") admin = true; //Conversión de string a bool
-            else admin = false;
-
-            obj.setUser(user);
-            obj.setPass(pass);
-            obj.setNombre(nom);
-            obj.setApellido(ape);
-            obj.setCedula(cc);
-            obj.setActivo(activo);
-            obj.setPuntos(stol(puntos)); //stol (string to long)
-            obj.setAdmin(admin);
-            obj.setDireccion(direccion);
-            vUsers.push_back(obj);
-        }
-        usuarios.close();
-    }
-}
 
 
 //Para el registro/logueo
@@ -506,18 +560,50 @@ void hacer_pedido(Admin _user)
 {
     Admin obj;
     obj = _user;
-    vector <int> vPedidos;
-    vPedidos.clear();
-    int pedido;
+
+    F5_pedidos();
+    Comidas objComida;
+
+    int orden;
+    char numOrden[10];
     char opc;
-    bool sigue=true;
+    bool existe, sigue = true;
+    long totalCuenta = 0;
 
     imprimir_menu();
     do
     {
+        time_t fecha; //Variable tipo time_t
+        tm * tlocal; //Estructura tm
+        time(&fecha); //La información a convertir (time)
+        tlocal = localtime(&fecha);
+
+        strftime(numOrden,10,"%j%M%S",tlocal); //Guarda el siguiente formato "Día (001-366)""Minuto""Segundo"
+        obj.setNumOrden(numOrden);
+
         cout<<endl<<"Seleccione una comida: ";
-        cin>>pedido;
-        vPedidos.push_back(pedido);
+        cin>>orden;
+
+        for (int i=0; i<vComidas.size(); i++)
+        {
+            objComida = vComidas.at(i);
+            existe = false;
+
+            if (orden == objComida.getPosicion())  //Comprueba si existe el menú solicitado
+            {
+                existe = true;
+                break;
+            }
+        }
+        if (existe == true)  //Si existe, suma el precio del menú al TOTAL y agrega el menú al vector de la clase Cliente
+        {
+            totalCuenta += objComida.getPrecio();
+            obj.setOrden(objComida.getNombre());
+        }
+        else cout<<"El menú solicitado no existe."<<endl;
+
+
+
         cout<<"¿Desea agregar algo más? (s/n) ";
         opc = _getch();
         switch(opc)
@@ -537,7 +623,21 @@ void hacer_pedido(Admin _user)
         }
     }
     while(sigue == true);
-    //Crear archivo con pedidos, nombre de la persona y total, decir precios totales, domicilios y descuentos preferencial
+    obj.setTotalcuenta(totalCuenta);
+
+    ofstream pedidos("pedidos.csv", ios::app); //Guardado del nuevo pedido en el archivo "pedidos.csv"
+    if (!pedidos) cout << "Aviso: Error al escribir en documento. No existe, se creará un nuevo archivo 'pedidos.csv'"<<endl;
+    else
+    {
+        pedidos<<obj.getNumOrden()<<";"<<obj.getOrden()<<";"<<obj.getNombre() + " " + obj.getApellido()<<";"<<obj.getCedula()<<";"<<obj.getDireccion()<<";"<<obj.getTotalcuenta()<<endl;
+        pedidos.close();
+        cout<<endl<<"Usuario registrado con éxito."<<endl<<endl;
+        system("pause");
+
+        //Verificar que el menú está activo
+        //Crear archivo con pedidos, nombre de la persona y total, decir precios totales, domicilios y descuentos preferencial
+    }
+    F5_pedidos();
 }
 
 
@@ -667,6 +767,7 @@ void submenu_comidas(Admin _user)
     }
     while(opc != 0);
 }
+
 
 
 void prueba_jartadera()
@@ -817,65 +918,3 @@ int main()
     //modificar();
     return 0;
 }
-
-
-/*
-//test
-//definicion de funciones para usar los objetos
-
-void lista()
-{
-    cout<<"Listado de clientes: "<<endl<<endl;
-    DefinicionCliente obj;
-
-    for(int i = 0; i < vecCliente.size(); i++)
-    {
-        cout<<"Informacion del cliente # "<<i+1<<endl;
-        obj = vecCliente.at(i);
-        cout<<obj.getCedula ()<<" "<<
-            obj.getApellido()<<" "<<obj.getNombre()<<" "<<
-            obj.getGenero()<<" "<<
-            //obj.getEdad()<<" años de edad"<<
-            obj.getOrden()<<" "<<
-            obj.getTotalcuenta()<<" "<<endl<<endl;
-            fflush(stdin);
-
-    }
-}
-
-
-void buscarCliente()
-{
-    system("cls");
-    bool existe = false;
-    DefinicionCliente obj;
-    int buscador;
-    cout<<"Ingrese la cedula que desea buscar: ";
-    cin>> buscador;
-
-    int n = vecCliente.size();
-    for(int i = 0; i < n; i++)
-    {
-        obj = vecCliente.at(i);
-        if(obj.getCedula() == buscador)
-        {
-            existe = true;
-            cout<<"Informacion del cliente"<<endl;
-            cout<<obj.getCedula ()<<" "<<
-                obj.getApellido()<<" "<<obj.getNombre()<<" "<<
-                obj.getGenero()<<" "<<
-                // obj.getEdad()<<" años de edad"<<
-//            obj.getOrden()<<" "<<
-                obj.getTotalcuenta()<<" "<<endl<<endl;
-            break;
-        }
-    }
-    if(!existe)
-    {
-        cout<<"El cliente con cedula "<<buscador<<
-            " no existe"<<endl;
-
-    }
-}
-
-*/
