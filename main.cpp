@@ -31,6 +31,8 @@ void F5_comidas(); /*Se usa para refrescar los menús (por ejemplo
 después de modificar o añadir un menú, etc.)*/
 void F5_pedidos(); /*Se usa para refrescar los pedidos (por ejemplo
 después de eliminar o hacer un pedido, etc.)*/
+void F5_usuariosArchivo(); /*Se usa para reescribir el archivo 'usuarios'
+después de una modificación*/
 
 //Para el registro/logueo o menú de bienvenida
 void menuBienvenida();
@@ -41,13 +43,14 @@ void acercaDe();
 //Menú usuario normal
 void menuUser(Admin _user);
 void hacer_pedido(Admin _user);
+void modificarUsuarioPROPIO(Admin _user);
 
 //Menú admin
 void menuAdmin(Admin _user);
 void submenu_usuarios(Admin _user);
 void listaUsuarios();
 void listaxCedula();
-void modificar();
+void modificarUsuarioADMIN();
 
 //Comidas
 void submenu_comidas(Admin _user);
@@ -212,6 +215,29 @@ void F5_pedidos()
     }
 }
 
+void F5_usuariosArchivo()
+{
+    Admin obj;
+    ofstream usuarios("usuarios.csv");
+
+    if (!usuarios) cout << "Aviso: Error #1 al escribir en documento. No existe, se creará un nuevo archivo 'usuarios.csv'"<<endl;
+    else
+    {
+        usuarios.open("usuarios.csv", ofstream::out | ofstream::trunc);
+        ofstream usuarios("usuarios.csv", ios::app);
+        for (int i=0; i<vUsers.size(); i++)
+        {
+            obj = vUsers.at(i);
+
+            //boolalpha fuerza el valor de un bool a true en vez de 1
+            usuarios<<obj.getUser()<<";"<<obj.getPass()<<";"<<obj.getNombre()<<";"<<obj.getApellido()<<";"<<obj.getCedula()<<";"
+                    <<boolalpha<<obj.getActivo()<<";"<<obj.getPuntos()<<";"<<obj.getAdmin()<<";"<<obj.getDireccion()<<endl;
+        }
+        usuarios.close();
+        system("cls");
+        cout<<"Usuario modificado con éxito."<<endl<<endl;
+    }
+}
 
 //Comidas
 void agregarComida()
@@ -266,7 +292,7 @@ void imprimir_menu()
 //Para el registro/logueo
 void menuBienvenida()
 {
-    int opc;
+    char opc;
     do
     {
         system("cls");
@@ -276,25 +302,25 @@ void menuBienvenida()
             <<"3. Acerca de..."<<endl
             <<"0. Salir"<<endl<<endl
             <<"Seleccione una opción: ";
-        cin>>opc;
+        opc = getch();
 
         switch(opc)
         {
-        case 1:
+        case '1':
             system("cls");
             loguearse();
             break;
-        case 2:
+        case '2':
             system("cls");
             registrarse();
             break;
-        case 3:
+        case '3':
             system("cls");
             acercaDe();
             system("pause");
             system("cls");
             break;
-        case 0:
+        case '0':
             system("cls");
             cout<<"¡Hasta pronto!"<<endl;
             break;
@@ -306,7 +332,7 @@ void menuBienvenida()
             break;
         }
     }
-    while(opc != 0);
+    while(opc != '0');
 }
 
 void registrarse()
@@ -525,34 +551,34 @@ void menuUser(Admin _user)
     Admin obj;
     obj = _user;
 
-    int opc;
+    char opc;
     do
     {
         system("cls");
         cout<<"¡Bienvenido, "<<obj.getUser()<<"! ¿Qué desea hacer?"<<endl<<endl
             <<"1. Ver el menú"<<endl
             <<"2. Hacer un pedido"<<endl
-            <<"3. Modificar mi información..."<<endl
+            <<"3. Modificar mi información"<<endl
             <<"0. Cerrar sesión"<<endl<<endl
             <<"Seleccione una opción: ";
-        cin>>opc;
+        opc = getch();
 
         switch(opc)
         {
-        case 1:
+        case '1':
             system("cls");
             imprimir_menu();
             system("pause");
             break;
-        case 2:
+        case '2':
             system("cls");
             hacer_pedido(obj);
             break;
-        case 3:
+        case '3':
             system("cls");
-            //modificar();
+            modificarUsuarioPROPIO(obj);
             break;
-        case 0:
+        case '0':
             system("cls");
             break;
         default:
@@ -563,7 +589,7 @@ void menuUser(Admin _user)
             break;
         }
     }
-    while(opc != 0);
+    while(opc != '0');
 }
 
 void hacer_pedido(Admin _user)
@@ -657,7 +683,7 @@ void menuAdmin(Admin _user)
     Admin obj;
     obj = _user;
 
-    int opc;
+    char opc;
     do
     {
         system("cls");
@@ -666,19 +692,19 @@ void menuAdmin(Admin _user)
             <<"2. Administrar comidas..."<<endl
             <<"0. Cerrar sesión"<<endl<<endl
             <<"Seleccione una opción: ";
-        cin>>opc;
+        opc = getch();
 
         switch(opc)
         {
-        case 1:
+        case '1':
             system("cls");
             submenu_usuarios(obj);
             break;
-        case 2:
+        case '2':
             system("cls");
             submenu_comidas(obj);
             break;
-        case 0:
+        case '0':
             system("cls");
             break;
         default:
@@ -689,7 +715,7 @@ void menuAdmin(Admin _user)
             break;
         }
     }
-    while(opc != 0);
+    while(opc != '0');
 }
 
 void submenu_usuarios(Admin _user)
@@ -697,7 +723,7 @@ void submenu_usuarios(Admin _user)
     Admin obj;
     obj = _user;
 
-    int opc;
+    char opc;
     do
     {
         system("cls");
@@ -707,23 +733,23 @@ void submenu_usuarios(Admin _user)
             <<"3. Modificar un usuario"<<endl
             <<"0. Salir"<<endl<<endl
             <<"Seleccione una opción: ";
-        cin>>opc;
+        opc = getch();
 
         switch(opc)
         {
-        case 1:
+        case '1':
             system("cls");
             listaUsuarios();
             break;
-        case 2:
+        case '2':
             system("cls");
             listaxCedula();
             break;
-        case 3:
+        case '3':
             system("cls");
-            modificar();
+            modificarUsuarioADMIN();
             break;
-        case 0:
+        case '0':
             system("cls");
             break;
         default:
@@ -734,7 +760,7 @@ void submenu_usuarios(Admin _user)
             break;
         }
     }
-    while(opc != 0);
+    while(opc != '0');
 }
 
 void submenu_comidas(Admin _user)
@@ -742,7 +768,7 @@ void submenu_comidas(Admin _user)
     Admin obj;
     obj = _user;
 
-    int opc;
+    char opc;
     do
     {
         system("cls");
@@ -752,19 +778,19 @@ void submenu_comidas(Admin _user)
             <<"3. Modificar un menú"<<endl
             <<"0. Salir"<<endl<<endl
             <<"Seleccione una opción: ";
-        cin>>opc;
+        opc = getch();
 
         switch(opc)
         {
-        case 1:
+        case '1':
             system("cls");
             agregarComida();
             break;
-        case 2:
+        case '2':
             system("cls");
             //registrarse();
             break;
-        case 0:
+        case '0':
             system("cls");
             break;
         default:
@@ -775,7 +801,7 @@ void submenu_comidas(Admin _user)
             break;
         }
     }
-    while(opc != 0);
+    while(opc != '0');
 }
 
 
@@ -813,10 +839,6 @@ void listaxCedula()
         if (obj.getAdmin() == true) cout<<"Administrador"<<endl;
         else cout<<"Usuario estándar"<<endl;
         cout<<"Direccion: "<<obj.getDireccion()<<endl<<endl;
-
-
-
-
     }
     else cout<<"El cliente con CC "<<cedula_buscar<<" no existe en el archivo"<<endl<<endl;
     system("pause");
@@ -843,7 +865,7 @@ void prueba_jartadera()
     cout<<obj.getIngrediente();
 }
 
-void modificar()
+void modificarUsuarioADMIN()
 {
     F5_usuarios();
     char opc = 0;
@@ -878,15 +900,18 @@ void modificar()
                 cout<<"Numero de cedula: "<<obj.getCedula()<<endl;
                 cout<<"1. Nombre: "<<obj.getNombre()<<endl;
                 cout<<"2. Apellido: "<<obj.getApellido()<<endl;
-                cout<<"3. Admin: "<<boolalpha<<obj.getAdmin()<<endl;
-                cout<<"4. Estado: "<<boolalpha<<obj.getActivo()<<endl;
+                cout<<"3. Dirección: "<<obj.getDireccion()<<endl;
+                cout<<"4. Puntos: "<<obj.getPuntos()<<endl;
+                cout<<"5. Admin: "<<boolalpha<<obj.getAdmin()<<endl;
+                cout<<"6. Estado: "<<boolalpha<<obj.getActivo()<<endl;
                 cout<<"0. Salir"<<endl<<endl;
 
                 cout<<"Seleccione el dato a modificar: ";
                 opc = _getch();
                 fflush (stdin);
 
-                string nom, ape;
+                string nom, ape, dir;
+                long puntos;
                 char admin, activ;
 
                 switch (opc)
@@ -907,11 +932,25 @@ void modificar()
 
                 case '3':
                     mod = true;
+                    cout<<endl<<"Ingrese la nueva dirección: ";
+                    getline(cin, dir);
+                    obj.setDireccion(dir);
+                    break;
+
+                case '4':
+                    mod = true;
+                    cout<<endl<<"Ingrese la nueva cantidad de puntos: ";
+                    cin>>puntos;
+                    obj.setPuntos(puntos);
+                    break;
+
+                case '5':
+                    mod = true;
                     if (obj.getAdmin() == true) obj.setAdmin(false);
                     else obj.setAdmin(true);
                     break;
 
-                case '4':
+                case '6':
                     mod = true;
                     if (obj.getActivo() == true) obj.setActivo(false);
                     else obj.setActivo(true);
@@ -926,28 +965,89 @@ void modificar()
     }
     else cout<<"El cliente con CC "<<cedula_buscar<<" no existe en el archivo"<<endl<<endl;
 
-    if (mod == true)
+    if (mod == true) F5_usuariosArchivo();
+    system("pause");
+}
+
+void modificarUsuarioPROPIO(Admin _user)
+{
+    F5_usuarios();
+    char opc = 0;
+    bool mod = false;
+
+    int i;
+    Admin obj;
+    for (i=0; i<vUsers.size(); i++) //Busca en qué posición se encuentra el usuario en el vector vUsers
     {
-        ofstream usuarios("usuarios.csv");
-
-        if (!usuarios) cout << "Aviso: Error #1 al escribir en documento. No existe, se creará un nuevo archivo 'usuarios.csv'"<<endl;
-        else
-        {
-            usuarios.open("usuarios.csv", ofstream::out | ofstream::trunc);
-            ofstream usuarios("usuarios.csv", ios::app);
-            for (i=0; i<vUsers.size(); i++)
-            {
-                obj = vUsers.at(i);
-
-                //boolalpha fuerza el valor de un bool a true en vez de 1
-                usuarios<<obj.getUser()<<";"<<obj.getPass()<<";"<<obj.getNombre()<<";"<<obj.getApellido()<<";"<<obj.getCedula()<<";"
-                        <<boolalpha<<obj.getActivo()<<";"<<obj.getPuntos()<<";"<<obj.getAdmin()<<";"<<obj.getDireccion()<<endl;
-            }
-            usuarios.close();
-            system("cls");
-            cout<<"Usuario modificado con éxito."<<endl<<endl;
-        }
+        obj = vUsers.at(i);
+        if(_user.getCedula().compare(obj.getCedula()) == 0) break; //Sale del bucle
     }
+
+    do
+    {
+        system("cls");
+        cout<<"Datos de "<<obj.getUser()<<": "<<endl;
+        cout<<"Numero de cedula: "<<obj.getCedula()<<endl;
+        cout<<"1. Nombre: "<<obj.getNombre()<<endl;
+        cout<<"2. Apellido: "<<obj.getApellido()<<endl;
+        cout<<"3. Dirección: "<<obj.getDireccion()<<endl;
+        cout<<"4. Admin: "<<boolalpha<<obj.getAdmin()<<endl;
+        cout<<"5. Estado: "<<boolalpha<<obj.getActivo()<<endl;
+        cout<<"0. Salir"<<endl<<endl;
+
+        cout<<"Seleccione el dato a modificar: ";
+        opc = _getch();
+        fflush (stdin);
+
+        string nom, ape, dir;
+        char admin, activ;
+
+        switch (opc)
+        {
+        case '1':
+            mod = true;
+            cout<<endl<<"Ingrese el nuevo nombre: ";
+            getline(cin, nom);
+            obj.setNombre(nom);
+            break;
+
+        case '2':
+            mod = true;
+            cout<<endl<<"Ingrese el nuevo apellido: ";
+            getline(cin, ape);
+            obj.setApellido(ape);
+            break;
+
+        case '3':
+            mod = true;
+            cout<<endl<<"Ingrese la nueva dirección: ";
+            getline(cin, dir);
+            obj.setDireccion(dir);
+            break;
+
+        case '4':
+            mod = true;
+            if (obj.getAdmin() == true) obj.setAdmin(false);
+            else obj.setAdmin(true);
+            break;
+
+        case '5':
+            mod = true;
+            if (obj.getActivo() == true) obj.setActivo(false);
+            else obj.setActivo(true);
+            break;
+
+        default:
+            cout<<endl<<"Ingrese una opción válida"<<endl;
+            break;
+
+        }
+        vUsers.at(i) = obj;
+    }
+    while(opc != '0');
+    system("cls");
+
+    if (mod == true) F5_usuariosArchivo();
     system("pause");
 }
 
@@ -988,6 +1088,6 @@ int main()
     //imprimir_menu();
     //prueba_jartadera();
     menuBienvenida();
-    //modificar();
+    //modificarUsuarioADMIN();
     return 0;
 }
