@@ -45,6 +45,7 @@ void hacer_pedido(Admin _user);
 //Menú admin
 void menuAdmin(Admin _user);
 void submenu_usuarios(Admin _user);
+void listaUsuarios();
 void modificar();
 
 //Comidas
@@ -491,12 +492,18 @@ void loguearse()
         }
         else
         {
+            if(obj.getActivo() == false){
+                cout<<" Usuario inactivo "<<endl;
+            }
+            else{
             cout << "\n\n\tBienvenido al sistema" << endl;
+
             /*
             Aquí va el código del programa cuando el usuario ingresa sus credenciales correctas
             */
             if (obj.getAdmin() == true) menuAdmin(obj);
             else menuUser(obj);
+            }
         }
 
         cin.get();
@@ -703,7 +710,7 @@ void submenu_usuarios(Admin _user)
         {
         case 1:
             system("cls");
-            //agregarComida();
+            listaUsuarios();
             break;
         case 2:
             system("cls");
@@ -794,9 +801,9 @@ void prueba_jartadera()
 void modificar()
 {
     F5_usuarios();
-
+    //bool activ;
     int opc = 0;
-    bool existe = false, mod = false;
+    bool existe = false, activo = false, mod = false;
     string cedula_buscar;
     cout<<"Ingrese la cedula a buscar: ";
     cin>>cedula_buscar;
@@ -809,6 +816,7 @@ void modificar()
         if(cedula_buscar.compare(obj.getCedula()) == 0)
         {
             existe = true;
+            activo = true;
             break; //Sale del bucle
         }
     }
@@ -821,6 +829,7 @@ void modificar()
             cout<<"1. Nombre: "<<obj.getNombre()<<endl;
             cout<<"2. Apellido: "<<obj.getApellido()<<endl;
             cout<<"3. Admin: "<<boolalpha<<obj.getAdmin()<<endl;
+            cout<<"4. Estado: "<<boolalpha<<obj.getActivo()<<endl;
             cout<<"0. Salir"<<endl<<endl;
 
             cout<<"Seleccione el dato a modificar: ";
@@ -828,7 +837,8 @@ void modificar()
             fflush (stdin);
 
             string nom, ape;
-            char admin;
+            char admin, activ;
+
 
 
             switch (opc)
@@ -869,6 +879,30 @@ void modificar()
                     break;
                 }
                 }
+
+            case 4:
+                mod = true;
+                cout<<"¿Estado? (s/n): ";
+                //cin>>activ;
+                //obj.setActivo(activ);
+                activ = _getch();
+
+                switch(activ)
+                {
+                case 's':
+                case 'S':
+                {
+                    obj.setActivo(true);
+                    break;
+                }
+                case 'n':
+                case 'N':
+                {
+                    obj.setActivo(false);
+                    break;
+                }
+                }
+
                 system("cls");
                 break;
             }
@@ -899,6 +933,50 @@ void modificar()
             system("cls");
             cout<<"Usuario modificado con éxito."<<endl<<endl;
         }
+    }
+    system("pause");
+}
+
+
+void listaUsuarios (){
+   // int i = 0;
+   Admin obj;
+     ifstream archivo("usuarios.csv", ios::in);
+    if(!archivo){
+        cout<<"Error al tratar de abrir el archivo 'usuarios.csv'"<<endl<<endl;
+    }else{
+        string registro, user, pass, nom, ape, cc, activoString, puntos, adminString, direccion;
+        while(getline(archivo, registro)){
+            //cout<<registro<<endl;
+            stringstream token(registro);
+
+            getline(token, user, ';');
+            getline(token, pass, ';');
+            getline(token, nom, ';');
+            getline(token, ape, ';');
+            getline(token, cc, ';');
+            getline(token, activoString, ';');
+            getline(token, puntos, ';');
+            getline(token, adminString, ';');
+            getline(token, direccion, ';');
+
+            for(int i = 0; i < vUsers.size(); i++ ){ //ciclo for implementado para enumerar los usuarios a la hora de mostrarlos en pantalla
+            obj = vUsers.at(i);
+            cout<<"**** Usuario # "<<i+1<<" ****"<<endl;
+
+            cout<<"Nombre de usuario: "<<obj.getUser()<<endl;
+            cout<<"Contraseña de usuario: "<<obj.getPass()<<endl;
+            cout<<"Nombre: "<<obj.getNombre()<<endl;
+            cout<<"Apellido: "<<obj.getApellido()<<endl;
+            cout<<"Documento de identidad: "<<obj.getCedula()<<endl;
+            cout<<"Estado: "<<obj.getActivo()<<endl;
+            cout<<"Puntos: "<<obj.getPuntos()<<endl;
+            cout<<"¿Admin? "<<obj.getAdmin()<<endl;
+            cout<<"Direccion: "<<obj.getDireccion()<<endl<<endl;
+            }
+            archivo.close();
+        }
+
     }
     system("pause");
 }
