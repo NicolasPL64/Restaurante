@@ -46,6 +46,7 @@ void hacer_pedido(Admin _user);
 void menuAdmin(Admin _user);
 void submenu_usuarios(Admin _user);
 void listaUsuarios();
+void listaxCedula();
 void modificar();
 
 //Comidas
@@ -716,7 +717,7 @@ void submenu_usuarios(Admin _user)
             break;
         case 2:
             system("cls");
-            //registrarse();
+            listaxCedula();
             break;
         case 3:
             system("cls");
@@ -778,6 +779,48 @@ void submenu_comidas(Admin _user)
 }
 
 
+void listaxCedula()
+{
+    F5_usuarios();
+
+    bool existe = false;
+    string cedula_buscar;
+    cout<<"Ingrese la cedula a buscar: ";
+    cin>>cedula_buscar;
+    cout<<endl;
+
+    int i;
+    Admin obj;
+    for (i=0; i<vUsers.size(); i++) //Busca si existe un usuario con dicha cédula
+    {
+        obj = vUsers.at(i);
+        if(cedula_buscar.compare(obj.getCedula()) == 0)
+        {
+            existe = true;
+            break; //Sale del bucle
+        }
+    }
+    if (existe == true) //Si existe, pregunta qué desea cambiar
+    {
+        cout<<"Nombre del usuario: "<<obj.getUser()<<endl;
+        cout<<"Contraseña del usuario: "<<obj.getPass()<<endl;
+        cout<<"Nombre: "<<obj.getNombre()<<endl;
+        cout<<"Apellido: "<<obj.getApellido()<<endl;
+        cout<<"Cédula: "<<obj.getCedula()<<endl;
+        if (obj.getActivo() == true) cout<<"Estado: Activo"<<endl;
+        else cout<<"Estado: Inactivo"<<endl;
+        cout<<"Puntos: "<<obj.getPuntos()<<endl;
+        if (obj.getAdmin() == true) cout<<"Administrador"<<endl;
+        else cout<<"Usuario estándar"<<endl;
+        cout<<"Direccion: "<<obj.getDireccion()<<endl<<endl;
+
+
+
+
+    }
+    else cout<<"El cliente con CC "<<cedula_buscar<<" no existe en el archivo"<<endl<<endl;
+    system("pause");
+}
 
 void prueba_jartadera()
 {
