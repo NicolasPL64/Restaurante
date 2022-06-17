@@ -868,41 +868,32 @@ void modificar()
                 {
                 case 's':
                 case 'S':
-                {
                     obj.setAdmin(true);
                     break;
-                }
                 case 'n':
                 case 'N':
-                {
                     obj.setAdmin(false);
                     break;
                 }
-                }
+                system("cls");
+                break;
 
             case 4:
                 mod = true;
                 cout<<"¿Estado? (s/n): ";
-                //cin>>activ;
-                //obj.setActivo(activ);
                 activ = _getch();
 
                 switch(activ)
                 {
                 case 's':
                 case 'S':
-                {
                     obj.setActivo(true);
                     break;
-                }
                 case 'n':
                 case 'N':
-                {
                     obj.setActivo(false);
                     break;
                 }
-                }
-
                 system("cls");
                 break;
             }
