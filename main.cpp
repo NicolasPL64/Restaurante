@@ -46,6 +46,7 @@ void hacer_pedido(Admin _user);
 void menuAdmin(Admin _user);
 void submenu_usuarios(Admin _user);
 void listaUsuarios();
+void listaxCedula();
 void modificar();
 
 //Comidas
@@ -714,7 +715,7 @@ void submenu_usuarios(Admin _user)
             break;
         case 2:
             system("cls");
-            //registrarse();
+            listaxCedula();
             break;
         case 3:
             system("cls");
@@ -918,7 +919,7 @@ void modificar()
 
                 //boolalpha fuerza el valor de un bool a true en vez de 1
                 usuarios<<obj.getUser()<<";"<<obj.getPass()<<";"<<obj.getNombre()<<";"<<obj.getApellido()<<";"<<obj.getCedula()<<";"
-                        <<boolalpha<<obj.getActivo()<<";"<<obj.getPuntos()<<";"<<obj.getAdmin()<<";"<<obj.getDireccion()<<endl;
+                        <<boolalpha<<obj.getActivo()<<";"<<obj.getPuntos()<<";"<<boolalpha<<obj.getAdmin()<<";"<<obj.getDireccion()<<endl;
             }
             usuarios.close();
             system("cls");
@@ -960,9 +961,9 @@ void listaUsuarios (){
             cout<<"Nombre: "<<obj.getNombre()<<endl;
             cout<<"Apellido: "<<obj.getApellido()<<endl;
             cout<<"Documento de identidad: "<<obj.getCedula()<<endl;
-            cout<<"Estado: "<<obj.getActivo()<<endl;
+            cout<<"Estado: "<<boolalpha<<obj.getActivo()<<endl;
             cout<<"Puntos: "<<obj.getPuntos()<<endl;
-            cout<<"¿Admin? "<<obj.getAdmin()<<endl;
+            cout<<"¿Admin? "<<boolalpha<<obj.getAdmin()<<endl;
             cout<<"Direccion: "<<obj.getDireccion()<<endl<<endl;
             }
             archivo.close();
@@ -971,6 +972,48 @@ void listaUsuarios (){
     }
     system("pause");
 }
+
+
+void listaxCedula (){
+     F5_usuarios();
+
+    bool existe = false;
+    string cedula_buscar;
+    cout<<"Ingrese la cedula a buscar: ";
+    cin>>cedula_buscar;
+    cout<<endl;
+
+    int i;
+    Admin obj;
+    for (i=0; i<vUsers.size(); i++) //Busca si existe un usuario con dicha cédula
+    {
+        obj = vUsers.at(i);
+        if(cedula_buscar.compare(obj.getCedula()) == 0)
+        {
+            existe = true;
+            break; //Sale del bucle
+        }
+    }
+    if (existe == true) //Si existe, pregunta qué desea cambiar
+    {
+
+            cout<<"Datos del usuario: "<<endl;
+            cout<<"Numero de cedula: "<<obj.getCedula()<<endl;
+            cout<<"1. Nombre: "<<obj.getNombre()<<endl;
+            cout<<"2. Apellido: "<<obj.getApellido()<<endl;
+            cout<<"3. Admin: "<<boolalpha<<obj.getAdmin()<<endl;
+            cout<<"4. Estado: "<<boolalpha<<obj.getActivo()<<endl;
+            cout<<"0. Salir"<<endl<<endl;
+
+
+
+
+        }else cout<<"El cliente con CC "<<cedula_buscar<<" no existe en el archivo"<<endl<<endl;
+         system("pause");
+    }
+
+
+
 
 
 

@@ -142,13 +142,14 @@
 1655257196 c:\users\slayer2024\desktop\restaurante\membresia.h
 	"DefinicionCliente.h"
 
-1655402861 source:c:\users\slayer2024\desktop\restaurante\cliente.cpp
+1655478471 source:c:\users\slayer2024\desktop\restaurante\cliente.cpp
 	<iostream>
 	"Cliente.h"
 
-1655402861 c:\users\slayer2024\desktop\restaurante\cliente.h
+1655478471 c:\users\slayer2024\desktop\restaurante\cliente.h
 	<iostream>
 	"Usuario.h"
+	"vector"
 
 1655402861 c:\users\slayer2024\desktop\restaurante\usuario.h
 	<iostream>
@@ -190,5 +191,12 @@
 	"Pedidos.h"
 
 1655429404 d:\users\nicolaspl_\desktop\restaurante\pedidos.h
+	<iostream>
+
+1655478471 source:c:\users\slayer2024\desktop\restaurante\pedidos.cpp
+	<iostream>
+	"Pedidos.h"
+
+1655478471 c:\users\slayer2024\desktop\restaurante\pedidos.h
 	<iostream>
 
