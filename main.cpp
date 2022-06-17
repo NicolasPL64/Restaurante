@@ -961,9 +961,14 @@ void listaUsuarios (){
             cout<<"Nombre: "<<obj.getNombre()<<endl;
             cout<<"Apellido: "<<obj.getApellido()<<endl;
             cout<<"Documento de identidad: "<<obj.getCedula()<<endl;
+
             cout<<"Estado: "<<boolalpha<<obj.getActivo()<<endl;
             cout<<"Puntos: "<<obj.getPuntos()<<endl;
             cout<<"¿Admin? "<<boolalpha<<obj.getAdmin()<<endl;
+
+            cout<<"Estado: "<<obj.getActivo()<<endl;
+            cout<<"Puntos: "<<obj.getPuntos()<<endl;
+            cout<<"¿Admin? "<<obj.getAdmin()<<endl;
             cout<<"Direccion: "<<obj.getDireccion()<<endl<<endl;
             }
             archivo.close();
@@ -972,6 +977,7 @@ void listaUsuarios (){
     }
     system("pause");
 }
+
 
 
 void listaxCedula (){
@@ -1011,6 +1017,7 @@ void listaxCedula (){
         }else cout<<"El cliente con CC "<<cedula_buscar<<" no existe en el archivo"<<endl<<endl;
          system("pause");
     }
+
 
 
 
