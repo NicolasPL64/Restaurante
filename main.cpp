@@ -37,6 +37,7 @@ void hacer_pedido(Admin _user);
 //Menú admin
 void menuAdmin(Admin _user);
 void submenu_usuarios(Admin _user);
+void listaUsuarios();
 void modificar();
 
 //Comidas
@@ -603,7 +604,7 @@ void submenu_usuarios(Admin _user)
         {
         case 1:
             system("cls");
-            //agregarComida();
+            listaUsuarios();
             break;
         case 2:
             system("cls");
@@ -798,6 +799,50 @@ void modificar()
             system("cls");
             cout<<"Usuario modificado con éxito."<<endl<<endl;
         }
+    }
+    system("pause");
+}
+
+
+void listaUsuarios (){
+   // int i = 0;
+   Admin obj;
+     ifstream archivo("usuarios.csv", ios::in);
+    if(!archivo){
+        cout<<"Error al tratar de abrir el archivo 'usuarios.csv'"<<endl<<endl;
+    }else{
+        string registro, user, pass, nom, ape, cc, activoString, puntos, adminString, direccion;
+        while(getline(archivo, registro)){
+            //cout<<registro<<endl;
+            stringstream token(registro);
+
+            getline(token, user, ';');
+            getline(token, pass, ';');
+            getline(token, nom, ';');
+            getline(token, ape, ';');
+            getline(token, cc, ';');
+            getline(token, activoString, ';');
+            getline(token, puntos, ';');
+            getline(token, adminString, ';');
+            getline(token, direccion, ';');
+
+            for(int i = 0; i < vUsers.size(); i++ ){ //ciclo for implementado para enumerar los usuarios a la hora de mostrarlos en pantalla
+            obj = vUsers.at(i);
+            cout<<"**** Usuario # "<<i+1<<" ****"<<endl;
+
+            cout<<"Nombre de usuario: "<<obj.getUser()<<endl;
+            cout<<"Contraseña de usuario: "<<obj.getPass()<<endl;
+            cout<<"Nombre: "<<obj.getNombre()<<endl;
+            cout<<"Apellido: "<<obj.getApellido()<<endl;
+            cout<<"Documento de identidad: "<<obj.getCedula()<<endl;
+            cout<<"Estado: "<<obj.getActivo()<<endl;
+            cout<<"Puntos: "<<obj.getPuntos()<<endl;
+            cout<<"¿Admin? "<<obj.getAdmin()<<endl;
+            cout<<"Direccion: "<<obj.getDireccion()<<endl<<endl;
+            }
+            archivo.close();
+        }
+
     }
     system("pause");
 }

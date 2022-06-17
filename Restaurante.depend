@@ -139,36 +139,36 @@
 1655257196 c:\users\slayer2024\desktop\restaurante\membresia.h
 	"DefinicionCliente.h"
 
-1655310667 source:c:\users\slayer2024\desktop\restaurante\cliente.cpp
+1655402861 source:c:\users\slayer2024\desktop\restaurante\cliente.cpp
 	<iostream>
 	"Cliente.h"
 
-1655310667 c:\users\slayer2024\desktop\restaurante\cliente.h
+1655402861 c:\users\slayer2024\desktop\restaurante\cliente.h
 	<iostream>
 	"Usuario.h"
 
-1655340874 c:\users\slayer2024\desktop\restaurante\usuario.h
+1655402861 c:\users\slayer2024\desktop\restaurante\usuario.h
 	<iostream>
 
-1655319988 source:c:\users\slayer2024\desktop\restaurante\comidas.cpp
+1655394846 source:c:\users\slayer2024\desktop\restaurante\comidas.cpp
 	<iostream>
 	"Comidas.h"
 
-1655319988 c:\users\slayer2024\desktop\restaurante\comidas.h
+1655394846 c:\users\slayer2024\desktop\restaurante\comidas.h
 	<iostream>
 	"vector"
 
-1655310667 source:c:\users\slayer2024\desktop\restaurante\usuario.cpp
+1655402861 source:c:\users\slayer2024\desktop\restaurante\usuario.cpp
 	<iostream>
 	"Usuario.h"
 
-1655343697 source:c:\users\slayer2024\desktop\restaurante\admin.cpp
+1655402861 source:c:\users\slayer2024\desktop\restaurante\admin.cpp
 	<iostream>
 	"Admin.h"
 
-1655343686 c:\users\slayer2024\desktop\restaurante\admin.h
+1655402861 c:\users\slayer2024\desktop\restaurante\admin.h
 	<iostream>
-	"Usuario.h"
+	"Cliente.h"
 
 1655393029 source:c:\users\slayer2024\desktop\restaurante\main.cpp
 	<iostream>
