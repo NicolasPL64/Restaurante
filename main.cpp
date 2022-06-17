@@ -438,12 +438,18 @@ void loguearse()
         }
         else
         {
+            if(obj.getActivo() == false){
+                cout<<" Usuario inactivo "<<endl;
+            }
+            else{
             cout << "\n\n\tBienvenido al sistema" << endl;
+
             /*
             Aquí va el código del programa cuando el usuario ingresa sus credenciales correctas
             */
             if (obj.getAdmin() == true) menuAdmin(obj);
             else menuUser(obj);
+            }
         }
 
         cin.get();
@@ -694,9 +700,9 @@ void prueba_jartadera()
 void modificar()
 {
     F5_usuarios();
-
+    //bool activ;
     int opc = 0;
-    bool existe = false, mod = false;
+    bool existe = false, activo = false, mod = false;
     string cedula_buscar;
     cout<<"Ingrese la cedula a buscar: ";
     cin>>cedula_buscar;
@@ -709,6 +715,7 @@ void modificar()
         if(cedula_buscar.compare(obj.getCedula()) == 0)
         {
             existe = true;
+            activo = true;
             break; //Sale del bucle
         }
     }
@@ -721,6 +728,7 @@ void modificar()
             cout<<"1. Nombre: "<<obj.getNombre()<<endl;
             cout<<"2. Apellido: "<<obj.getApellido()<<endl;
             cout<<"3. Admin: "<<boolalpha<<obj.getAdmin()<<endl;
+            cout<<"4. Estado: "<<boolalpha<<obj.getActivo()<<endl;
             cout<<"0. Salir"<<endl<<endl;
 
             cout<<"Seleccione el dato a modificar: ";
@@ -728,7 +736,8 @@ void modificar()
             fflush (stdin);
 
             string nom, ape;
-            char admin;
+            char admin, activ;
+
 
 
             switch (opc)
@@ -769,6 +778,30 @@ void modificar()
                     break;
                 }
                 }
+
+            case 4:
+                mod = true;
+                cout<<"¿Estado? (s/n): ";
+                //cin>>activ;
+                //obj.setActivo(activ);
+                activ = _getch();
+
+                switch(activ)
+                {
+                case 's':
+                case 'S':
+                {
+                    obj.setActivo(true);
+                    break;
+                }
+                case 'n':
+                case 'N':
+                {
+                    obj.setActivo(false);
+                    break;
+                }
+                }
+
                 system("cls");
                 break;
             }

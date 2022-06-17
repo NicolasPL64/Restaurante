@@ -170,12 +170,13 @@
 	<iostream>
 	"Cliente.h"
 
-1655393029 source:c:\users\slayer2024\desktop\restaurante\main.cpp
+1655434224 source:c:\users\slayer2024\desktop\restaurante\main.cpp
 	<iostream>
 	<vector>
 	<conio.h>
 	"fstream"
 	"sstream"
+	"algorithm"
 	"Usuario.h"
 	"Cliente.h"
 	"Admin.h"
