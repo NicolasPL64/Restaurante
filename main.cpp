@@ -961,15 +961,14 @@ void listaUsuarios (){
             cout<<"Nombre: "<<obj.getNombre()<<endl;
             cout<<"Apellido: "<<obj.getApellido()<<endl;
             cout<<"Documento de identidad: "<<obj.getCedula()<<endl;
-<<<<<<< HEAD
+
             cout<<"Estado: "<<boolalpha<<obj.getActivo()<<endl;
             cout<<"Puntos: "<<obj.getPuntos()<<endl;
             cout<<"¿Admin? "<<boolalpha<<obj.getAdmin()<<endl;
-=======
+
             cout<<"Estado: "<<obj.getActivo()<<endl;
             cout<<"Puntos: "<<obj.getPuntos()<<endl;
             cout<<"¿Admin? "<<obj.getAdmin()<<endl;
->>>>>>> parent of 7f55968 (cambio Modificar())
             cout<<"Direccion: "<<obj.getDireccion()<<endl<<endl;
             }
             archivo.close();
@@ -980,7 +979,7 @@ void listaUsuarios (){
 }
 
 
-<<<<<<< HEAD
+
 void listaxCedula (){
      F5_usuarios();
 
@@ -1023,8 +1022,7 @@ void listaxCedula (){
 
 
 
-=======
->>>>>>> parent of 7f55968 (cambio Modificar())
+
 
 ///Main
 int main()
