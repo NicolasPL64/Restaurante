@@ -99,8 +99,6 @@ void acercaDe(){
 
       system("cls");
       HANDLE hconsole = GetStdHandle(STD_OUTPUT_HANDLE);
-      SetConsoleTextAttribute(hconsole,10);
-
 
 gotoxy(18,1);cout<<"        **  "<<endl;
 gotoxy(18,2);cout<<"     *****                       * "<<endl;
