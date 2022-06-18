@@ -4,6 +4,7 @@ using namespace std;
 #define COMIDAS_H
 #include "vector"
 
+
 class Comidas
 {
     public:
@@ -11,7 +12,7 @@ class Comidas
         virtual ~Comidas();
 
         ///Atributos
-        string ingrediente, nombre;
+        string ingrediente, ingredienteString, nombre;
         int precio, posicion;
         vector <string> vIngredientes;
         bool activo;
@@ -27,6 +28,7 @@ class Comidas
 
         //Getter
         string getIngrediente();
+        string getIngredienteString(); //Se usa para actualizar el archivo
         string getNombre();
         int getPrecio();
         int getPosicion();
@@ -36,5 +38,8 @@ class Comidas
 
     private:
 };
+
+//Sort
+bool operator<(Comidas &s1, Comidas &s2);
 
 #endif // COMIDAS_H

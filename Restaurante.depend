@@ -59,7 +59,7 @@
 1655484620 d:\users\nicolaspl_\desktop\restaurante\usuario.h
 	<iostream>
 
-1655504359 source:d:\users\nicolaspl_\desktop\restaurante\main.cpp
+1655519216 source:d:\users\nicolaspl_\desktop\restaurante\main.cpp
 	<iostream>
 	<vector>
 	<conio.h>
@@ -112,7 +112,7 @@
 	"Usuario.h"
 	"vector"
 
-1655484620 source:d:\users\nicolaspl_\desktop\restaurante\admin.cpp
+1655519395 source:d:\users\nicolaspl_\desktop\restaurante\admin.cpp
 	<iostream>
 	"Admin.h"
 
@@ -120,11 +120,11 @@
 	<iostream>
 	"Cliente.h"
 
-1655502481 source:d:\users\nicolaspl_\desktop\restaurante\comidas.cpp
+1655520212 source:d:\users\nicolaspl_\desktop\restaurante\comidas.cpp
 	<iostream>
 	"Comidas.h"
 
-1655502423 d:\users\nicolaspl_\desktop\restaurante\comidas.h
+1655520211 d:\users\nicolaspl_\desktop\restaurante\comidas.h
 	<iostream>
 	"vector"
 

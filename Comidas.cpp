@@ -5,6 +5,7 @@ using namespace std;
 Comidas::Comidas()
 {
     ingrediente = nombre = "-";
+    ingredienteString = "";
     precio = posicion = 0;
     vIngredientes.clear();
     activo = true;
@@ -37,13 +38,14 @@ void Comidas::setPosicion(int _posicion)
     posicion = _posicion;
 }
 
-void Comidas::setActivo(bool _activo){
+void Comidas::setActivo(bool _activo)
+{
     activo = _activo;
 }
 
 
 //Getter
-string Comidas::getIngrediente()
+string Comidas::getIngrediente() //Condensa todos los menús del vector en un string
 {
     for (int i=0; i < vIngredientes.size(); i++)
     {
@@ -61,6 +63,22 @@ string Comidas::getIngrediente()
     return "";
 }
 
+string Comidas::getIngredienteString()
+{
+    for (int i=0; i < vIngredientes.size(); i++)
+    {
+        if (i == vIngredientes.size()-1) //Condicional para agregar o no una coma
+        {
+            ingredienteString += vIngredientes.at(i);
+        }
+        else
+        {
+            ingredienteString += vIngredientes.at(i) + ",";
+        }
+    }
+    return ingredienteString;
+}
+
 string Comidas::getNombre()
 {
     return nombre;
@@ -76,6 +94,17 @@ int Comidas::getPosicion()
     return posicion;
 }
 
-bool Comidas::getActivo(){
+bool Comidas::getActivo()
+{
     return activo;
+}
+
+
+//Sort
+bool operator<(Comidas &s1, Comidas &s2)
+{
+    if(s1.getPosicion() < s2.getPosicion())
+        return true;
+    else
+        return false;
 }
