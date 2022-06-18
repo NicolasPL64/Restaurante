@@ -80,16 +80,22 @@
 1655052036 c:\users\usuario\documents\ipoo\restaurante\definicioncliente.h
 	<iostream>
 
-1655052036 source:c:\users\usuario\documents\ipoo\restaurante\main.cpp
+1655509773 source:c:\users\usuario\documents\ipoo\restaurante\main.cpp
 	<iostream>
 	<vector>
 	<conio.h>
 	"fstream"
 	"sstream"
-	"DefinicionCliente.h"
+	"algorithm"
+	"ctime"
+	<windows.h>
 	"Usuario.h"
+	"Cliente.h"
+	"Admin.h"
+	"Comidas.h"
+	"Pedidos.h"
 
-1655052036 c:\users\usuario\documents\ipoo\restaurante\usuario.h
+1655504900 c:\users\usuario\documents\ipoo\restaurante\usuario.h
 	<iostream>
 
 1655052036 source:c:\users\usuario\documents\ipoo\restaurante\membresia.cpp
@@ -99,7 +105,7 @@
 1655052036 c:\users\usuario\documents\ipoo\restaurante\membresia.h
 	"DefinicionCliente.h"
 
-1655052036 source:c:\users\usuario\documents\ipoo\restaurante\usuario.cpp
+1655504900 source:c:\users\usuario\documents\ipoo\restaurante\usuario.cpp
 	<iostream>
 	"Usuario.h"
 
@@ -190,5 +196,37 @@
 	"Pedidos.h"
 
 1655502427 d:\users\nicolaspl_\desktop\restaurante\pedidos.h
+	<iostream>
+
+1655504900 source:c:\users\usuario\documents\ipoo\restaurante\admin.cpp
+	<iostream>
+	"Admin.h"
+
+1655504900 c:\users\usuario\documents\ipoo\restaurante\admin.h
+	<iostream>
+	"Cliente.h"
+
+1655504900 c:\users\usuario\documents\ipoo\restaurante\cliente.h
+	<iostream>
+	"Usuario.h"
+	"vector"
+
+1655504900 source:c:\users\usuario\documents\ipoo\restaurante\cliente.cpp
+	<iostream>
+	"Cliente.h"
+
+1655505187 source:c:\users\usuario\documents\ipoo\restaurante\comidas.cpp
+	<iostream>
+	"Comidas.h"
+
+1655505187 c:\users\usuario\documents\ipoo\restaurante\comidas.h
+	<iostream>
+	"vector"
+
+1655504900 source:c:\users\usuario\documents\ipoo\restaurante\pedidos.cpp
+	<iostream>
+	"Pedidos.h"
+
+1655505187 c:\users\usuario\documents\ipoo\restaurante\pedidos.h
 	<iostream>
 
