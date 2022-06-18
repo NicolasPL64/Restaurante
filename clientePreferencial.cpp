@@ -5,8 +5,8 @@ using namespace::std;
 
 clientePreferencial::clientePreferencial()
 {
-   puntos = 0;
-   cliente = false; //ctor
+    puntos = 0;
+    clientePref = false; //ctor
 }
 
 clientePreferencial::~clientePreferencial()
@@ -16,11 +16,12 @@ clientePreferencial::~clientePreferencial()
 
 //setter
 
-void clientePreferencial::setCliente(bool _cliente){
-    cliente = _cliente;
+void clientePreferencial::setClientePref(bool _clientePref)
+{
+    clientePref = _clientePref;
 }
 
-void clientePreferencial::setPuntos(long _puntos)
+void clientePreferencial::setPuntos(int _puntos)
 {
     puntos = _puntos;
 }
@@ -32,3 +33,12 @@ void clientePreferencial::setTotalcuenta(long _total)
 
 //getter
 
+bool clientePreferencial::getClientePref()
+{
+    return clientePref;
+}
+
+int clientePreferencial::getPuntos()
+{
+    return puntos;
+}

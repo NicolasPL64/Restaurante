@@ -52,14 +52,14 @@
 1655484620 d:\users\nicolaspl_\desktop\restaurante\membresia.h
 	"DefinicionCliente.h"
 
-1655581182 source:d:\users\nicolaspl_\desktop\restaurante\usuario.cpp
+1655585800 source:d:\users\nicolaspl_\desktop\restaurante\usuario.cpp
 	<iostream>
 	"Usuario.h"
 
-1655581182 d:\users\nicolaspl_\desktop\restaurante\usuario.h
+1655585636 d:\users\nicolaspl_\desktop\restaurante\usuario.h
 	<iostream>
 
-1655584640 source:d:\users\nicolaspl_\desktop\restaurante\main.cpp
+1655589960 source:d:\users\nicolaspl_\desktop\restaurante\main.cpp
 	<iostream>
 	<vector>
 	<conio.h>
@@ -68,6 +68,8 @@
 	"algorithm"
 	"ctime"
 	<windows.h>
+	"cmath"
+	"iomanip"
 	"Usuario.h"
 	"Cliente.h"
 	"Admin.h"
@@ -118,9 +120,9 @@
 	<iostream>
 	"Admin.h"
 
-1655484620 d:\users\nicolaspl_\desktop\restaurante\admin.h
+1655585246 d:\users\nicolaspl_\desktop\restaurante\admin.h
 	<iostream>
-	"Cliente.h"
+	"clientePreferencial.h"
 
 1655520212 source:d:\users\nicolaspl_\desktop\restaurante\comidas.cpp
 	<iostream>
@@ -213,11 +215,11 @@
 	<iostream>
 	"Cliente.h"
 
-1655581182 source:d:\users\nicolaspl_\desktop\restaurante\clientepreferencial.cpp
+1655585955 source:d:\users\nicolaspl_\desktop\restaurante\clientepreferencial.cpp
 	<iostream>
 	"clientePreferencial.h"
 
-1655581182 d:\users\nicolaspl_\desktop\restaurante\clientepreferencial.h
+1655585934 d:\users\nicolaspl_\desktop\restaurante\clientepreferencial.h
 	<iostream>
 	"Cliente.h"
 

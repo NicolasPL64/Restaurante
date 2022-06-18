@@ -2,10 +2,10 @@
 using namespace std;
 #ifndef ADMIN_H
 #define ADMIN_H
-#include "Cliente.h"
+#include "clientePreferencial.h"
 
 
-class Admin : public Cliente
+class Admin : public clientePreferencial
 {
     public:
         Admin();

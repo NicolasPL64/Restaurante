@@ -6,6 +6,9 @@
 #include "algorithm"
 #include "ctime"
 #include <windows.h>
+#include "cmath"
+#include "iomanip"
+
 #include "Usuario.h"
 #include "Cliente.h"
 #include "Admin.h"
@@ -162,14 +165,14 @@ void F5_usuarios()
     {
         cout << "Aviso: Error al leer el documento. No existe, se creará un nuevo archivo 'usuarios.csv'"<<endl;
         //Si no existe 'usuarios.csv', se creará un admin automáticamente:
-        usuariosAdmin<<"admin"<<";"<<"admin"<<";"<<"admin"<<";"<<"admin"<<";"<<0<<";"<<boolalpha<<true<<";"<<-1<<";"<<true<<";"<<"admin"<<endl;
+        usuariosAdmin<<"admin"<<";"<<"admin"<<";"<<"admin"<<";"<<"admin"<<";"<<0<<";"<<boolalpha<<true<<";"<<-1<<";"<<true<<";"<<"admin"<<";"<<true<<endl;
         usuariosAdmin.close();
     }
     else
     {
         Admin obj;
-        string registro, user, pass, nom, ape, cc, activoString, puntos, adminString, direccion;
-        bool activo, admin, existeAdmin = false;
+        string registro, user, pass, nom, ape, cc, activoString, puntos, adminString, direccion, clientePrefString;
+        bool activo, admin, clientePref, existeAdmin = false;
         while(getline(usuarios, registro))
         {
             stringstream token(registro);
@@ -183,6 +186,7 @@ void F5_usuarios()
             getline(token, puntos, ';');
             getline(token, adminString, ';');
             getline(token, direccion, ';');
+            getline(token, clientePrefString, ';');
 
             if (activoString == "true") activo = true; //Conversión de string a bool
             else activo = false;
@@ -190,8 +194,11 @@ void F5_usuarios()
             if (adminString == "true") admin = true; //Conversión de string a bool
             else admin = false;
 
+            if (clientePrefString == "true") clientePref = true; //Conversión de string a bool
+            else clientePref = false;
+
             //Comprueba si ya existe 'admin' o no
-            if (user=="admin" && pass=="admin" && nom=="admin" && ape=="admin" && cc=="0" && activo==true && puntos=="-1" && admin==true && direccion=="admin")
+            if (user=="admin" && pass=="admin" && nom=="admin" && ape=="admin" && cc=="0" && activo==true && puntos=="-1" && admin==true && direccion=="admin" && clientePref==true)
             {
                 existeAdmin = true;
             }
@@ -202,9 +209,10 @@ void F5_usuarios()
             obj.setApellido(ape);
             obj.setCedula(cc);
             obj.setActivo(activo);
-            obj.setPuntos(stol(puntos)); //stol (string to long)
+            obj.setPuntos(stoi(puntos)); //stoi (string to int)
             obj.setAdmin(admin);
             obj.setDireccion(direccion);
+            obj.setClientePref(clientePref);
             vUsers.push_back(obj);
         }
         usuarios.close();
@@ -212,7 +220,7 @@ void F5_usuarios()
         {
             //Crea un usuario 'admin'. Esto se ejecuta cuando no hay usuarios pero el archivo 'usuarios.csv' ya existe.
             ofstream usuariosAdmin("usuarios.csv", ios::app);
-            usuariosAdmin<<"admin"<<";"<<"admin"<<";"<<"admin"<<";"<<"admin"<<";"<<0<<";"<<boolalpha<<true<<";"<<-1<<";"<<true<<";"<<"admin"<<endl;
+            usuariosAdmin<<"admin"<<";"<<"admin"<<";"<<"admin"<<";"<<"admin"<<";"<<0<<";"<<boolalpha<<true<<";"<<-1<<";"<<true<<";"<<"admin"<<";"<<true<<endl;
             usuariosAdmin.close();
         }
     }
@@ -306,9 +314,9 @@ void F5_usuariosArchivo()
         {
             obj = vUsers.at(i);
 
-            //boolalpha fuerza el valor de un bool a true en vez de 1
+            //boolalpha fuerza el valor de un bool a 'true' en vez de '1'
             usuarios<<obj.getUser()<<";"<<obj.getPass()<<";"<<obj.getNombre()<<";"<<obj.getApellido()<<";"<<obj.getCedula()<<";"
-                    <<boolalpha<<obj.getActivo()<<";"<<obj.getPuntos()<<";"<<obj.getAdmin()<<";"<<obj.getDireccion()<<endl;
+                    <<boolalpha<<obj.getActivo()<<";"<<obj.getPuntos()<<";"<<obj.getAdmin()<<";"<<obj.getDireccion()<<";"<<obj.getClientePref()<<endl;
         }
         usuarios.close();
         system("cls");
@@ -537,7 +545,7 @@ void registrarse()
                 if (!usuarios) cout << "Aviso: Error al escribir en documento. No existe, se creará un nuevo archivo 'usuarios.csv'"<<endl;
                 else
                 {
-                    usuarios<<u<<";"<<p<<";"<<nom<<";"<<ape<<";"<<cc<<";"<<boolalpha<<true<<";"<<puntos<<";"<<false<<";"<<dir<<endl; //boolalpha fuerza el valor de un bool a true en vez de 1
+                    usuarios<<u<<";"<<p<<";"<<nom<<";"<<ape<<";"<<cc<<";"<<boolalpha<<true<<";"<<puntos<<";"<<false<<";"<<dir<<";"<<false<<endl; //boolalpha fuerza el valor de un bool a true en vez de 1
                     usuarios.close();
                     cout<<"Usuario registrado con éxito."<<endl<<endl;
                     system("pause");
@@ -731,19 +739,20 @@ void hacer_pedido(Admin obj)
         cin>>orden;
 
         for (int i=0; i<vComidas.size(); i++)
-
         {
             objComida = vComidas.at(i);
             existe = false;
 
             if (orden == objComida.getPosicion())  //Comprueba si existe el menú solicitado
             {
+                //if está desactivado, que salga otro error objComida.getActivo()
                 existe = true;
                 break;
             }
         }
         if (existe == true)  //Si existe, suma el precio del menú al TOTAL y agrega el menú al vector de la clase Cliente
         {
+            //Si variable activado está off entonces tal
             totalCuenta += objComida.getPrecio();
             obj.setOrden(objComida.getNombre());
         }
@@ -770,9 +779,47 @@ void hacer_pedido(Admin obj)
         }
     }
     while(sigue == true);
-    obj.setTotalcuenta(totalCuenta);
     totalPuntos = totalCuenta/1000;
     obj.setPuntos(obj.getPuntos() + totalPuntos);
+
+    //if totalCuenta==0, se salta todo el codigo de abajo, sale al menú
+
+    //usar setw() para acomodar a la derecha los precios si hay tiempo
+    system("cls"); //Comienzo del recibo
+    cout<<"Puntos que acumula: "<<totalPuntos<<endl<<endl;
+    cout<<"Total de la cuenta: "<<totalCuenta<<"$"<<endl;
+
+
+    int puntosRestan = 0, descuentoPesos = totalCuenta;
+
+    if (obj.getClientePref() == true && obj.getPuntos() >= 15) //Si es Cliente Preferencial y tiene 15 puntos o más se le aplica descuento
+    {
+        puntosRestan = (floor(obj.getPuntos() / 15)) * 15;
+        descuentoPesos *= floor(obj.getPuntos() / 15) * 0.05;
+
+        cout<<puntosRestan<<" puntos han sido canjeados para un descuento total de "<<floor(obj.getPuntos() / 15) * 5<<"%"<<endl;
+
+        obj.setPuntos(obj.getPuntos() - puntosRestan); //Resta los puntos
+        totalCuenta -= descuentoPesos; //Resta el descuento
+
+        cout<<"                   -"<<descuentoPesos<<"$"<<endl; //Muestra el descuento en pesos
+    }
+
+    if (obj.getClientePref() == false && obj.getPuntos() >= 50) //Asciende al usuario a Cliente Preferencial en caso de no serlo y poseer 50 puntos o más
+    {
+        obj.setClientePref(true);
+        cout<<"Ha sido ascendido a Cliente Preferencial por haber gastado 50000$ con nosotros. ¡Muchas gracias!"<<endl
+            <<"A partir de la siguiente compra, cada 15 puntos recibirá un descuento del 5%."<<endl<<endl;
+        obj.setPuntos(obj.getPuntos() - 50);
+    }
+
+    cout<<"Domicilio:         +2000$"<<endl;
+    totalCuenta += 2000;
+    cout<<"-------------------------------------"<<endl;
+    cout<<"Total a pagar:     "<<totalCuenta<<"$"<<endl;
+    system("pause");
+    obj.setTotalcuenta(totalCuenta);
+
 
     ofstream pedidos("pedidos.csv", ios::app); //Guardado del nuevo pedido en el archivo "pedidos.csv"
     if (!pedidos) cout << "Aviso: Error al escribir en documento. No existe, se creará un nuevo archivo 'pedidos.csv'"<<endl;
@@ -780,11 +827,8 @@ void hacer_pedido(Admin obj)
     {
         pedidos<<obj.getNumOrden()<<";"<<obj.getOrden()<<";"<<obj.getNombre() + " " + obj.getApellido()<<";"<<obj.getCedula()<<";"<<obj.getDireccion()<<";"<<obj.getTotalcuenta()<<endl;
         pedidos.close();
-        cout<<endl<<"Usuario registrado con éxito."<<endl;
-        cout<<"Total de la cuenta: "<<totalCuenta<<"$"<<endl;
-        cout<<"Puntos que acumula: "<<totalPuntos<<endl;
-        system("pause");
 
+        cout<<"Pedido registrado con éxito."<<endl;
 
         //Verificar que el menú está activo
         //Crear archivo con pedidos, nombre de la persona y total, decir precios totales, domicilios y descuentos preferencial

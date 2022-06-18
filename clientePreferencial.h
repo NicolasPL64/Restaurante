@@ -8,23 +8,26 @@ using namespace std;
 class clientePreferencial: public Cliente
 {
     public:
-        bool cliente;
         clientePreferencial();
         virtual ~clientePreferencial();
+
+        ///Atributos
+        bool clientePref;
+        int puntos;
+
+        ///Métodos
         //setter
         void setTotalcuenta(long);
-        void setCliente(bool);
-        void setPuntos(long);
+        void setClientePref(bool);
+        void setPuntos(int);
 
         //getter
-        long getPuntos();
-        bool getCliente();
+        bool getClientePref();
+        int getPuntos();
 
     protected:
 
     private:
-       long puntos;
-
 };
 
 #endif // CLIENTEPREFERENCIAL_H

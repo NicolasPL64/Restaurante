@@ -13,7 +13,6 @@ class Usuario
         ///Atributos
         string user, pass, nombre, apellido, cedula;
         bool activo;
-        int puntos;
 
         ///Métodos
         //Setter
@@ -23,7 +22,6 @@ class Usuario
         void setApellido(string);
         void setCedula(string);
         void setActivo(bool);
-        void setPuntos(int);
 
         //Getter
         string getUser();
@@ -32,7 +30,6 @@ class Usuario
         string getApellido();
         string getCedula();
         bool getActivo();
-        int getPuntos();
 
     protected:
 
