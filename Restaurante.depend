@@ -142,48 +142,52 @@
 1655257196 c:\users\slayer2024\desktop\restaurante\membresia.h
 	"DefinicionCliente.h"
 
-1655402861 source:c:\users\slayer2024\desktop\restaurante\cliente.cpp
+1655514173 source:c:\users\slayer2024\desktop\restaurante\cliente.cpp
 	<iostream>
 	"Cliente.h"
 
-1655402861 c:\users\slayer2024\desktop\restaurante\cliente.h
+1655517146 c:\users\slayer2024\desktop\restaurante\cliente.h
 	<iostream>
 	"Usuario.h"
+	"vector"
 
-1655402861 c:\users\slayer2024\desktop\restaurante\usuario.h
+1655574163 c:\users\slayer2024\desktop\restaurante\usuario.h
 	<iostream>
 
-1655394846 source:c:\users\slayer2024\desktop\restaurante\comidas.cpp
+1655505320 source:c:\users\slayer2024\desktop\restaurante\comidas.cpp
 	<iostream>
 	"Comidas.h"
 
-1655394846 c:\users\slayer2024\desktop\restaurante\comidas.h
+1655505320 c:\users\slayer2024\desktop\restaurante\comidas.h
 	<iostream>
 	"vector"
 
-1655402861 source:c:\users\slayer2024\desktop\restaurante\usuario.cpp
+1655574494 source:c:\users\slayer2024\desktop\restaurante\usuario.cpp
 	<iostream>
 	"Usuario.h"
 
-1655402861 source:c:\users\slayer2024\desktop\restaurante\admin.cpp
+1655505320 source:c:\users\slayer2024\desktop\restaurante\admin.cpp
 	<iostream>
 	"Admin.h"
 
-1655402861 c:\users\slayer2024\desktop\restaurante\admin.h
+1655505320 c:\users\slayer2024\desktop\restaurante\admin.h
 	<iostream>
 	"Cliente.h"
 
-1655434224 source:c:\users\slayer2024\desktop\restaurante\main.cpp
+1655574354 source:c:\users\slayer2024\desktop\restaurante\main.cpp
 	<iostream>
 	<vector>
 	<conio.h>
 	"fstream"
 	"sstream"
 	"algorithm"
+	"ctime"
 	"Usuario.h"
 	"Cliente.h"
 	"Admin.h"
 	"Comidas.h"
+	"Pedidos.h"
+	"clientePreferencial.h"
 
 1655502620 source:d:\users\nicolaspl_\desktop\restaurante\pedidos.cpp
 	<iostream>
@@ -191,4 +195,19 @@
 
 1655502427 d:\users\nicolaspl_\desktop\restaurante\pedidos.h
 	<iostream>
+
+1655505320 c:\users\slayer2024\desktop\restaurante\pedidos.h
+	<iostream>
+
+1655505320 source:c:\users\slayer2024\desktop\restaurante\pedidos.cpp
+	<iostream>
+	"Pedidos.h"
+
+1655518402 source:c:\users\slayer2024\desktop\restaurante\clientepreferencial.cpp
+	<iostream>
+	"clientePreferencial.h"
+
+1655522816 c:\users\slayer2024\desktop\restaurante\clientepreferencial.h
+	<iostream>
+	"Cliente.h"
 

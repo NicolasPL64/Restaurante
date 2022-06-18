@@ -12,13 +12,13 @@ class Cliente : public Usuario
         virtual ~Cliente();
 
         ///Atributos
-        long puntos, total;
+        long total;
         vector <string> vPedidosClase;
         string orden, direccion, numOrden;
 
         ///Métodos
         //Setter
-        void setPuntos(long);
+       // void setPuntos(long);
         void setOrden(string);
         void setDireccion(string);
 
@@ -26,7 +26,7 @@ class Cliente : public Usuario
         virtual void setTotalcuenta(long); //Polimorfismo
 
         //Getter
-        long getPuntos();
+        //long getPuntos();
         string getOrden();
         string getDireccion();
         long getTotalcuenta();

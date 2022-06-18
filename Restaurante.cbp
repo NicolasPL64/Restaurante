@@ -40,15 +40,13 @@
 		<Unit filename="Cliente.h" />
 		<Unit filename="Comidas.cpp" />
 		<Unit filename="Comidas.h" />
-		<Unit filename="DefinicionCliente.cpp" />
-		<Unit filename="DefinicionCliente.h" />
 		<Unit filename="Pedidos.cpp" />
 		<Unit filename="Pedidos.h" />
 		<Unit filename="Usuario.cpp" />
 		<Unit filename="Usuario.h" />
+		<Unit filename="clientePreferencial.cpp" />
+		<Unit filename="clientePreferencial.h" />
 		<Unit filename="main.cpp" />
-		<Unit filename="membresia.cpp" />
-		<Unit filename="membresia.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>

@@ -4,7 +4,7 @@ using namespace std;
 
 Cliente::Cliente()
 {
-    puntos = total = 0;
+    total = 0;
     direccion = numOrden = "-";
     orden = "";
     vPedidosClase.clear();
@@ -16,10 +16,10 @@ Cliente::~Cliente()
 }
 
 //Setter
-void Cliente::setPuntos(long _puntos)
+/*void Cliente::setPuntos(long _puntos)
 {
     puntos = _puntos;
-}
+}*/
 
 void Cliente::setTotalcuenta(long _total)
 {
@@ -42,11 +42,11 @@ void Cliente::setNumOrden(string _numOrden)
 }
 
 //Getters
-long Cliente::getPuntos()
+/*long Cliente::getPuntos()
 {
     return puntos;
 }
-
+*/
 string Cliente::getOrden() //Condensa todos los pedidos del vector en un string
 {
     for (int i=0; i < vPedidosClase.size(); i++)

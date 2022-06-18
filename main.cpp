@@ -11,6 +11,7 @@
 #include "Admin.h"
 #include "Comidas.h"
 #include "Pedidos.h"
+#include "clientePreferencial.h"
 
 
 using namespace std;
@@ -605,6 +606,8 @@ void hacer_pedido(Admin _user)
 
     F5_pedidos();
     Comidas objComida;
+    Usuario objPuntos;
+   // clientePreferencial objPuntos;
 
     int orden;
     char numOrden[10];
@@ -627,6 +630,7 @@ void hacer_pedido(Admin _user)
         cin>>orden;
 
         for (int i=0; i<vComidas.size(); i++)
+
         {
             objComida = vComidas.at(i);
             existe = false;
@@ -641,6 +645,9 @@ void hacer_pedido(Admin _user)
         {
             totalCuenta += objComida.getPrecio();
             obj.setOrden(objComida.getNombre());
+            obj.setPuntos(totalCuenta/1000);
+
+
         }
         else cout<<"El menú solicitado no existe."<<endl;
 
@@ -673,13 +680,17 @@ void hacer_pedido(Admin _user)
     {
         pedidos<<obj.getNumOrden()<<";"<<obj.getOrden()<<";"<<obj.getNombre() + " " + obj.getApellido()<<";"<<obj.getCedula()<<";"<<obj.getDireccion()<<";"<<obj.getTotalcuenta()<<endl;
         pedidos.close();
-        cout<<endl<<"Usuario registrado con éxito."<<endl<<endl;
+        cout<<endl<<"Usuario registrado con éxito."<<endl;
+        cout<<"Total de la cuenta: "<<totalCuenta<<endl;
+        cout<<"Puntos: "<<totalCuenta/1000<<endl;
         system("pause");
+
 
         //Verificar que el menú está activo
         //Crear archivo con pedidos, nombre de la persona y total, decir precios totales, domicilios y descuentos preferencial
     }
     F5_pedidos();
+    F5_usuariosArchivo();
 }
 
 
@@ -981,6 +992,7 @@ void modificarUsuarioPROPIO(Admin _user)
     char opc = 0;
     bool mod = false;
 
+
     int i;
     Admin obj;
     for (i=0; i<vUsers.size(); i++) //Busca en qué posición se encuentra el usuario en el vector vUsers
@@ -998,7 +1010,8 @@ void modificarUsuarioPROPIO(Admin _user)
         cout<<"2. Apellido: "<<obj.getApellido()<<endl;
         cout<<"3. Dirección: "<<obj.getDireccion()<<endl;
         cout<<"4. Admin: "<<boolalpha<<obj.getAdmin()<<endl;
-        cout<<"5. Estado: "<<boolalpha<<obj.getActivo()<<endl;
+        cout<<"5. Puntos: "<<obj.getPuntos()<<endl;
+        cout<<"6. Estado: "<<boolalpha<<obj.getActivo()<<endl;
         cout<<"0. Salir"<<endl<<endl;
 
         cout<<"Seleccione el dato a modificar: ";
@@ -1082,6 +1095,28 @@ void listaUsuarios ()
     }
     system("pause");
 }
+
+
+/*void canPuntos(){
+    F5_pedidos();
+    clientePreferencial objPuntos;
+    //Comidas objComidas;
+
+    int i;
+    bool clienteP = false;
+    int cont;
+    for(i=0; i<.size(); i++){
+
+        objComidas = vPedidos.at(i);
+        clienteP = true;
+
+        if(clienteP == true){
+            cont += (objPuntos.getTotalcuenta())/1000;
+            cout<<"El cliente tiene "<<cont<<" puntos"<<endl;
+        }else cout<<"El cliente no es preferencial"<<endl;
+    }
+
+}*/
 
 
 ///Main

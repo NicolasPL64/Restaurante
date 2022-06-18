@@ -8,6 +8,7 @@ Usuario::Usuario()
 {
     user = pass = nombre = apellido = cedula = "-";
     activo = true;
+    puntos = 0;
 }
 
 Usuario::~Usuario()
@@ -42,6 +43,10 @@ void Usuario::setCedula(string _cedula)
     cedula = _cedula;
 }
 
+void Usuario::setPuntos(int _puntos){
+    puntos = _puntos;
+}
+
 void Usuario::setActivo(bool _activo)
 {
     activo = _activo;
@@ -72,6 +77,10 @@ string Usuario::getApellido()
 string Usuario::getCedula()
 {
     return cedula;
+}
+
+int Usuario::getPuntos(){
+    return puntos;
 }
 
 bool Usuario::getActivo()
