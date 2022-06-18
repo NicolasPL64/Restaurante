@@ -1,7 +1,7 @@
-1;Arroz china;arroz, chino;10000
-2;Tilapia frita;tilapia, tomate, cebolla;12000
-3;Gusano cosmico;tajada madura, arroz;4000
-4;Papas fritas;papas, salsa de tomate;3000
-5;Pruebita;carne, gorda, cebo;3000
-6;Potaxio;arro blanco, potac;2000
-7;Antojito de medianoche;heces humanas, pescado, pi§a;700;true
+1;Arroz chimbo;arroz, chimbo;3000;true
+2;Tilapia frita;tilapia, tomate, cebolla;12000;false
+3;Gusano cosmico;tajada madura, arroz;4000;false
+4;Papas fritas;papas, salsa de tomate;3000;false
+5;Pruebita;carne, gorda, cebo;3000;false
+9;Potaxio;arro blanco, potac;2000;false
+10;Antojito de medianoche;heces humanas, pescado, pi√±a;700;true
