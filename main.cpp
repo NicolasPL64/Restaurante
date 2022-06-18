@@ -44,20 +44,20 @@ void acercaDe();
 void gotoxy();
 
 //Menú usuario normal
-void menuUser(Admin _user);
-void hacer_pedido(Admin _user);
+void menuUser(Admin obj);
+void hacer_pedido(Admin obj);
 void modificarUsuarioPROPIO(Admin _user);
 
 //Menú admin
-void menuAdmin(Admin _user);
-void submenu_usuarios(Admin _user);
+void menuAdmin(Admin obj);
+void submenu_usuarios(Admin obj);
 void listaUsuarios();
 void listaxCedula();
 void modificarUsuarioADMIN();
 
 //Comidas
-void submenu_comidas(Admin _user);
-void imprimir_menu();
+void submenu_comidas(Admin obj);
+void imprimir_menu(bool _admin);
 void agregarComida();
 void modificarComida();
 
@@ -71,13 +71,14 @@ void menu();
 
 ///    ---- Métodos ----    ////
 //Misc
-void gotoxy(int x,int y){
-     HANDLE hcon;
-      hcon = GetStdHandle(STD_OUTPUT_HANDLE);
-      COORD dwPos;
-      dwPos.X = x;
-      dwPos.Y= y;
-      SetConsoleCursorPosition(hcon,dwPos);
+void gotoxy(int x,int y)
+{
+    HANDLE hcon;
+    hcon = GetStdHandle(STD_OUTPUT_HANDLE);
+    COORD dwPos;
+    dwPos.X = x;
+    dwPos.Y= y;
+    SetConsoleCursorPosition(hcon,dwPos);
 }
 /* acercaDe()
 {
@@ -95,36 +96,58 @@ void gotoxy(int x,int y){
         <<"Sort con vectores tipo clase https://www.walletfox.com/course/sortvectorofcustomobjects.php"<<endl<<endl;
 }
 */
-void acercaDe(){
+void acercaDe()
+{
 
-      system("cls");
-      HANDLE hconsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    system("cls");
 
-gotoxy(18,1);cout<<"        **  "<<endl;
-gotoxy(18,2);cout<<"     *****                       * "<<endl;
-gotoxy(18,3);cout<<"    *  ***                      ** "<<endl;
-gotoxy(18,4);cout<<"       ***                      ** "<<endl;
-gotoxy(18,5);cout<<"      *  **    **   ****      ******** ****   ***  ****              **** "<<endl;
-gotoxy(18,6);cout<<"      *  **     **    ***    ******** * ***  * **** **** * ***      * **** * "<<endl;
-gotoxy(18,7);cout<<"     *    **    **     ****     **   *   ****   **   **** * ***    **  ****  "<<endl;
-gotoxy(18,8);cout<<"     *    **    **      **      **  **    **    **       *   ***  ****   "<<endl;
-gotoxy(18,9);cout<<"    *      **   **      **      **  **    **    **      **    ***   ***  "<<endl;
-gotoxy(18,10);cout<<"    *********   **      **      **  **    **    **      ********      ***  "<<endl;
-gotoxy(18,11);cout<<"   *        **  **      **      **  **    **    **      *******         *** "<<endl;
-gotoxy(18,12);cout<<"   *        **  **      **      **  **    **    **      **         ****  **  "<<endl;
-gotoxy(18,13);cout<<"  *****      **  ******* **     **   ******     ***     ****    * * **** * "<<endl;
-gotoxy(18,14);cout<<" *   ****    ** * *****   **     **   ****       ***     *******     ****  "<<endl;
-gotoxy(18,15);cout<<"*     **      **                                          *****      "<<endl;
-gotoxy(18,16);cout<<"*  "<<endl;
-gotoxy(18,17);cout<<" **  "<<endl<<endl;
+    gotoxy(18,1);
+    cout<<"        **  "<<endl;
+    gotoxy(18,2);
+    cout<<"     *****                       * "<<endl;
+    gotoxy(18,3);
+    cout<<"    *  ***                      ** "<<endl;
+    gotoxy(18,4);
+    cout<<"       ***                      ** "<<endl;
+    gotoxy(18,5);
+    cout<<"      *  **    **   ****      ******** ****   ***  ****              **** "<<endl;
+    gotoxy(18,6);
+    cout<<"      *  **     **    ***    ******** * ***  * **** **** * ***      * **** * "<<endl;
+    gotoxy(18,7);
+    cout<<"     *    **    **     ****     **   *   ****   **   **** * ***    **  ****  "<<endl;
+    gotoxy(18,8);
+    cout<<"     *    **    **      **      **  **    **    **       *   ***  ****   "<<endl;
+    gotoxy(18,9);
+    cout<<"    *      **   **      **      **  **    **    **      **    ***   ***  "<<endl;
+    gotoxy(18,10);
+    cout<<"    *********   **      **      **  **    **    **      ********      ***  "<<endl;
+    gotoxy(18,11);
+    cout<<"   *        **  **      **      **  **    **    **      *******         *** "<<endl;
+    gotoxy(18,12);
+    cout<<"   *        **  **      **      **  **    **    **      **         ****  **  "<<endl;
+    gotoxy(18,13);
+    cout<<"  *****      **  ******* **     **   ******     ***     ****    * * **** * "<<endl;
+    gotoxy(18,14);
+    cout<<" *   ****    ** * *****   **     **   ****       ***     *******     ****  "<<endl;
+    gotoxy(18,15);
+    cout<<"*     **      **                                          *****      "<<endl;
+    gotoxy(18,16);
+    cout<<"*  "<<endl;
+    gotoxy(18,17);
+    cout<<" **  "<<endl<<endl;
 
 
 
-    gotoxy(50,20); cout<<"Autores:"<<endl;
-    gotoxy(40,21); cout<<"Kevin Stiven Gil Salcedo - 202159863\n";
-    gotoxy(40,22); cout<<"Nicolas Prado Leon - 202160073\n";
-    gotoxy(40,23); cout<<"Kevin Alexander Marín Henao - 202160364\n";
-    gotoxy(40,24); cout<<"Miguel Angel Rueda Colonia - 202159896\n";
+    gotoxy(50,20);
+    cout<<"Autores:"<<endl;
+    gotoxy(40,21);
+    cout<<"Kevin Stiven Gil Salcedo - 202159863\n";
+    gotoxy(40,22);
+    cout<<"Nicolas Prado Leon - 202160073\n";
+    gotoxy(40,23);
+    cout<<"Kevin Alexander Marín Henao - 202160364\n";
+    gotoxy(40,24);
+    cout<<"Miguel Angel Rueda Colonia - 202159896\n";
 
 
 }
@@ -351,18 +374,32 @@ void agregarComida()
     }
 }
 
-void imprimir_menu()
+void imprimir_menu(bool _admin)
 {
     F5_comidas();
     Comidas obj;
     for (int i=0; i<vComidas.size(); i++)
     {
         obj = vComidas.at(i);
-
-        cout<<obj.getPosicion()<<". "<<obj.getNombre()<<endl
-            <<"Ingredientes: "<<obj.getIngrediente()<<endl
-            <<"Precio: "<<obj.getPrecio()<<"$"<<endl
-            <<"----------------------------"<<endl<<endl;
+        if (!_admin) //Comprueba si es admin o no para saber si imprimir todas las comidas
+        {
+            if (obj.getActivo() == true)
+            {
+                cout<<obj.getPosicion()<<". "<<obj.getNombre()<<endl
+                    <<"Ingredientes: "<<obj.getIngrediente()<<endl
+                    <<"Precio: "<<obj.getPrecio()<<"$"<<endl
+                    <<"----------------------------"<<endl<<endl;
+            }
+        }
+        else
+        {
+            cout<<obj.getPosicion()<<". "<<obj.getNombre()<<endl
+                <<"Ingredientes: "<<obj.getIngrediente()<<endl
+                <<"Precio: "<<obj.getPrecio()<<"$"<<endl;
+                if (obj.getActivo() == true) cout<<">> Menú activo"<<endl;
+                else cout<<">> Menú inactivo"<<endl;
+            cout<<"----------------------------"<<endl<<endl;
+        }
     }
 }
 
@@ -624,11 +661,8 @@ void loguearse()
 
 
 //Menú usuario normal
-void menuUser(Admin _user)
+void menuUser(Admin obj)
 {
-    Admin obj;
-    obj = _user;
-
     char opc;
     do
     {
@@ -645,7 +679,7 @@ void menuUser(Admin _user)
         {
         case '1':
             system("cls");
-            imprimir_menu();
+            imprimir_menu(false);
             system("pause");
             break;
         case '2':
@@ -670,11 +704,8 @@ void menuUser(Admin _user)
     while(opc != '0');
 }
 
-void hacer_pedido(Admin _user)
+void hacer_pedido(Admin obj)
 {
-    Admin obj;
-    obj = _user;
-
     F5_pedidos();
     Comidas objComida;
 
@@ -684,7 +715,7 @@ void hacer_pedido(Admin _user)
     bool existe, sigue = true;
     long totalCuenta = 0;
 
-    imprimir_menu();
+    imprimir_menu(false);
     do
     {
         time_t fecha; //Variable tipo time_t
@@ -756,11 +787,8 @@ void hacer_pedido(Admin _user)
 
 
 //Menú admin
-void menuAdmin(Admin _user)
+void menuAdmin(Admin obj)
 {
-    Admin obj;
-    obj = _user;
-
     char opc;
     do
     {
@@ -796,11 +824,8 @@ void menuAdmin(Admin _user)
     while(opc != '0');
 }
 
-void submenu_usuarios(Admin _user)
+void submenu_usuarios(Admin obj)
 {
-    Admin obj;
-    obj = _user;
-
     char opc;
     do
     {
@@ -841,18 +866,16 @@ void submenu_usuarios(Admin _user)
     while(opc != '0');
 }
 
-void submenu_comidas(Admin _user)
+void submenu_comidas(Admin obj)
 {
-    Admin obj;
-    obj = _user;
-
     char opc;
     do
     {
         system("cls");
         cout<<"¡Bienvenido, "<<obj.getUser()<<"! ¿Qué desea hacer?"<<endl<<endl
             <<"1. Agregar menú"<<endl
-            <<"2. Modificar un menú"<<endl
+            <<"2. Ver menú"<<endl
+            <<"3. Modificar un menú"<<endl
             <<"0. Salir"<<endl<<endl
             <<"Seleccione una opción: ";
         opc = getch();
@@ -865,7 +888,12 @@ void submenu_comidas(Admin _user)
             break;
         case '2':
             system("cls");
-            imprimir_menu(); //Si es admin imprime también los inactivos SOBRECARGA AÑADIR
+            imprimir_menu(true);
+            system("pause");
+            break;
+        case '3':
+            system("cls");
+            imprimir_menu(true);
             modificarComida();
             break;
         case '0':
@@ -1282,8 +1310,9 @@ int main()
 {
     setlocale(LC_ALL, ""); //Para soportar caracteres especiales
 
-    //modificarComida();
+    HANDLE hconsole = GetStdHandle(STD_OUTPUT_HANDLE); //Para cambiar el color del texto
+    SetConsoleTextAttribute(hconsole,15); //Para cambiar el color del texto
+
     menuBienvenida();
-    //modificarUsuarioADMIN();
     return 0;
 }

@@ -59,7 +59,7 @@
 1655484620 d:\users\nicolaspl_\desktop\restaurante\usuario.h
 	<iostream>
 
-1655519216 source:d:\users\nicolaspl_\desktop\restaurante\main.cpp
+1655575376 source:d:\users\nicolaspl_\desktop\restaurante\main.cpp
 	<iostream>
 	<vector>
 	<conio.h>
@@ -67,6 +67,7 @@
 	"sstream"
 	"algorithm"
 	"ctime"
+	<windows.h>
 	"Usuario.h"
 	"Cliente.h"
 	"Admin.h"
