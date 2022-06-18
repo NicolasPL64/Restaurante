@@ -312,7 +312,6 @@ void F5_usuariosArchivo()
         }
         usuarios.close();
         system("cls");
-        cout<<"Usuario modificado con éxito."<<endl<<endl;
     }
 }
 
@@ -397,8 +396,8 @@ void imprimir_menu(bool _admin)
             cout<<obj.getPosicion()<<". "<<obj.getNombre()<<endl
                 <<"Ingredientes: "<<obj.getIngrediente()<<endl
                 <<"Precio: "<<obj.getPrecio()<<"$"<<endl;
-                if (obj.getActivo() == true) cout<<">> Menú activo"<<endl;
-                else cout<<">> Menú inactivo"<<endl;
+            if (obj.getActivo() == true) cout<<">> Menú activo"<<endl;
+            else cout<<">> Menú inactivo"<<endl;
             cout<<"----------------------------"<<endl<<endl;
         }
     }
@@ -514,6 +513,7 @@ void registrarse()
 
             cout<<"Ingrese el número de identificación (sin puntos): ";
             cin>>cc;
+            fflush(stdin);
 
             if (vUsers.size() != 0) //Comprueba si existe mínimo un usuario
             {
@@ -709,10 +709,8 @@ void hacer_pedido(Admin obj)
 {
     F5_pedidos();
     Comidas objComida;
-    Usuario objPuntos;
-   // clientePreferencial objPuntos;
 
-    int orden;
+    int orden, totalPuntos;
     char numOrden[10];
     char opc;
     bool existe, sigue = true;
@@ -748,9 +746,6 @@ void hacer_pedido(Admin obj)
         {
             totalCuenta += objComida.getPrecio();
             obj.setOrden(objComida.getNombre());
-            obj.setPuntos(totalCuenta/1000);
-
-
         }
         else cout<<"El menú solicitado no existe."<<endl;
 
@@ -776,6 +771,8 @@ void hacer_pedido(Admin obj)
     }
     while(sigue == true);
     obj.setTotalcuenta(totalCuenta);
+    totalPuntos = totalCuenta/1000;
+    obj.setPuntos(obj.getPuntos() + totalPuntos);
 
     ofstream pedidos("pedidos.csv", ios::app); //Guardado del nuevo pedido en el archivo "pedidos.csv"
     if (!pedidos) cout << "Aviso: Error al escribir en documento. No existe, se creará un nuevo archivo 'pedidos.csv'"<<endl;
@@ -784,16 +781,28 @@ void hacer_pedido(Admin obj)
         pedidos<<obj.getNumOrden()<<";"<<obj.getOrden()<<";"<<obj.getNombre() + " " + obj.getApellido()<<";"<<obj.getCedula()<<";"<<obj.getDireccion()<<";"<<obj.getTotalcuenta()<<endl;
         pedidos.close();
         cout<<endl<<"Usuario registrado con éxito."<<endl;
-        cout<<"Total de la cuenta: "<<totalCuenta<<endl;
-        cout<<"Puntos: "<<totalCuenta/1000<<endl;
+        cout<<"Total de la cuenta: "<<totalCuenta<<"$"<<endl;
+        cout<<"Puntos que acumula: "<<totalPuntos<<endl;
         system("pause");
 
 
         //Verificar que el menú está activo
         //Crear archivo con pedidos, nombre de la persona y total, decir precios totales, domicilios y descuentos preferencial
     }
-    F5_pedidos();
+
+    for (int i=0; i<vUsers.size(); i++) //Busca en qué posición del vector está
+    {
+        Admin objComprobacion;
+        objComprobacion = vUsers.at(i);
+
+        if (obj.getCedula() == objComprobacion.getCedula()) //Guarda el obj en vUsers
+        {
+            vUsers.at(i) = obj;
+            break;
+        }
+    }
     F5_usuariosArchivo();
+    F5_pedidos();
 }
 
 
@@ -1205,6 +1214,7 @@ void modificarUsuarioADMIN()
 
     if (mod == true) F5_usuariosArchivo();
     system("pause");
+    cout<<"Usuario modificado con éxito."<<endl<<endl;
 }
 
 void modificarUsuarioPROPIO(Admin _user)
@@ -1289,6 +1299,7 @@ void modificarUsuarioPROPIO(Admin _user)
 
     if (mod == true) F5_usuariosArchivo();
     system("pause");
+    cout<<"Usuario modificado con éxito."<<endl<<endl;
 }
 
 
