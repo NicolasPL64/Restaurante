@@ -5,7 +5,7 @@
 #include "sstream"
 #include "algorithm"
 #include "ctime"
-
+#include <windows.h>
 #include "Usuario.h"
 #include "Cliente.h"
 #include "Admin.h"
@@ -39,6 +39,7 @@ void menuBienvenida();
 void registrarse();
 void loguearse();
 void acercaDe();
+void gotoxy();
 
 //Menú usuario normal
 void menuUser(Admin _user);
@@ -68,7 +69,15 @@ void menu();
 
 ///    ---- Métodos ----    ////
 //Misc
-void acercaDe()
+void gotoxy(int x,int y){
+     HANDLE hcon;
+      hcon = GetStdHandle(STD_OUTPUT_HANDLE);
+      COORD dwPos;
+      dwPos.X = x;
+      dwPos.Y= y;
+      SetConsoleCursorPosition(hcon,dwPos);
+}
+/* acercaDe()
 {
 
     cout<<"------ Trabajo final del segundo semestre de IPOO ------"<<endl
@@ -81,6 +90,42 @@ void acercaDe()
         <<"Código del sistema de registro y logueo adaptado de https://bit.ly/2Plcea8"<<endl
         <<"Separar strings por caracter https://java2blog.com/cpp-split-string-by-comma/"<<endl
         <<"Código para sacar fecha usando strftime() adaptado de https://bit.ly/3tC0cdq"<<endl<<endl;
+}
+*/
+void acercaDe(){
+
+      system("cls");
+      HANDLE hconsole = GetStdHandle(STD_OUTPUT_HANDLE);
+      SetConsoleTextAttribute(hconsole,10);
+
+
+gotoxy(18,1);cout<<"        **  "<<endl;
+gotoxy(18,2);cout<<"     *****                       * "<<endl;
+gotoxy(18,3);cout<<"    *  ***                      ** "<<endl;
+gotoxy(18,4);cout<<"       ***                      ** "<<endl;
+gotoxy(18,5);cout<<"      *  **    **   ****      ******** ****   ***  ****              **** "<<endl;
+gotoxy(18,6);cout<<"      *  **     **    ***    ******** * ***  * **** **** * ***      * **** * "<<endl;
+gotoxy(18,7);cout<<"     *    **    **     ****     **   *   ****   **   **** * ***    **  ****  "<<endl;
+gotoxy(18,8);cout<<"     *    **    **      **      **  **    **    **       *   ***  ****   "<<endl;
+gotoxy(18,9);cout<<"    *      **   **      **      **  **    **    **      **    ***   ***  "<<endl;
+gotoxy(18,10);cout<<"    *********   **      **      **  **    **    **      ********      ***  "<<endl;
+gotoxy(18,11);cout<<"   *        **  **      **      **  **    **    **      *******         *** "<<endl;
+gotoxy(18,12);cout<<"   *        **  **      **      **  **    **    **      **         ****  **  "<<endl;
+gotoxy(18,13);cout<<"  *****      **  ******* **     **   ******     ***     ****    * * **** * "<<endl;
+gotoxy(18,14);cout<<" *   ****    ** * *****   **     **   ****       ***     *******     ****  "<<endl;
+gotoxy(18,15);cout<<"*     **      **                                          *****      "<<endl;
+gotoxy(18,16);cout<<"*  "<<endl;
+gotoxy(18,17);cout<<" **  "<<endl<<endl;
+
+
+
+    gotoxy(50,20); cout<<"Autores:"<<endl;
+    gotoxy(40,21); cout<<"Kevin Stiven Gil Salcedo - 202159863\n";
+    gotoxy(40,22); cout<<"Nicolas Prado Leon - 202160073\n";
+    gotoxy(40,23); cout<<"Kevin Alexander Marín Henao - 202160364\n";
+    gotoxy(40,24); cout<<"Miguel Angel Rueda Colonia - 202159896\n";
+
+
 }
 
 void F5_usuarios()
@@ -330,7 +375,7 @@ void menuBienvenida()
             break;
         case '0':
             system("cls");
-            cout<<"¡Hasta pronto!"<<endl;
+            cout<<"Gracias por usar la aplicación."<<endl;
             break;
         default:
             system("cls");
