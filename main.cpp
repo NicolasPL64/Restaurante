@@ -64,7 +64,7 @@ void modificar_pedidos();
 void menuAdmin(Admin obj);
 void submenu_usuarios(Admin obj);
 void submenu_comidas(Admin obj);
-void listaxCedula(Admin obj);
+void buscarxCedula(Admin obj);
 void modificarUsuarioADMIN();
 
 //Comidas
@@ -311,7 +311,6 @@ void F5_pedidosArchivo()
         }
         pedidos.close();
         system("cls");
-        cout<<"Pedido modificado con éxito."<<endl<<endl;
     }
 }
 
@@ -346,8 +345,6 @@ void menuBienvenida()
         case '3':
             system("cls");
             acercaDe();
-            system("pause");
-            system("cls");
             break;
         case '0':
             system("cls");
@@ -627,7 +624,7 @@ void acercaDe()
     gotoxy(36,23);
     cout<<"Kevin Alexander Marín Henao - 202160364\n";
     gotoxy(36,24);
-    cout<<"Miguel Angel Rueda Colonia - 202159896\n";
+    cout<<"Miguel Angel Rueda Colonia - 202159896\n"<<endl<<endl<<endl<<endl;
 
     system("pause");
     system("cls");
@@ -638,6 +635,7 @@ void acercaDe()
         <<"Sort con vectores tipo clase https://www.walletfox.com/course/sortvectorofcustomobjects.php"<<endl<<endl<<endl;
 
     system("pause");
+    system("cls");
 }
 
 
@@ -648,6 +646,16 @@ void menuUser(Admin obj)
     char opc;
     do
     {
+        for (int i=0; i<vUsers.size(); i++) //Actualiza el obj con nueva información
+        {
+            Admin objUpdate;
+            objUpdate = vUsers.at(i);
+            if (objUpdate.getCedula() == obj.getCedula())
+            {
+                obj = vUsers.at(i);
+                break;
+            }
+        }
         system("cls");
         cout<<"¡Bienvenido, "<<obj.getUser()<<"! ¿Qué desea hacer?"<<endl<<endl
             <<"1. Ver el menú"<<endl
@@ -658,6 +666,7 @@ void menuUser(Admin obj)
             <<"0. Cerrar sesión"<<endl<<endl
             <<"Seleccione una opción: ";
         opc = getch();
+
 
         switch(opc)
         {
@@ -680,7 +689,7 @@ void menuUser(Admin obj)
             break;
         case '5':
             system("cls");
-            listaxCedula(obj);
+            buscarxCedula(obj);
             break;
         case '0':
             system("cls");
@@ -705,7 +714,7 @@ void hacer_pedido(Admin obj)
     int orden, totalPuntos;
     char numOrden[10];
     char opc;
-    bool existe, sigue = true;
+    bool existe, activo, sigue = true;
     long totalCuenta = 0;
 
     imprimir_menu(false);
@@ -725,26 +734,26 @@ void hacer_pedido(Admin obj)
         for (int i=0; i<vComidas.size(); i++)
         {
             objComida = vComidas.at(i);
-            existe = false;
+            existe = activo = false;
 
             if (orden == objComida.getPosicion())  //Comprueba si existe el menú solicitado
             {
-                //if está desactivado, que salga otro error objComida.getActivo()
                 if(objComida.getActivo() == false)
                 {
-                    cout<<"El menu seleccionado esta desactivado. Seleccione otro."<<endl<<endl;
-                    system("pause");
+                    existe = true;
+                    activo = false;
+                    cout<<"El menu seleccionado está desactivado. Seleccione otro."<<endl<<endl;
+                    break;
                 }
                 else
                 {
-                    existe = true;
+                    existe = activo = true;
                     break;
                 }
             }
         }
         if (existe == true)  //Si existe, suma el precio del menú al TOTAL y agrega el menú al vector de la clase Cliente
         {
-            //Si variable activado está off entonces tal
             totalCuenta += objComida.getPrecio();
             obj.setOrden(objComida.getNombre());
         }
@@ -780,7 +789,8 @@ void hacer_pedido(Admin obj)
     else
     {
         system("cls"); //Comienzo del recibo
-        cout<<"Puntos que suma: "<<totalPuntos<<endl<<endl;
+        cout<<"Puntos que suma: "<<totalPuntos<<endl
+            <<"Puntos que acumula: "<<obj.getPuntos()<<endl<<endl;
         cout<<"Total de la cuenta: "<<totalCuenta<<"$"<<endl;
 
         bool descuento = false;
@@ -841,6 +851,7 @@ void hacer_pedido(Admin obj)
             if (obj.getCedula() == objComprobacion.getCedula()) //Guarda el obj en vUsers
             {
                 vUsers.at(i) = obj;
+                system("pause");
                 break;
             }
         }
@@ -884,7 +895,8 @@ void comida_x_ingrediente()
         }
     }
 
-    if (existe == false){
+    if (existe == false)
+    {
         system("cls");
         cout<<"No existe ningún menú con '"<<ingr_buscar<<"'."<<endl<<endl;
     }
@@ -926,7 +938,7 @@ void menuDomiciliario(Admin obj)
             break;
         case '4':
             system("cls");
-            listaxCedula(obj);
+            buscarxCedula(obj);
             break;
         case '0':
             system("cls");
@@ -946,46 +958,57 @@ void imprimir_pedidos()
 {
     F5_pedidos();
     Pedidos obj;
-    for (int i=0; i<vPedidos.size(); i++)
+    if (vPedidos.size() > 0)
     {
-        obj = vPedidos.at(i);
-        cout<<i+1<<". "<<obj.getNumPedido()<<" - "<<obj.getNombreFull()<<endl
-            <<"Pedido: "<<obj.getOrdenes()<<endl
-            <<"Cédula: "<<obj.getCedula()<<endl
-            <<"Dirección: "<<obj.getDireccion()<<endl
-            <<"Debe pagar: "<<obj.getTotal()<<"$"<<endl
-            <<"----------------------------"<<endl<<endl;
+        for (int i=0; i<vPedidos.size(); i++)
+        {
+            obj = vPedidos.at(i);
+            cout<<i+1<<". "<<obj.getNumPedido()<<" - "<<obj.getNombreFull()<<endl
+                <<"Pedido: "<<obj.getOrdenes()<<endl
+                <<"Cédula: "<<obj.getCedula()<<endl
+                <<"Dirección: "<<obj.getDireccion()<<endl
+                <<"Debe pagar: "<<obj.getTotal()<<"$"<<endl
+                <<"----------------------------"<<endl<<endl;
+        }
     }
+    else cout<<"No hay pedidos."<<endl<<endl;
 }
 
 void modificar_pedidos()
 {
     F5_pedidos();
+    F5_pedidosArchivo();
     Pedidos obj;
     int i;
-    for (i=0; i<vPedidos.size(); i++)
-    {
-        obj = vPedidos.at(i);
-        cout<<i+1<<". "<<obj.getNumPedido()<<" - "<<obj.getNombreFull()<<endl
-            <<"Pedido: "<<obj.getOrdenes()<<endl
-            <<"Cédula: "<<obj.getCedula()<<endl
-            <<"Dirección: "<<obj.getDireccion()<<endl
-            <<"Debe pagar: "<<obj.getTotal()<<"$"<<endl
-            <<"----------------------------"<<endl<<endl;
-    }
 
-    bool existe = false, sigue, mod = false;
-    int pos_eliminar;
-    cout<<"Ingrese la posición del pedido a eliminar: ";
-    cin>>pos_eliminar;
-    pos_eliminar -= 1;
-
-    if (pos_eliminar < 0 || pos_eliminar > i) cout<<"Por favor, ingrese una posición válida."<<endl;
-    else
+    if (vPedidos.size() > 0)
     {
-        vPedidos.erase(vPedidos.begin() + pos_eliminar);
-        F5_pedidosArchivo();
+        for (i=0; i<vPedidos.size(); i++)
+        {
+            obj = vPedidos.at(i);
+            cout<<i+1<<". "<<obj.getNumPedido()<<" - "<<obj.getNombreFull()<<endl
+                <<"Pedido: "<<obj.getOrdenes()<<endl
+                <<"Cédula: "<<obj.getCedula()<<endl
+                <<"Dirección: "<<obj.getDireccion()<<endl
+                <<"Debe pagar: "<<obj.getTotal()<<"$"<<endl
+                <<"----------------------------"<<endl<<endl;
+        }
+
+        bool existe = false, sigue, mod = false;
+        int pos_eliminar;
+        cout<<"Ingrese la posición del pedido a eliminar: ";
+        cin>>pos_eliminar;
+        pos_eliminar -= 1;
+
+        if (pos_eliminar < 0 || pos_eliminar > i) cout<<"Por favor, ingrese una posición válida."<<endl;
+        else
+        {
+            vPedidos.erase(vPedidos.begin() + pos_eliminar);
+            F5_pedidosArchivo();
+            cout<<"Pedido modificado con éxito."<<endl<<endl;
+        }
     }
+    else cout<<"No hay pedidos."<<endl<<endl;
 
     system("pause");
 }
@@ -1043,7 +1066,7 @@ void submenu_usuarios(Admin obj)
         system("cls");
         cout<<"¡Bienvenido, "<<obj.getUser()<<"! ¿Qué desea hacer?"<<endl<<endl
             <<"1. Listado general"<<endl
-            <<"2. Listado por cédula"<<endl
+            <<"2. Buscar por cédula"<<endl
             <<"3. Modificar un usuario"<<endl
             <<"0. Salir"<<endl<<endl
             <<"Seleccione una opción: ";
@@ -1057,7 +1080,7 @@ void submenu_usuarios(Admin obj)
             break;
         case '2':
             system("cls");
-            listaxCedula(obj);
+            buscarxCedula(obj);
             break;
         case '3':
             system("cls");
@@ -1121,10 +1144,8 @@ void submenu_comidas(Admin obj)
     while(opc != '0');
 }
 
-void listaxCedula(Admin obj)
+void buscarxCedula(Admin obj)
 {
-    F5_usuarios();
-
     if (obj.getAdmin() == true) //Para saber si el usuario es admin o no
     {
         bool existe = false;
@@ -1134,7 +1155,6 @@ void listaxCedula(Admin obj)
         cout<<endl;
 
         int i;
-        Admin obj;
         for (i=0; i<vUsers.size(); i++) //Busca si existe un usuario con dicha cédula
         {
             obj = vUsers.at(i);
@@ -1576,8 +1596,8 @@ void modificarUsuarioPROPIO(Admin _user)
     if (mod == true)
     {
         F5_usuariosArchivo();
-        system("pause");
         cout<<"Usuario modificado con éxito."<<endl<<endl;
+        system("pause");
     }
 }
 

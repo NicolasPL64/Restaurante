@@ -12,7 +12,6 @@
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
-					<Add option="-g" />
 					<Add directory="./" />
 				</Compiler>
 			</Target>
@@ -27,6 +26,7 @@
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
+					<LinkerExe value="CppCompiler" />
 				</Linker>
 			</Target>
 		</Build>

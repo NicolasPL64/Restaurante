@@ -1,7 +1,13 @@
-1;Arroz chimbo;arroz, chimbo;3000;true
-2;Tilapia frita;tilapia, tomate, cebolla;12000;true
-3;Gusano cosmico;tajada madura, arroz;4000;true
-4;Papas fritas;papas, salsa de tomate;3000;true
-5;Pruebita;carne, gorda, cebo;3000;false
-9;Potaxio;arro blanco, potac;2000;false
-10;Antojito de medianoche;heces humanas, pescado, piña;700;true
+1;Ajiaco;pollo, crema de leche, mazorca, papa, alcaparra, arroz, maduro;9500;true
+2;Bandeja Paisa;frijoles, maduro, arroz, chorizo, aguacate, huevo frito;25000;true
+3;ACPM;arroz, carne, papa, maduro;7500;true
+4;Churrasco;churrasco, papa, ensalada, tajada;21500;true
+5;Cazuela de mariscos;mariscos, pescado, crema de leche, vino blanco;28700;true
+6;Costilla;arroz, patacon, costilla, ensalada;15000;true
+7;Espagueti a la bolognesa;espagueti, carne molida, vino blanco, pasta de tomate, queso parmesano;11600;true
+8;Arroz chino;arroz, camarones, cabano, pollo, raices chinas;9000;false
+9;Jugo de papaya;jugo, papaya;2000;true
+10;Jugo de naranja;jugo, naranja;1500;true
+11;Jugo de borojo;jugo, borojo;2000;true
+12;Jugo de chontaduro;jugo, chontaduro;2000;true
+13;Jugo de lulo;jugo, lulo;1500;true
