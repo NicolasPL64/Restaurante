@@ -420,12 +420,12 @@ void menuBienvenida()
     do
     {
         system("cls");
-        cout<<"¡Bienvenido!"<<endl<<endl
-            <<"1. Iniciar sesión"<<endl
-            <<"2. Registrarse"<<endl
-            <<"3. Acerca de..."<<endl
-            <<"0. Salir"<<endl<<endl
-            <<"Seleccione una opción: ";
+        cout<<"\t\t¡Bienvenido!"<<endl<<endl
+            <<"\t1. Iniciar sesión"<<endl
+            <<"\t2. Registrarse"<<endl
+            <<"\t3. Acerca de..."<<endl
+            <<"\t0. Salir"<<endl<<endl
+            <<"  Seleccione una opción: ";
         opc = getch();
 
 
@@ -472,8 +472,8 @@ void registrarse()
     {
         fflush(stdin);
         Admin obj;
-        cout<<"   -- REGISTRO --"<<endl
-            <<"Ingrese el usuario: ";
+        cout<<"\t\t-- REGISTRO --"<<endl
+            <<"\tIngrese el usuario: ";
         getline(cin, u);
 
         if (vUsers.size() != 0) //Comprueba si existe mínimo un usuario
@@ -491,7 +491,7 @@ void registrarse()
         }
         if (!existe) //Sigue con el registro en caso de no existir
         {
-            cout<<"Ingrese la contraseña: "; //Mismo código que loguearse() para censurar la contraseña
+            cout<<"\tIngrese la contraseña: "; //Mismo código que loguearse() para censurar la contraseña
             caracter = getch();
             p = "";
 
@@ -513,13 +513,13 @@ void registrarse()
                 caracter = getch();
             }
 
-            cout<<endl<<"Ingrese un nombre: ";
+            cout<<endl<<"\tIngrese un nombre: ";
             getline(cin, nom);
 
-            cout<<"Ingrese un apellido: ";
+            cout<<"\tIngrese un apellido: ";
             getline(cin, ape);
 
-            cout<<"Ingrese el número de identificación (sin puntos): ";
+            cout<<"\tIngrese el número de identificación (sin puntos): ";
             cin>>cc;
             fflush(stdin);
 
@@ -538,11 +538,11 @@ void registrarse()
             }
             if (!existe) //Sigue con el registro en caso de no existir
             {
-                cout<<"Ingrese su dirección: ";
+                cout<<"\tIngrese su dirección: ";
                 getline(cin, dir);
 
                 ofstream usuarios("usuarios.csv", ios::app); //Registro exitoso. Guardado del nuevo registro en el archivo "usuarios.csv"
-                if (!usuarios) cout << "Aviso: Error al escribir en documento. No existe, se creará un nuevo archivo 'usuarios.csv'"<<endl;
+                if (!usuarios) cout << "  Aviso: Error al escribir en documento. No existe, se creará un nuevo archivo 'usuarios.csv'"<<endl;
                 else
                 {
                     usuarios<<u<<";"<<p<<";"<<nom<<";"<<ape<<";"<<cc<<";"<<boolalpha<<true<<";"<<puntos<<";"<<false<<";"<<dir<<";"<<false<<endl; //boolalpha fuerza el valor de un bool a true en vez de 1
@@ -553,14 +553,14 @@ void registrarse()
             }
             else
             {
-                cout<<"Ya existe un usuario registrado con el mismo documento."<<endl<<endl;
+                cout<<" Ya existe un usuario registrado con el mismo documento."<<endl<<endl;
                 system("pause");
                 system("cls");
             }
         }
         else
         {
-            cout<<"El usuario ya existe, pruebe un nombre diferente."<<endl<<endl;
+            cout<<" El usuario ya existe, pruebe un nombre diferente."<<endl<<endl;
             system("pause");
             system("cls");
         }
@@ -676,12 +676,12 @@ void menuUser(Admin obj)
     do
     {
         system("cls");
-        cout<<"¡Bienvenido, "<<obj.getUser()<<"! ¿Qué desea hacer?"<<endl<<endl
-            <<"1. Ver el menú"<<endl
-            <<"2. Hacer un pedido"<<endl
-            <<"3. Modificar mi información"<<endl
-            <<"0. Cerrar sesión"<<endl<<endl
-            <<"Seleccione una opción: ";
+        cout<<"\t\t¡Bienvenido, "<<obj.getUser()<<"! ¿Qué acción desea realizar?: "<<endl<<endl
+            <<"\t1. Ver el menú"<<endl
+            <<"\t2. Hacer un pedido"<<endl
+            <<"\t3. Modificar mi información"<<endl
+            <<"\t0. Cerrar sesión"<<endl<<endl
+            <<"  Seleccione una opción: ";
         opc = getch();
 
         switch(opc)
