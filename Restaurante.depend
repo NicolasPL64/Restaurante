@@ -59,7 +59,7 @@
 1655585636 d:\users\nicolaspl_\desktop\restaurante\usuario.h
 	<iostream>
 
-1655589960 source:d:\users\nicolaspl_\desktop\restaurante\main.cpp
+1655601323 source:d:\users\nicolaspl_\desktop\restaurante\main.cpp
 	<iostream>
 	<vector>
 	<conio.h>
@@ -76,6 +76,7 @@
 	"Comidas.h"
 	"Pedidos.h"
 	"clientePreferencial.h"
+	"Domiciliario.h"
 
 1655052036 source:c:\users\usuario\documents\ipoo\restaurante\definicioncliente.cpp
 	<iostream>
@@ -120,9 +121,9 @@
 	<iostream>
 	"Cliente.h"
 
-1655581182 d:\users\nicolaspl_\desktop\restaurante\cliente.h
+1655594986 d:\users\nicolaspl_\desktop\restaurante\cliente.h
 	<iostream>
-	"Usuario.h"
+	"Domiciliario.h"
 	"vector"
 
 1655519395 source:d:\users\nicolaspl_\desktop\restaurante\admin.cpp
@@ -133,11 +134,11 @@
 	<iostream>
 	"clientePreferencial.h"
 
-1655520212 source:d:\users\nicolaspl_\desktop\restaurante\comidas.cpp
+1655591820 source:d:\users\nicolaspl_\desktop\restaurante\comidas.cpp
 	<iostream>
 	"Comidas.h"
 
-1655520211 d:\users\nicolaspl_\desktop\restaurante\comidas.h
+1655591821 d:\users\nicolaspl_\desktop\restaurante\comidas.h
 	<iostream>
 	"vector"
 
@@ -271,4 +272,12 @@
 1655591895 c:\users\usuario\documents\ipoo\restaurante\comidas.h
 	<iostream>
 	"vector"
+
+1655595055 d:\users\nicolaspl_\desktop\restaurante\domiciliario.h
+	<iostream>
+	"Usuario.h"
+
+1655596244 source:d:\users\nicolaspl_\desktop\restaurante\domiciliario.cpp
+	<iostream>
+	"Domiciliario.h"
 
