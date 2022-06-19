@@ -796,6 +796,7 @@ void menuUser(Admin obj)
 void hacer_pedido(Admin obj)
 {
     F5_pedidos();
+    F5_usuarios();
     Comidas objComida;
 
     int orden, totalPuntos;
@@ -826,8 +827,16 @@ void hacer_pedido(Admin obj)
             if (orden == objComida.getPosicion())  //Comprueba si existe el menú solicitado
             {
                 //if está desactivado, que salga otro error objComida.getActivo()
-                existe = true;
-                break;
+                if(objComida.getActivo() == false)
+                {
+                    cout<<"El menu seleccionado esta desactivado. Seleccione otro."<<endl<<endl;
+                    system("pause");
+                }
+                else
+                {
+                    existe = true;
+                    break;
+                }
             }
         }
         if (existe == true)  //Si existe, suma el precio del menú al TOTAL y agrega el menú al vector de la clase Cliente
@@ -837,9 +846,6 @@ void hacer_pedido(Admin obj)
             obj.setOrden(objComida.getNombre());
         }
         else cout<<"El menú solicitado no existe."<<endl;
-
-
-
         cout<<"¿Desea agregar algo más? (s/n) ";
         opc = _getch();
         switch(opc)
@@ -862,73 +868,83 @@ void hacer_pedido(Admin obj)
     totalPuntos = totalCuenta/1000;
     obj.setPuntos(obj.getPuntos() + totalPuntos);
 
-    //if totalCuenta==0, se salta todo el codigo de abajo, sale al menú
-
-    //usar setw() para acomodar a la derecha los precios si hay tiempo
-    system("cls"); //Comienzo del recibo
-    cout<<"Puntos que acumula: "<<totalPuntos<<endl<<endl;
-    cout<<"Total de la cuenta: "<<totalCuenta<<"$"<<endl;
-
-
-    int puntosRestan = 0, descuentoPesos = totalCuenta;
-
-    if (obj.getClientePref() == true && obj.getPuntos() >= 15) //Si es Cliente Preferencial y tiene 15 puntos o más se le aplica descuento
+    if(totalCuenta == 0)
     {
-        puntosRestan = (floor(obj.getPuntos() / 15)) * 15;
-        descuentoPesos *= floor(obj.getPuntos() / 15) * 0.05;
-
-        cout<<puntosRestan<<" puntos han sido canjeados para un descuento total de "<<floor(obj.getPuntos() / 15) * 5<<"%"<<endl;
-
-        obj.setPuntos(obj.getPuntos() - puntosRestan); //Resta los puntos
-        totalCuenta -= descuentoPesos; //Resta el descuento
-
-        cout<<"                   -"<<descuentoPesos<<"$"<<endl; //Muestra el descuento en pesos
+        cout<<endl;
+        cout<<"No seleccionó nada para comprar."<<endl<<endl;
+        system("pause");
     }
-
-    if (obj.getClientePref() == false && obj.getPuntos() >= 50) //Asciende al usuario a Cliente Preferencial en caso de no serlo y poseer 50 puntos o más
-    {
-        obj.setClientePref(true);
-        cout<<"Ha sido ascendido a Cliente Preferencial por haber gastado 50000$ con nosotros. ¡Muchas gracias!"<<endl
-            <<"A partir de la siguiente compra, cada 15 puntos recibirá un descuento del 5%."<<endl<<endl;
-        obj.setPuntos(obj.getPuntos() - 50);
-    }
-
-    cout<<"Domicilio:         +2000$"<<endl;
-    totalCuenta += 2000;
-    cout<<"-------------------------------------"<<endl;
-    cout<<"Total a pagar:     "<<totalCuenta<<"$"<<endl;
-    system("pause");
-    obj.setTotalcuenta(totalCuenta);
-
-
-    ofstream pedidos("pedidos.csv", ios::app); //Guardado del nuevo pedido en el archivo "pedidos.csv"
-    if (!pedidos) cout << "Aviso: Error al escribir en documento. No existe, se creará un nuevo archivo 'pedidos.csv'"<<endl;
     else
     {
-        pedidos<<obj.getNumOrden()<<";"<<obj.getOrden()<<";"<<obj.getNombre() + " " + obj.getApellido()<<";"<<obj.getCedula()<<";"<<obj.getDireccion()<<";"<<obj.getTotalcuenta()<<endl;
-        pedidos.close();
+        system("cls"); //Comienzo del recibo
+        cout<<"Puntos que suma: "<<totalPuntos<<endl<<endl;
+        cout<<"Total de la cuenta: "<<totalCuenta<<"$"<<endl;
 
-        cout<<"Pedido registrado con éxito."<<endl;
+        bool descuento = false;
+        int puntosRestan = 0, descuentoPesos = totalCuenta;
 
-        //Verificar que el menú está activo
-        //Crear archivo con pedidos, nombre de la persona y total, decir precios totales, domicilios y descuentos preferencial
-    }
-
-    for (int i=0; i<vUsers.size(); i++) //Busca en qué posición del vector está
-    {
-        Admin objComprobacion;
-        objComprobacion = vUsers.at(i);
-
-        if (obj.getCedula() == objComprobacion.getCedula()) //Guarda el obj en vUsers
+        if (obj.getClientePref() == true && obj.getPuntos() >= 15) //Si es Cliente Preferencial y tiene 15 puntos o más se le aplica descuento
         {
-            vUsers.at(i) = obj;
-            break;
-        }
-    }
-    F5_usuariosArchivo();
-    F5_pedidos();
-}
+            puntosRestan = (floor(obj.getPuntos() / 15)) * 15;
+            descuentoPesos *= floor(obj.getPuntos() / 15) * 0.05;
+            descuento = true;
 
+            totalCuenta -= descuentoPesos; //Resta el descuento
+
+            cout<<"                   -"<<descuentoPesos<<"$"<<endl; //Muestra el descuento en pesos
+        }
+
+
+
+
+
+
+        cout<<"Domicilio:         +2000$"<<endl;
+        totalCuenta += 2000;
+        cout<<"-------------------------------------"<<endl;
+        cout<<"Total a pagar:      "<<totalCuenta<<"$"<<endl<<endl;
+        obj.setTotalcuenta(totalCuenta);
+
+        if (descuento == true)
+        {
+            cout<<puntosRestan<<" puntos han sido canjeados para un descuento total de "<<floor(obj.getPuntos() / 15) * 5<<"%"<<endl;
+            obj.setPuntos(obj.getPuntos() - puntosRestan); //Resta los puntos
+        }
+
+        if (obj.getClientePref() == false && obj.getPuntos() >= 50) //Asciende al usuario a Cliente Preferencial en caso de no serlo y poseer 50 puntos o más
+        {
+            cout<<"Ha sido ascendido a Cliente Preferencial por haber gastado 50000$ con nosotros. ¡Muchas gracias!"<<endl
+                <<"A partir de la siguiente compra, cada 15 puntos recibirá un descuento del 5%."<<endl<<endl;
+            obj.setClientePref(true);
+            obj.setPuntos(obj.getPuntos() - 50);
+        }
+
+        ofstream pedidos("pedidos.csv", ios::app); //Guardado del nuevo pedido en el archivo "pedidos.csv"
+        if (!pedidos) cout << "Aviso: Error al escribir en documento. No existe, se creará un nuevo archivo 'pedidos.csv'"<<endl;
+        else
+        {
+            pedidos<<obj.getNumOrden()<<";"<<obj.getOrden()<<";"<<obj.getNombre() + " " + obj.getApellido()<<";"<<obj.getCedula()<<";"<<obj.getDireccion()<<";"<<obj.getTotalcuenta()<<endl;
+            pedidos.close();
+
+            cout<<"Pedido registrado con éxito."<<endl<<endl;
+            system("pause");
+        }
+
+        for (int i=0; i<vUsers.size(); i++) //Busca en qué posición del vector está
+        {
+            Admin objComprobacion;
+            objComprobacion = vUsers.at(i);
+
+            if (obj.getCedula() == objComprobacion.getCedula()) //Guarda el obj en vUsers
+            {
+                vUsers.at(i) = obj;
+                break;
+            }
+        }
+        F5_usuariosArchivo();
+        F5_pedidos();
+    }
+}
 
 //Menú domiciliario
 void menuDomiciliario(Admin obj)
