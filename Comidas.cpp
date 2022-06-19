@@ -73,7 +73,7 @@ string Comidas::getIngredienteString()
         }
         else
         {
-            ingredienteString += vIngredientes.at(i) + ",";
+            ingredienteString += vIngredientes.at(i) + ", ";
         }
     }
     return ingredienteString;

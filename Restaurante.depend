@@ -59,15 +59,15 @@
 1655606383 d:\users\nicolaspl_\desktop\restaurante\usuario.h
 	<iostream>
 
-1655612548 source:d:\users\nicolaspl_\desktop\restaurante\main.cpp
+1655613944 source:d:\users\nicolaspl_\desktop\restaurante\main.cpp
 	<iostream>
 	<vector>
 	<conio.h>
+	<windows.h>
 	"fstream"
 	"sstream"
 	"algorithm"
 	"ctime"
-	<windows.h>
 	"cmath"
 	"iomanip"
 	"Usuario.h"
@@ -134,7 +134,7 @@
 	<iostream>
 	"clientePreferencial.h"
 
-1655612222 source:d:\users\nicolaspl_\desktop\restaurante\comidas.cpp
+1655666208 source:d:\users\nicolaspl_\desktop\restaurante\comidas.cpp
 	<iostream>
 	"Comidas.h"
 
