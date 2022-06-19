@@ -12,10 +12,7 @@ class Comidas
         virtual ~Comidas();
 
         ///Atributos
-        string ingrediente, ingredienteString, nombre;
-        int precio, posicion;
         vector <string> vIngredientes;
-        bool activo;
 
         ///Métodos
         //Setter
@@ -37,6 +34,10 @@ class Comidas
     protected:
 
     private:
+        ///Atributos
+        string ingrediente, ingredienteString, nombre;
+        int precio, posicion;
+        bool activo;
 };
 
 //Sort

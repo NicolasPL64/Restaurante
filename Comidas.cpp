@@ -57,7 +57,7 @@ string Comidas::getIngrediente() //Condensa todos los menús del vector en un str
         else
         {
             ingrediente = vIngredientes.at(i);
-            cout<<ingrediente<<",";
+            cout<<ingrediente<<", ";
         }
     }
     return "";

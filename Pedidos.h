@@ -9,11 +9,6 @@ class Pedidos
         Pedidos();
         virtual ~Pedidos();
 
-        ///Atributos
-        string numPedido, ordenes, nombreFull, cedula, direccion;
-        long total;
-        int posicion;
-
         ///Métodos
         //Setter
         void setPosicion(int);
@@ -37,6 +32,10 @@ class Pedidos
     protected:
 
     private:
+        ///Atributos
+        string numPedido, ordenes, nombreFull, cedula, direccion;
+        long total;
+        int posicion;
 };
 
 #endif // PEDIDOS_H

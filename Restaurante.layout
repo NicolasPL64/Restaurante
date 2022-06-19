@@ -2,24 +2,14 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
-	<File name="Pedidos.cpp" open="1" top="0" tabpos="14" split="0" active="1" splitpos="0" zoom_1="4" zoom_2="0">
+	<File name="Pedidos.cpp" open="1" top="0" tabpos="15" split="0" active="1" splitpos="0" zoom_1="4" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="0" topLine="10" />
 		</Cursor>
 	</File>
-	<File name="Pedidos.h" open="1" top="0" tabpos="13" split="0" active="1" splitpos="0" zoom_1="4" zoom_2="0">
+	<File name="clientePreferencial.cpp" open="1" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="3" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="79" topLine="3" />
-		</Cursor>
-	</File>
-	<File name="Cliente.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="5" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="539" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="Comidas.cpp" open="1" top="0" tabpos="12" split="0" active="1" splitpos="0" zoom_1="5" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1951" topLine="71" />
+			<Cursor1 position="502" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="Usuario.cpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
@@ -27,49 +17,116 @@
 			<Cursor1 position="920" topLine="44" />
 		</Cursor>
 	</File>
-	<File name="clientePreferencial.cpp" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="3" zoom_2="0">
+	<File name="Comidas.cpp" open="1" top="0" tabpos="13" split="0" active="1" splitpos="0" zoom_1="5" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="319" topLine="5" />
+			<Cursor1 position="1127" topLine="36" />
 		</Cursor>
 	</File>
-	<File name="main.cpp" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="4" zoom_2="0">
+	<File name="Cliente.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="5" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="26031" topLine="1550" />
+			<Cursor1 position="229" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="Admin.h" open="1" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="5" zoom_2="0">
+	<File name="clientePreferencial.h" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="4" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="263" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="Comidas.h" open="1" top="0" tabpos="12" split="0" active="1" splitpos="0" zoom_1="4" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="806" topLine="4" />
+		</Cursor>
+	</File>
+	<File name="Admin.h" open="1" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="5" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="268" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="Domiciliario.cpp" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="5" zoom_2="0">
+	<File name="Domiciliario.cpp" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="5" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="256" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="Admin.cpp" open="1" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="4" zoom_2="0">
+	<File name="Domiciliario.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="4" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="254" topLine="0" />
+			<Cursor1 position="225" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="main.cpp" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="4" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="80" topLine="6" />
+		</Cursor>
+		<Folding>
+			<Collapse line="82" />
+			<Collapse line="92" />
+			<Collapse line="97" />
+			<Collapse line="104" />
+			<Collapse line="109" />
+			<Collapse line="138" />
+			<Collapse line="157" />
+			<Collapse line="167" />
+			<Collapse line="172" />
+			<Collapse line="178" />
+			<Collapse line="192" />
+			<Collapse line="215" />
+			<Collapse line="220" />
+			<Collapse line="224" />
+			<Collapse line="247" />
+			<Collapse line="253" />
+			<Collapse line="257" />
+			<Collapse line="270" />
+			<Collapse line="278" />
+			<Collapse line="282" />
+			<Collapse line="295" />
+			<Collapse line="301" />
+			<Collapse line="305" />
+			<Collapse line="321" />
+			<Collapse line="367" />
+			<Collapse line="475" />
+			<Collapse line="579" />
+			<Collapse line="646" />
+			<Collapse line="699" />
+			<Collapse line="852" />
+			<Collapse line="897" />
+			<Collapse line="945" />
+			<Collapse line="961" />
+			<Collapse line="996" />
+			<Collapse line="1038" />
+			<Collapse line="1080" />
+			<Collapse line="1124" />
+			<Collapse line="1188" />
+			<Collapse line="1323" />
+			<Collapse line="1352" />
+			<Collapse line="1375" />
+			<Collapse line="1384" />
+			<Collapse line="1507" />
+			<Collapse line="1516" />
+			<Collapse line="1522" />
+			<Collapse line="1540" />
+			<Collapse line="1576" />
+			<Collapse line="1584" />
+			<Collapse line="1589" />
+			<Collapse line="1616" />
+		</Folding>
+	</File>
+	<File name="Pedidos.h" open="1" top="0" tabpos="14" split="0" active="1" splitpos="0" zoom_1="4" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="807" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="Cliente.cpp" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="852" topLine="9" />
 		</Cursor>
 	</File>
 	<File name="Usuario.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="4" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="688" topLine="0" />
+			<Cursor1 position="163" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="Comidas.h" open="1" top="0" tabpos="11" split="0" active="1" splitpos="0" zoom_1="4" zoom_2="0">
+	<File name="Admin.cpp" open="1" top="0" tabpos="11" split="0" active="1" splitpos="0" zoom_1="4" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="859" topLine="6" />
-		</Cursor>
-	</File>
-	<File name="Cliente.cpp" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="852" topLine="27" />
-		</Cursor>
-	</File>
-	<File name="clientePreferencial.h" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="4" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="554" topLine="0" />
+			<Cursor1 position="254" topLine="0" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

@@ -10,10 +10,6 @@ class Usuario
         Usuario();
         virtual ~Usuario();
 
-        ///Atributos
-        string user, pass, nombre, apellido, cedula;
-        bool activo;
-
         ///Métodos
         //Setter
         void setUser(string);
@@ -34,6 +30,9 @@ class Usuario
     protected:
 
     private:
+        ///Atributos
+        string user, pass, nombre, apellido, cedula;
+        bool activo;
 };
 
 #endif // USUARIO_H

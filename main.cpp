@@ -1,11 +1,11 @@
 #include <iostream>
 #include <vector>
 #include <conio.h>
+#include <windows.h>
 #include "fstream"
 #include "sstream"
 #include "algorithm"
 #include "ctime"
-#include <windows.h>
 #include "cmath"
 #include "iomanip"
 
@@ -40,41 +40,41 @@ void F5_usuariosArchivo(); /*Se usa para reescribir el archivo 'usuarios'
 después de una modificación*/
 void F5_comidasArchivo(); /*Se usa para reescribir el archivo 'comidas'
 después de una modificación*/
+void F5_pedidosArchivo(); /*Se usa para reescribir el archivo 'pedidos'
+después de una modificación*/
+void gotoxy();
 
 //Para el registro/logueo o menú de bienvenida
 void menuBienvenida();
 void registrarse();
 void loguearse();
 void acercaDe();
-void gotoxy();
 
 //Menú usuario normal
 void menuUser(Admin obj);
 void hacer_pedido(Admin obj);
-void modificarUsuarioPROPIO(Admin _user);
+void comida_x_ingrediente();
 
 //Menú domiciliario
 void menuDomiciliario(Admin obj);
+void imprimir_pedidos();
+void modificar_pedidos();
 
 //Menú admin
 void menuAdmin(Admin obj);
 void submenu_usuarios(Admin obj);
-void listaUsuarios();
+void submenu_comidas(Admin obj);
 void listaxCedula(Admin obj);
 void modificarUsuarioADMIN();
 
 //Comidas
-void submenu_comidas(Admin obj);
 void imprimir_menu(bool _admin);
 void agregarComida();
 void modificarComida();
 
-//Para menú principal morbid
-void ingresar();
-void lista();
-void buscarCliente();
-void eliminarCliente();
-void menu();
+//Métodos reutilizables o globales
+void modificarUsuarioPROPIO(Admin _user);
+void listaUsuarios();
 
 
 ///    ---- Métodos ----    ////
@@ -87,70 +87,6 @@ void gotoxy(int x,int y)
     dwPos.X = x;
     dwPos.Y= y;
     SetConsoleCursorPosition(hcon,dwPos);
-}
-
-void acercaDe()
-{
-
-    system("cls");
-
-    gotoxy(18,1);
-    cout<<"        **  "<<endl;
-    gotoxy(18,2);
-    cout<<"     *****                       * "<<endl;
-    gotoxy(18,3);
-    cout<<"    *  ***                      ** "<<endl;
-    gotoxy(18,4);
-    cout<<"       ***                      ** "<<endl;
-    gotoxy(18,5);
-    cout<<"      *  **    **   ****      ******** ****   ***  ****              **** "<<endl;
-    gotoxy(18,6);
-    cout<<"      *  **     **    ***    ******** * ***  * **** **** * ***      * **** * "<<endl;
-    gotoxy(18,7);
-    cout<<"     *    **    **     ****     **   *   ****   **   **** * ***    **  ****  "<<endl;
-    gotoxy(18,8);
-    cout<<"     *    **    **      **      **  **    **    **       *   ***  ****   "<<endl;
-    gotoxy(18,9);
-    cout<<"    *      **   **      **      **  **    **    **      **    ***   ***  "<<endl;
-    gotoxy(18,10);
-    cout<<"    *********   **      **      **  **    **    **      ********      ***  "<<endl;
-    gotoxy(18,11);
-    cout<<"   *        **  **      **      **  **    **    **      *******         *** "<<endl;
-    gotoxy(18,12);
-    cout<<"   *        **  **      **      **  **    **    **      **         ****  **  "<<endl;
-    gotoxy(18,13);
-    cout<<"  *****      **  ******* **     **   ******     ***     ****    * * **** * "<<endl;
-    gotoxy(18,14);
-    cout<<" *   ****    ** * *****   **     **   ****       ***     *******     ****  "<<endl;
-    gotoxy(18,15);
-    cout<<"*     **      **                                          *****      "<<endl;
-    gotoxy(18,16);
-    cout<<"*  "<<endl;
-    gotoxy(18,17);
-    cout<<" **  "<<endl<<endl;
-
-
-
-    gotoxy(50,20);
-    cout<<"Autores:"<<endl;
-    gotoxy(36,21);
-    cout<<"Kevin Stiven Gil Salcedo - 202159863\n";
-    gotoxy(36,22);
-    cout<<"Nicolas Prado Leon - 202160073\n";
-    gotoxy(36,23);
-    cout<<"Kevin Alexander Marín Henao - 202160364\n";
-    gotoxy(36,24);
-    cout<<"Miguel Angel Rueda Colonia - 202159896\n";
-
-    system("pause");
-    system("cls");
-    cout<<"-------------------------------- Créditos -----------------------------------"<<endl<<endl
-        <<"Código del sistema de registro y logueo adaptado de https://bit.ly/2Plcea8"<<endl
-        <<"Separar strings por caracter https://java2blog.com/cpp-split-string-by-comma/"<<endl
-        <<"Código para sacar fecha usando strftime() adaptado de https://bit.ly/3tC0cdq"<<endl
-        <<"Sort con vectores tipo clase https://www.walletfox.com/course/sortvectorofcustomobjects.php"<<endl<<endl<<endl;
-
-    system("pause");
 }
 
 void F5_usuarios()
@@ -236,10 +172,12 @@ void F5_comidas()
     else
     {
         Comidas obj;
+
         string registroComidas, posicion, nombre, ingredientes, precio, activoString;
         bool activo;
         while(getline(comidas, registroComidas))
         {
+            int cont = 0;
             stringstream token(registroComidas);
             obj.vIngredientes.clear();
 
@@ -255,7 +193,11 @@ void F5_comidas()
             {
                 string sub;
                 getline(ss, sub, ',');
-                obj.setIngrediente(sub);
+
+                //Condicional para eliminar el primer espacio de un ingrediente en caso de no ser el primer ingrediente de la lista
+                if (cont == 0) obj.setIngrediente(sub);
+                else obj.setIngrediente(sub.erase(0,1));
+                cont++;
             }
             obj.setNombre(nombre);
             obj.setPrecio(stoi(precio)); //stoi (String to int
@@ -374,117 +316,8 @@ void F5_pedidosArchivo()
 }
 
 
-//Comidas
-void agregarComida()
-{
-    F5_comidas();
-    fflush(stdin);
-    string nombre, ingredientes;
-    int precio, posicion = vComidas.size()+1;
-    fflush(stdin);
-    Comidas obj;
 
-    cout<<"   -- AGREGAR MENÚ --"<<endl
-        <<"Ingrese el nombre del menú: ";
-    getline(cin, nombre);
-
-    cout<<"Ingrese los ingredientes (separados por comas y un espacio): ";
-    getline(cin, ingredientes);
-    transform(ingredientes.begin(), ingredientes.end(), ingredientes.begin(), ::tolower);
-
-    cout<<"Ingrese el precio: ";
-    cin>>precio;
-    fflush(stdin);
-
-    ofstream comidas("comidas.csv", ios::app); //Registro exitoso. Guardado del nuevo registro en el archivo "comidas.csv"
-    if (!comidas) cout << "Aviso: Error al escribir en documento. No existe, se creará un nuevo archivo 'comidas.csv'"<<endl;
-    else
-    {
-        comidas<<posicion<<";"<<nombre<<";"<<ingredientes<<";"<<precio<<";"<<boolalpha<<true<<endl;
-        comidas.close();
-        cout<<"Comida agregada con éxito."<<endl<<endl;
-        system("pause");
-    }
-}
-
-void imprimir_menu(bool _admin)
-{
-    F5_comidas();
-    Comidas obj;
-    for (int i=0; i<vComidas.size(); i++)
-    {
-        obj = vComidas.at(i);
-        if (!_admin) //Comprueba si es admin o no para saber si imprimir todas las comidas
-        {
-            if (obj.getActivo() == true)
-            {
-                cout<<obj.getPosicion()<<". "<<obj.getNombre()<<endl
-                    <<"Ingredientes: "<<obj.getIngrediente()<<endl
-                    <<"Precio: "<<obj.getPrecio()<<"$"<<endl
-                    <<"----------------------------"<<endl<<endl;
-            }
-        }
-        else
-        {
-            cout<<obj.getPosicion()<<". "<<obj.getNombre()<<endl
-                <<"Ingredientes: "<<obj.getIngrediente()<<endl
-                <<"Precio: "<<obj.getPrecio()<<"$"<<endl;
-            if (obj.getActivo() == true) cout<<">> Menú activo"<<endl;
-            else cout<<">> Menú inactivo"<<endl;
-            cout<<"----------------------------"<<endl<<endl;
-        }
-    }
-}
-
-void imprimir_pedidos()
-{
-    F5_pedidos();
-    Pedidos obj;
-    for (int i=0; i<vPedidos.size(); i++)
-    {
-        obj = vPedidos.at(i);
-        cout<<i+1<<". "<<obj.getNumPedido()<<" - "<<obj.getNombreFull()<<endl
-            <<"Pedido: "<<obj.getOrdenes()<<endl
-            <<"Cédula: "<<obj.getCedula()<<endl
-            <<"Dirección: "<<obj.getDireccion()<<endl
-            <<"Debe pagar: "<<obj.getTotal()<<"$"<<endl
-            <<"----------------------------"<<endl<<endl;
-    }
-}
-
-void modificar_pedidos()
-{
-    F5_pedidos();
-    Pedidos obj;
-    int i;
-    for (i=0; i<vPedidos.size(); i++)
-    {
-        obj = vPedidos.at(i);
-        cout<<i+1<<". "<<obj.getNumPedido()<<" - "<<obj.getNombreFull()<<endl
-            <<"Pedido: "<<obj.getOrdenes()<<endl
-            <<"Cédula: "<<obj.getCedula()<<endl
-            <<"Dirección: "<<obj.getDireccion()<<endl
-            <<"Debe pagar: "<<obj.getTotal()<<"$"<<endl
-            <<"----------------------------"<<endl<<endl;
-    }
-
-    bool existe = false, sigue, mod = false;
-    int pos_eliminar;
-    cout<<"Ingrese la posición del pedido a eliminar: ";
-    cin>>pos_eliminar;
-    pos_eliminar -= 1;
-
-    if (pos_eliminar < 0 || pos_eliminar > i) cout<<"Por favor, ingrese una posición válida."<<endl;
-    else
-    {
-        vPedidos.erase(vPedidos.begin() + pos_eliminar);
-        F5_pedidosArchivo();
-    }
-
-    system("pause");
-}
-
-//Para el registro/logueo
+//Para el registro/logueo o menú de bienvenida
 void menuBienvenida()
 {
     char opc;
@@ -743,6 +576,71 @@ void loguearse()
     }
 }
 
+void acercaDe()
+{
+
+    system("cls");
+
+    gotoxy(18,1);
+    cout<<"        **  "<<endl;
+    gotoxy(18,2);
+    cout<<"     *****                       * "<<endl;
+    gotoxy(18,3);
+    cout<<"    *  ***                      ** "<<endl;
+    gotoxy(18,4);
+    cout<<"       ***                      ** "<<endl;
+    gotoxy(18,5);
+    cout<<"      *  **    **   ****      ******** ****   ***  ****              **** "<<endl;
+    gotoxy(18,6);
+    cout<<"      *  **     **    ***    ******** * ***  * **** **** * ***      * **** * "<<endl;
+    gotoxy(18,7);
+    cout<<"     *    **    **     ****     **   *   ****   **   **** * ***    **  ****  "<<endl;
+    gotoxy(18,8);
+    cout<<"     *    **    **      **      **  **    **    **       *   ***  ****   "<<endl;
+    gotoxy(18,9);
+    cout<<"    *      **   **      **      **  **    **    **      **    ***   ***  "<<endl;
+    gotoxy(18,10);
+    cout<<"    *********   **      **      **  **    **    **      ********      ***  "<<endl;
+    gotoxy(18,11);
+    cout<<"   *        **  **      **      **  **    **    **      *******         *** "<<endl;
+    gotoxy(18,12);
+    cout<<"   *        **  **      **      **  **    **    **      **         ****  **  "<<endl;
+    gotoxy(18,13);
+    cout<<"  *****      **  ******* **     **   ******     ***     ****    * * **** * "<<endl;
+    gotoxy(18,14);
+    cout<<" *   ****    ** * *****   **     **   ****       ***     *******     ****  "<<endl;
+    gotoxy(18,15);
+    cout<<"*     **      **                                          *****      "<<endl;
+    gotoxy(18,16);
+    cout<<"*  "<<endl;
+    gotoxy(18,17);
+    cout<<" **  "<<endl<<endl;
+
+
+
+    gotoxy(50,20);
+    cout<<"Autores:"<<endl;
+    gotoxy(36,21);
+    cout<<"Kevin Stiven Gil Salcedo - 202159863\n";
+    gotoxy(36,22);
+    cout<<"Nicolas Prado Leon - 202160073\n";
+    gotoxy(36,23);
+    cout<<"Kevin Alexander Marín Henao - 202160364\n";
+    gotoxy(36,24);
+    cout<<"Miguel Angel Rueda Colonia - 202159896\n";
+
+    system("pause");
+    system("cls");
+    cout<<"-------------------------------- Créditos -----------------------------------"<<endl<<endl
+        <<"Código del sistema de registro y logueo adaptado de https://bit.ly/2Plcea8"<<endl
+        <<"Separar strings por caracter https://java2blog.com/cpp-split-string-by-comma/"<<endl
+        <<"Código para sacar fecha usando strftime() adaptado de https://bit.ly/3tC0cdq"<<endl
+        <<"Sort con vectores tipo clase https://www.walletfox.com/course/sortvectorofcustomobjects.php"<<endl<<endl<<endl;
+
+    system("pause");
+}
+
+
 
 //Menú usuario normal
 void menuUser(Admin obj)
@@ -754,8 +652,9 @@ void menuUser(Admin obj)
         cout<<"¡Bienvenido, "<<obj.getUser()<<"! ¿Qué desea hacer?"<<endl<<endl
             <<"1. Ver el menú"<<endl
             <<"2. Hacer un pedido"<<endl
-            <<"3. Modificar mi información"<<endl
-            <<"4. Ver mi información"<<endl
+            <<"3. Buscar un menú con ingrediente"<<endl
+            <<"4. Modificar mi información"<<endl
+            <<"5. Ver mi información"<<endl
             <<"0. Cerrar sesión"<<endl<<endl
             <<"Seleccione una opción: ";
         opc = getch();
@@ -773,9 +672,13 @@ void menuUser(Admin obj)
             break;
         case '3':
             system("cls");
-            modificarUsuarioPROPIO(obj);
+            comida_x_ingrediente();
             break;
         case '4':
+            system("cls");
+            modificarUsuarioPROPIO(obj);
+            break;
+        case '5':
             system("cls");
             listaxCedula(obj);
             break;
@@ -946,6 +849,50 @@ void hacer_pedido(Admin obj)
     }
 }
 
+void comida_x_ingrediente()
+{
+    F5_comidas();
+
+    string ingr_buscar;
+    bool existe = false;
+    Comidas obj;
+    cout<<"Ingrese un ingrediente a buscar: ";
+    getline(cin, ingr_buscar);
+    transform(ingr_buscar.begin(), ingr_buscar.end(), ingr_buscar.begin(), ::tolower);
+    fflush(stdin);
+    system("cls");
+    cout<<"Listado de menús que contienen '"<<ingr_buscar<<"':"<<endl<<endl;
+
+    for (int i=0; i<vComidas.size(); i++)
+    {
+        obj = vComidas.at(i);
+
+        if (obj.getActivo() == true)
+        {
+            for (int f=0; f<obj.vIngredientes.size(); f++)
+            {
+                if (obj.vIngredientes.at(f) == ingr_buscar)
+                {
+                    existe = true;
+                    cout<<obj.getPosicion()<<". "<<obj.getNombre()<<endl
+                        <<"Ingredientes: "<<obj.getIngrediente()<<endl
+                        <<"Precio: "<<obj.getPrecio()<<"$"<<endl
+                        <<"----------------------------"<<endl<<endl;
+                    break;
+                }
+            }
+        }
+    }
+
+    if (existe == false){
+        system("cls");
+        cout<<"No existe ningún menú con '"<<ingr_buscar<<"'."<<endl<<endl;
+    }
+    system("pause");
+}
+
+
+
 //Menú domiciliario
 void menuDomiciliario(Admin obj)
 {
@@ -995,6 +942,55 @@ void menuDomiciliario(Admin obj)
     while(opc != '0');
 }
 
+void imprimir_pedidos()
+{
+    F5_pedidos();
+    Pedidos obj;
+    for (int i=0; i<vPedidos.size(); i++)
+    {
+        obj = vPedidos.at(i);
+        cout<<i+1<<". "<<obj.getNumPedido()<<" - "<<obj.getNombreFull()<<endl
+            <<"Pedido: "<<obj.getOrdenes()<<endl
+            <<"Cédula: "<<obj.getCedula()<<endl
+            <<"Dirección: "<<obj.getDireccion()<<endl
+            <<"Debe pagar: "<<obj.getTotal()<<"$"<<endl
+            <<"----------------------------"<<endl<<endl;
+    }
+}
+
+void modificar_pedidos()
+{
+    F5_pedidos();
+    Pedidos obj;
+    int i;
+    for (i=0; i<vPedidos.size(); i++)
+    {
+        obj = vPedidos.at(i);
+        cout<<i+1<<". "<<obj.getNumPedido()<<" - "<<obj.getNombreFull()<<endl
+            <<"Pedido: "<<obj.getOrdenes()<<endl
+            <<"Cédula: "<<obj.getCedula()<<endl
+            <<"Dirección: "<<obj.getDireccion()<<endl
+            <<"Debe pagar: "<<obj.getTotal()<<"$"<<endl
+            <<"----------------------------"<<endl<<endl;
+    }
+
+    bool existe = false, sigue, mod = false;
+    int pos_eliminar;
+    cout<<"Ingrese la posición del pedido a eliminar: ";
+    cin>>pos_eliminar;
+    pos_eliminar -= 1;
+
+    if (pos_eliminar < 0 || pos_eliminar > i) cout<<"Por favor, ingrese una posición válida."<<endl;
+    else
+    {
+        vPedidos.erase(vPedidos.begin() + pos_eliminar);
+        F5_pedidosArchivo();
+    }
+
+    system("pause");
+}
+
+
 
 //Menú admin
 void menuAdmin(Admin obj)
@@ -1006,6 +1002,7 @@ void menuAdmin(Admin obj)
         cout<<"¡Bienvenido, "<<obj.getUser()<<"! ¿Qué desea hacer?"<<endl<<endl
             <<"1. Administrar usuarios..."<<endl
             <<"2. Administrar comidas..."<<endl
+            <<"3. Eliminar pedidos"<<endl
             <<"0. Cerrar sesión"<<endl<<endl
             <<"Seleccione una opción: ";
         opc = getch();
@@ -1019,6 +1016,10 @@ void menuAdmin(Admin obj)
         case '2':
             system("cls");
             submenu_comidas(obj);
+            break;
+        case '3':
+            system("cls");
+            modificar_pedidos();
             break;
         case '0':
             system("cls");
@@ -1120,7 +1121,6 @@ void submenu_comidas(Admin obj)
     while(opc != '0');
 }
 
-
 void listaxCedula(Admin obj)
 {
     F5_usuarios();
@@ -1184,148 +1184,6 @@ void listaxCedula(Admin obj)
     }
     system("pause");
 }
-
-void prueba_jartadera()
-{
-    Comidas obj;
-    string ingrediente;
-    int seguir=0;
-    do
-    {
-        cout<<"Ingrese un ingrediente: ";
-        getline(cin,ingrediente);
-
-        obj.setIngrediente(ingrediente);
-        cout<<"seguir?"<<endl;
-        cin>>seguir;
-        fflush(stdin);
-
-    }
-    while(seguir != 0);
-
-    cout<<obj.getIngrediente();
-}
-
-void modificarComida()
-{
-    F5_comidas();
-    char opc = 0;
-    bool existe = false, sigue, mod = false;
-    int pos_modificar;
-    cout<<"Ingrese la posición del menú a modificar: ";
-    cin>>pos_modificar;
-
-    int i;
-    Comidas objComprobacion;
-    Comidas obj;
-    for (i=0; i<vComidas.size(); i++) //Busca si existe un menú con dicha posición
-    {
-        obj = vComidas.at(i);
-        if(pos_modificar == obj.getPosicion())
-        {
-            existe = true;
-            break; //Sale del bucle
-        }
-    }
-    if (existe == true) //Si existe, pregunta qué desea cambiar
-    {
-        do
-        {
-            system("cls");
-            cout<<"Datos del menú: "<<endl;
-            cout<<"1. Posición: "<<obj.getPosicion()<<endl;
-            cout<<"2. Nombre: "<<obj.getNombre()<<endl;
-            cout<<"3. Ingredientes: "<<obj.getIngrediente()<<endl;
-            cout<<"4. Precio: "<<obj.getPrecio()<<endl;
-            cout<<"5. Estado: "<<boolalpha<<obj.getActivo()<<endl;
-            cout<<"0. Salir"<<endl<<endl;
-
-            cout<<"Seleccione el dato a modificar: ";
-            opc = _getch();
-            fflush (stdin);
-
-            bool sigue = true;
-            int pos;
-            string nom, ingr;
-            long precio;
-            char activ;
-
-            switch (opc)
-            {
-            case '1':
-                mod = true;
-                cout<<endl<<"Ingrese la nueva posición: ";
-                cin>>pos;
-                for (int f=0; f<vComidas.size(); f++) //Comprueba si ya existe un menú en esa posición
-                {
-                    objComprobacion = vComidas.at(f);
-                    if (objComprobacion.getPosicion() == pos)
-                    {
-                        sigue = false;
-                        break;
-                    }
-                }
-                if (!sigue)
-                {
-                    cout<<"Ya existe un menú en esa posición, elija una diferente."<<endl<<endl;
-                    system("pause");
-                }
-                else if (pos < 1)
-                {
-                    cout<<"No ingrese un número menor que 1."<<endl<<endl;
-                    system("pause");
-                }
-                else obj.setPosicion(pos);
-
-                break;
-
-            case '2':
-                mod = true;
-                cout<<endl<<"Ingrese el nuevo nombre: ";
-                getline(cin, nom);
-                obj.setNombre(nom);
-                break;
-
-            case '3':
-                mod = true;
-                cout<<endl<<"Ingrese los nuevos ingredientes (separados por una coma y un espacio): ";
-                getline(cin, ingr);
-                obj.vIngredientes.clear();
-                transform(ingr.begin(), ingr.end(), ingr.begin(), ::tolower);
-                obj.setIngrediente(ingr);
-                break;
-
-            case '4':
-                mod = true;
-                cout<<endl<<"Ingrese el nuevo precio: ";
-                cin>>precio;
-                fflush(stdin);
-                obj.setPrecio(precio);
-                break;
-
-            case '5':
-                mod = true;
-                if (obj.getActivo() == true) obj.setActivo(false);
-                else obj.setActivo(true);
-                break;
-
-            default:
-                cout<<endl<<"Ingrese una opción válida"<<endl;
-                break;
-
-            }
-            vComidas.at(i) = obj;
-        }
-        while(opc != '0');
-        system("cls");
-
-    }
-    else cout<<"No existe un menú en la posición "<<pos_modificar<<"."<<endl<<endl;
-
-    if (mod == true) F5_comidasArchivo();
-    system("pause");
-}
-
 
 void modificarUsuarioADMIN()
 {
@@ -1459,6 +1317,193 @@ void modificarUsuarioADMIN()
     }
 }
 
+
+
+//Comidas
+void imprimir_menu(bool _admin)
+{
+    F5_comidas();
+    Comidas obj;
+    for (int i=0; i<vComidas.size(); i++)
+    {
+        obj = vComidas.at(i);
+        if (!_admin) //Comprueba si es admin o no para saber si imprimir todas las comidas
+        {
+            if (obj.getActivo() == true)
+            {
+                cout<<obj.getPosicion()<<". "<<obj.getNombre()<<endl
+                    <<"Ingredientes: "<<obj.getIngrediente()<<endl
+                    <<"Precio: "<<obj.getPrecio()<<"$"<<endl
+                    <<"----------------------------"<<endl<<endl;
+            }
+        }
+        else
+        {
+            cout<<obj.getPosicion()<<". "<<obj.getNombre()<<endl
+                <<"Ingredientes: "<<obj.getIngrediente()<<endl
+                <<"Precio: "<<obj.getPrecio()<<"$"<<endl;
+            if (obj.getActivo() == true) cout<<">> Menú activo"<<endl;
+            else cout<<">> Menú inactivo"<<endl;
+            cout<<"----------------------------"<<endl<<endl;
+        }
+    }
+}
+
+void agregarComida()
+{
+    F5_comidas();
+    fflush(stdin);
+    string nombre, ingredientes;
+    int precio, posicion = vComidas.size()+1;
+    fflush(stdin);
+    Comidas obj;
+
+    cout<<"   -- AGREGAR MENÚ --"<<endl
+        <<"Ingrese el nombre del menú: ";
+    getline(cin, nombre);
+
+    cout<<"Ingrese los ingredientes (separados por comas y un espacio): ";
+    getline(cin, ingredientes);
+    transform(ingredientes.begin(), ingredientes.end(), ingredientes.begin(), ::tolower);
+
+    cout<<"Ingrese el precio: ";
+    cin>>precio;
+    fflush(stdin);
+
+    ofstream comidas("comidas.csv", ios::app); //Registro exitoso. Guardado del nuevo registro en el archivo "comidas.csv"
+    if (!comidas) cout << "Aviso: Error al escribir en documento. No existe, se creará un nuevo archivo 'comidas.csv'"<<endl;
+    else
+    {
+        comidas<<posicion<<";"<<nombre<<";"<<ingredientes<<";"<<precio<<";"<<boolalpha<<true<<endl;
+        comidas.close();
+        cout<<"Comida agregada con éxito."<<endl<<endl;
+        system("pause");
+    }
+}
+
+void modificarComida()
+{
+    F5_comidas();
+    char opc = 0;
+    bool existe = false, sigue, mod = false;
+    int pos_modificar;
+    cout<<"Ingrese la posición del menú a modificar: ";
+    cin>>pos_modificar;
+
+    int i;
+    Comidas objComprobacion;
+    Comidas obj;
+    for (i=0; i<vComidas.size(); i++) //Busca si existe un menú con dicha posición
+    {
+        obj = vComidas.at(i);
+        if(pos_modificar == obj.getPosicion())
+        {
+            existe = true;
+            break; //Sale del bucle
+        }
+    }
+    if (existe == true) //Si existe, pregunta qué desea cambiar
+    {
+        do
+        {
+            system("cls");
+            cout<<"Datos del menú: "<<endl;
+            cout<<"1. Posición: "<<obj.getPosicion()<<endl;
+            cout<<"2. Nombre: "<<obj.getNombre()<<endl;
+            cout<<"3. Ingredientes: "<<obj.getIngrediente()<<endl;
+            cout<<"4. Precio: "<<obj.getPrecio()<<endl;
+            cout<<"5. Estado: "<<boolalpha<<obj.getActivo()<<endl;
+            cout<<"0. Salir"<<endl<<endl;
+
+            cout<<"Seleccione el dato a modificar: ";
+            opc = _getch();
+            fflush (stdin);
+
+            bool sigue = true;
+            int pos;
+            string nom, ingr;
+            long precio;
+            char activ;
+
+            switch (opc)
+            {
+            case '1':
+                mod = true;
+                cout<<endl<<"Ingrese la nueva posición: ";
+                cin>>pos;
+                for (int f=0; f<vComidas.size(); f++) //Comprueba si ya existe un menú en esa posición
+                {
+                    objComprobacion = vComidas.at(f);
+                    if (objComprobacion.getPosicion() == pos)
+                    {
+                        sigue = false;
+                        break;
+                    }
+                }
+                if (!sigue)
+                {
+                    cout<<"Ya existe un menú en esa posición, elija una diferente."<<endl<<endl;
+                    system("pause");
+                }
+                else if (pos < 1)
+                {
+                    cout<<"No ingrese un número menor que 1."<<endl<<endl;
+                    system("pause");
+                }
+                else obj.setPosicion(pos);
+
+                break;
+
+            case '2':
+                mod = true;
+                cout<<endl<<"Ingrese el nuevo nombre: ";
+                getline(cin, nom);
+                obj.setNombre(nom);
+                break;
+
+            case '3':
+                mod = true;
+                cout<<endl<<"Ingrese los nuevos ingredientes (separados por una coma y un espacio): ";
+                getline(cin, ingr);
+                obj.vIngredientes.clear();
+                transform(ingr.begin(), ingr.end(), ingr.begin(), ::tolower);
+                obj.setIngrediente(ingr);
+                break;
+
+            case '4':
+                mod = true;
+                cout<<endl<<"Ingrese el nuevo precio: ";
+                cin>>precio;
+                fflush(stdin);
+                obj.setPrecio(precio);
+                break;
+
+            case '5':
+                mod = true;
+                if (obj.getActivo() == true) obj.setActivo(false);
+                else obj.setActivo(true);
+                break;
+
+            default:
+                cout<<endl<<"Ingrese una opción válida"<<endl;
+                break;
+
+            }
+            vComidas.at(i) = obj;
+        }
+        while(opc != '0');
+        system("cls");
+
+    }
+    else cout<<"No existe un menú en la posición "<<pos_modificar<<"."<<endl<<endl;
+
+    if (mod == true) F5_comidasArchivo();
+    system("pause");
+}
+
+
+
+//Métodos reutilizables o globales
 void modificarUsuarioPROPIO(Admin _user)
 {
     F5_usuarios();
@@ -1478,7 +1523,8 @@ void modificarUsuarioPROPIO(Admin _user)
     {
         system("cls");
         cout<<"Datos de "<<obj.getUser()<<": "<<endl;
-        cout<<"Numero de cedula: "<<obj.getCedula()<<endl;
+        cout<<"Numero de cedula: "<<obj.getCedula()<<endl<<endl;
+
         cout<<"1. Nombre: "<<obj.getNombre()<<endl;
         cout<<"2. Apellido: "<<obj.getApellido()<<endl;
         cout<<"3. Dirección: "<<obj.getDireccion()<<endl;
@@ -1535,8 +1581,7 @@ void modificarUsuarioPROPIO(Admin _user)
     }
 }
 
-
-void listaUsuarios ()
+void listaUsuarios()
 {
     F5_usuarios();
     Admin obj;

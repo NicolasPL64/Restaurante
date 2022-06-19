@@ -11,10 +11,6 @@ class clientePreferencial: public Cliente
         clientePreferencial();
         virtual ~clientePreferencial();
 
-        ///Atributos
-        bool clientePref;
-        int puntos;
-
         ///Métodos
         //setter
         void setTotalcuenta(long);
@@ -28,6 +24,9 @@ class clientePreferencial: public Cliente
     protected:
 
     private:
+        ///Atributos
+        bool clientePref;
+        int puntos;
 };
 
 #endif // CLIENTEPREFERENCIAL_H

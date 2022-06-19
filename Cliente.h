@@ -12,9 +12,8 @@ class Cliente : public Domiciliario
         virtual ~Cliente();
 
         ///Atributos
-        long total;
         vector <string> vPedidosClase;
-        string orden, direccion, numOrden;
+        long total;
 
         ///Métodos
         //Setter
@@ -33,6 +32,8 @@ class Cliente : public Domiciliario
     protected:
 
     private:
+        ///Atributos
+        string orden, direccion, numOrden;
 };
 
 #endif // CLIENTE_H

@@ -10,9 +10,6 @@ class Domiciliario : public Usuario
         Domiciliario();
         virtual ~Domiciliario();
 
-        ///Atributos
-        bool esDomi;
-
         ///Métodos
         //Setters
         void setDomiciliario(bool);
@@ -23,6 +20,8 @@ class Domiciliario : public Usuario
     protected:
 
     private:
+        ///Atributos
+        bool esDomi;
 };
 
 #endif // DOMICILIARIO_H
