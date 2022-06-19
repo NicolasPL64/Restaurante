@@ -165,18 +165,18 @@
 	"Usuario.h"
 	"vector"
 
-1655591386 c:\users\slayer2024\desktop\restaurante\usuario.h
+1655574163 c:\users\slayer2024\desktop\restaurante\usuario.h
 	<iostream>
 
-1655581076 source:c:\users\slayer2024\desktop\restaurante\comidas.cpp
+1655505320 source:c:\users\slayer2024\desktop\restaurante\comidas.cpp
 	<iostream>
 	"Comidas.h"
 
-1655581076 c:\users\slayer2024\desktop\restaurante\comidas.h
+1655505320 c:\users\slayer2024\desktop\restaurante\comidas.h
 	<iostream>
 	"vector"
 
-1655591386 source:c:\users\slayer2024\desktop\restaurante\usuario.cpp
+1655574494 source:c:\users\slayer2024\desktop\restaurante\usuario.cpp
 	<iostream>
 	"Usuario.h"
 
@@ -184,9 +184,9 @@
 	<iostream>
 	"Admin.h"
 
-1655591386 c:\users\slayer2024\desktop\restaurante\admin.h
+1655505320 c:\users\slayer2024\desktop\restaurante\admin.h
 	<iostream>
-	"clientePreferencial.h"
+	"Cliente.h"
 
 1655574354 source:c:\users\slayer2024\desktop\restaurante\main.cpp
 	<iostream>
@@ -217,11 +217,11 @@
 	<iostream>
 	"Pedidos.h"
 
-1655591386 source:c:\users\slayer2024\desktop\restaurante\clientepreferencial.cpp
+1655518402 source:c:\users\slayer2024\desktop\restaurante\clientepreferencial.cpp
 	<iostream>
 	"clientePreferencial.h"
 
-1655591386 c:\users\slayer2024\desktop\restaurante\clientepreferencial.h
+1655522816 c:\users\slayer2024\desktop\restaurante\clientepreferencial.h
 	<iostream>
 	"Cliente.h"
 

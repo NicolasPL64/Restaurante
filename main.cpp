@@ -15,6 +15,7 @@
 #include "Comidas.h"
 #include "Pedidos.h"
 #include "clientePreferencial.h"
+#include "Domiciliario.h"
 
 
 using namespace std;
@@ -52,11 +53,14 @@ void menuUser(Admin obj);
 void hacer_pedido(Admin obj);
 void modificarUsuarioPROPIO(Admin _user);
 
+//Menú domiciliario
+void menuDomiciliario(Admin obj);
+
 //Menú admin
 void menuAdmin(Admin obj);
 void submenu_usuarios(Admin obj);
 void listaUsuarios();
-void listaxCedula();
+void listaxCedula(Admin obj);
 void modificarUsuarioADMIN();
 
 //Comidas
@@ -84,22 +88,7 @@ void gotoxy(int x,int y)
     dwPos.Y= y;
     SetConsoleCursorPosition(hcon,dwPos);
 }
-/* acercaDe()
-{
 
-    cout<<"------ Trabajo final del segundo semestre de IPOO ------"<<endl
-        <<"Realizado por: Nicolás Prado León              202160073"<<endl
-        <<"               Kevin Estiven Gil Salcedo       202159863"<<endl
-        <<"               Miguel Ángel Rueda Colonia      202159896"<<endl
-        <<"               Kevin Alexander Marín Henao     202160364"<<endl<<endl
-
-        <<"-------------------------------- Créditos -----------------------------------"<<endl
-        <<"Código del sistema de registro y logueo adaptado de https://bit.ly/2Plcea8"<<endl
-        <<"Separar strings por caracter https://java2blog.com/cpp-split-string-by-comma/"<<endl
-        <<"Código para sacar fecha usando strftime() adaptado de https://bit.ly/3tC0cdq"<<endl
-        <<"Sort con vectores tipo clase https://www.walletfox.com/course/sortvectorofcustomobjects.php"<<endl<<endl;
-}
-*/
 void acercaDe()
 {
 
@@ -144,16 +133,24 @@ void acercaDe()
 
     gotoxy(50,20);
     cout<<"Autores:"<<endl;
-    gotoxy(40,21);
+    gotoxy(36,21);
     cout<<"Kevin Stiven Gil Salcedo - 202159863\n";
-    gotoxy(40,22);
+    gotoxy(36,22);
     cout<<"Nicolas Prado Leon - 202160073\n";
-    gotoxy(40,23);
+    gotoxy(36,23);
     cout<<"Kevin Alexander Marín Henao - 202160364\n";
-    gotoxy(40,24);
+    gotoxy(36,24);
     cout<<"Miguel Angel Rueda Colonia - 202159896\n";
 
+    system("pause");
+    system("cls");
+    cout<<"-------------------------------- Créditos -----------------------------------"<<endl<<endl
+        <<"Código del sistema de registro y logueo adaptado de https://bit.ly/2Plcea8"<<endl
+        <<"Separar strings por caracter https://java2blog.com/cpp-split-string-by-comma/"<<endl
+        <<"Código para sacar fecha usando strftime() adaptado de https://bit.ly/3tC0cdq"<<endl
+        <<"Sort con vectores tipo clase https://www.walletfox.com/course/sortvectorofcustomobjects.php"<<endl<<endl<<endl;
 
+    system("pause");
 }
 
 void F5_usuarios()
@@ -165,14 +162,14 @@ void F5_usuarios()
     {
         cout << "Aviso: Error al leer el documento. No existe, se creará un nuevo archivo 'usuarios.csv'"<<endl;
         //Si no existe 'usuarios.csv', se creará un admin automáticamente:
-        usuariosAdmin<<"admin"<<";"<<"admin"<<";"<<"admin"<<";"<<"admin"<<";"<<0<<";"<<boolalpha<<true<<";"<<-1<<";"<<true<<";"<<"admin"<<";"<<true<<endl;
+        usuariosAdmin<<"admin"<<";"<<"admin"<<";"<<"admin"<<";"<<"admin"<<";"<<0<<";"<<boolalpha<<true<<";"<<-1<<";"<<true<<";"<<"admin"<<";"<<true<<";"<<false<<endl;
         usuariosAdmin.close();
     }
     else
     {
         Admin obj;
-        string registro, user, pass, nom, ape, cc, activoString, puntos, adminString, direccion, clientePrefString;
-        bool activo, admin, clientePref, existeAdmin = false;
+        string registro, user, pass, nom, ape, cc, activoString, puntos, adminString, direccion, clientePrefString, esDomiString;
+        bool activo, admin, clientePref, esDomi, existeAdmin = false;
         while(getline(usuarios, registro))
         {
             stringstream token(registro);
@@ -187,6 +184,7 @@ void F5_usuarios()
             getline(token, adminString, ';');
             getline(token, direccion, ';');
             getline(token, clientePrefString, ';');
+            getline(token, esDomiString, ';');
 
             if (activoString == "true") activo = true; //Conversión de string a bool
             else activo = false;
@@ -197,8 +195,11 @@ void F5_usuarios()
             if (clientePrefString == "true") clientePref = true; //Conversión de string a bool
             else clientePref = false;
 
+            if (esDomiString == "true") esDomi = true; //Conversión de string a bool
+            else esDomi = false;
+
             //Comprueba si ya existe 'admin' o no
-            if (user=="admin" && pass=="admin" && nom=="admin" && ape=="admin" && cc=="0" && activo==true && puntos=="-1" && admin==true && direccion=="admin" && clientePref==true)
+            if (user=="admin" && pass=="admin" && nom=="admin" && ape=="admin" && cc=="0" && activo==true && puntos=="-1" && admin==true && direccion=="admin" && clientePref==true && esDomi==false)
             {
                 existeAdmin = true;
             }
@@ -213,6 +214,7 @@ void F5_usuarios()
             obj.setAdmin(admin);
             obj.setDireccion(direccion);
             obj.setClientePref(clientePref);
+            obj.setDomiciliario(esDomi);
             vUsers.push_back(obj);
         }
         usuarios.close();
@@ -220,7 +222,7 @@ void F5_usuarios()
         {
             //Crea un usuario 'admin'. Esto se ejecuta cuando no hay usuarios pero el archivo 'usuarios.csv' ya existe.
             ofstream usuariosAdmin("usuarios.csv", ios::app);
-            usuariosAdmin<<"admin"<<";"<<"admin"<<";"<<"admin"<<";"<<"admin"<<";"<<0<<";"<<boolalpha<<true<<";"<<-1<<";"<<true<<";"<<"admin"<<";"<<true<<endl;
+            usuariosAdmin<<"admin"<<";"<<"admin"<<";"<<"admin"<<";"<<"admin"<<";"<<0<<";"<<boolalpha<<true<<";"<<-1<<";"<<true<<";"<<"admin"<<";"<<true<<";"<<false<<endl;
             usuariosAdmin.close();
         }
     }
@@ -316,7 +318,7 @@ void F5_usuariosArchivo()
 
             //boolalpha fuerza el valor de un bool a 'true' en vez de '1'
             usuarios<<obj.getUser()<<";"<<obj.getPass()<<";"<<obj.getNombre()<<";"<<obj.getApellido()<<";"<<obj.getCedula()<<";"
-                    <<boolalpha<<obj.getActivo()<<";"<<obj.getPuntos()<<";"<<obj.getAdmin()<<";"<<obj.getDireccion()<<";"<<obj.getClientePref()<<endl;
+                    <<boolalpha<<obj.getActivo()<<";"<<obj.getPuntos()<<";"<<obj.getAdmin()<<";"<<obj.getDireccion()<<";"<<obj.getClientePref()<<";"<<obj.getDomiciliario()<<endl;
         }
         usuarios.close();
         system("cls");
@@ -345,6 +347,29 @@ void F5_comidasArchivo()
         comidas.close();
         system("cls");
         cout<<"Comida modificada con éxito."<<endl<<endl;
+    }
+}
+
+void F5_pedidosArchivo()
+{
+    Pedidos obj;
+    ofstream pedidos("pedidos.csv");
+
+    if (!pedidos) cout << "Aviso: Error #1 al escribir en documento. No existe, se creará un nuevo archivo 'pedidos.csv'"<<endl;
+    else
+    {
+        pedidos.open("pedidos.csv", ofstream::out | ofstream::trunc);
+        ofstream pedidos("pedidos.csv", ios::app);
+        for (int i=0; i<vPedidos.size(); i++)
+        {
+            obj = vPedidos.at(i);
+
+            //boolalpha fuerza el valor de un bool a true en vez de 1
+            pedidos<<obj.getNumPedido()<<";"<<obj.getOrdenes()<<";"<<obj.getNombreFull()<<";"<<obj.getCedula()<<";"<<obj.getDireccion()<<";"<<obj.getTotal()<<endl;
+        }
+        pedidos.close();
+        system("cls");
+        cout<<"Pedido modificado con éxito."<<endl<<endl;
     }
 }
 
@@ -411,7 +436,53 @@ void imprimir_menu(bool _admin)
     }
 }
 
+void imprimir_pedidos()
+{
+    F5_pedidos();
+    Pedidos obj;
+    for (int i=0; i<vPedidos.size(); i++)
+    {
+        obj = vPedidos.at(i);
+        cout<<i+1<<". "<<obj.getNumPedido()<<" - "<<obj.getNombreFull()<<endl
+            <<"Pedido: "<<obj.getOrdenes()<<endl
+            <<"Cédula: "<<obj.getCedula()<<endl
+            <<"Dirección: "<<obj.getDireccion()<<endl
+            <<"Debe pagar: "<<obj.getTotal()<<"$"<<endl
+            <<"----------------------------"<<endl<<endl;
+    }
+}
 
+void modificar_pedidos()
+{
+    F5_pedidos();
+    Pedidos obj;
+    int i;
+    for (i=0; i<vPedidos.size(); i++)
+    {
+        obj = vPedidos.at(i);
+        cout<<i+1<<". "<<obj.getNumPedido()<<" - "<<obj.getNombreFull()<<endl
+            <<"Pedido: "<<obj.getOrdenes()<<endl
+            <<"Cédula: "<<obj.getCedula()<<endl
+            <<"Dirección: "<<obj.getDireccion()<<endl
+            <<"Debe pagar: "<<obj.getTotal()<<"$"<<endl
+            <<"----------------------------"<<endl<<endl;
+    }
+
+    bool existe = false, sigue, mod = false;
+    int pos_eliminar;
+    cout<<"Ingrese la posición del pedido a eliminar: ";
+    cin>>pos_eliminar;
+    pos_eliminar -= 1;
+
+    if (pos_eliminar < 0 || pos_eliminar > i) cout<<"Por favor, ingrese una posición válida."<<endl;
+    else
+    {
+        vPedidos.erase(vPedidos.begin() + pos_eliminar);
+        F5_pedidosArchivo();
+    }
+
+    system("pause");
+}
 
 //Para el registro/logueo
 void menuBienvenida()
@@ -545,7 +616,7 @@ void registrarse()
                 if (!usuarios) cout << "Aviso: Error al escribir en documento. No existe, se creará un nuevo archivo 'usuarios.csv'"<<endl;
                 else
                 {
-                    usuarios<<u<<";"<<p<<";"<<nom<<";"<<ape<<";"<<cc<<";"<<boolalpha<<true<<";"<<puntos<<";"<<false<<";"<<dir<<";"<<false<<endl; //boolalpha fuerza el valor de un bool a true en vez de 1
+                    usuarios<<u<<";"<<p<<";"<<nom<<";"<<ape<<";"<<cc<<";"<<boolalpha<<true<<";"<<puntos<<";"<<false<<";"<<dir<<";"<<false<<";"<<false<<endl; //boolalpha fuerza el valor de un bool a true en vez de 1
                     usuarios.close();
                     cout<<"Usuario registrado con éxito."<<endl<<endl;
                     system("pause");
@@ -641,7 +712,9 @@ void loguearse()
 
         if (!ingresa)
         {
-            cout << "\n\tUsted no pudo ingresar al sistema. ADIOS" << endl;
+            system("cls");
+            cout << "\n\tUsted no pudo ingresar al sistema. ADIÓS." << endl;
+            exit(EXIT_SUCCESS);
         }
         else
         {
@@ -656,7 +729,9 @@ void loguearse()
                 /*
                 Aquí va el código del programa cuando el usuario ingresa sus credenciales correctas
                 */
+                //Entra a un menú diferente dependiendo de qué tipo de usuario sea
                 if (obj.getAdmin() == true) menuAdmin(obj);
+                else if (obj.getDomiciliario() == true) menuDomiciliario(obj);
                 else menuUser(obj);
             }
         }
@@ -680,6 +755,7 @@ void menuUser(Admin obj)
             <<"1. Ver el menú"<<endl
             <<"2. Hacer un pedido"<<endl
             <<"3. Modificar mi información"<<endl
+            <<"4. Ver mi información"<<endl
             <<"0. Cerrar sesión"<<endl<<endl
             <<"Seleccione una opción: ";
         opc = getch();
@@ -698,6 +774,10 @@ void menuUser(Admin obj)
         case '3':
             system("cls");
             modificarUsuarioPROPIO(obj);
+            break;
+        case '4':
+            system("cls");
+            listaxCedula(obj);
             break;
         case '0':
             system("cls");
@@ -746,11 +826,8 @@ void hacer_pedido(Admin obj)
             if (orden == objComida.getPosicion())  //Comprueba si existe el menú solicitado
             {
                 //if está desactivado, que salga otro error objComida.getActivo()
-                if(objComida.getActivo() == false){
-                    cout<<"El menu seleccionado esta desactivado. Seleccione otro";
-                    system("pause");
-                }else{ existe = true;
-                        break;}
+                existe = true;
+                break;
             }
         }
         if (existe == true)  //Si existe, suma el precio del menú al TOTAL y agrega el menú al vector de la clase Cliente
@@ -786,11 +863,7 @@ void hacer_pedido(Admin obj)
     obj.setPuntos(obj.getPuntos() + totalPuntos);
 
     //if totalCuenta==0, se salta todo el codigo de abajo, sale al menú
-    if(totalCuenta == 0 && totalCuenta > 0){
-            cout<<endl;
-            cout<<"No esta comprando. Seleccione un menu: "<<endl;
-            system("pause");
-    } else{
+
     //usar setw() para acomodar a la derecha los precios si hay tiempo
     system("cls"); //Comienzo del recibo
     cout<<"Puntos que acumula: "<<totalPuntos<<endl<<endl;
@@ -806,36 +879,26 @@ void hacer_pedido(Admin obj)
 
         cout<<puntosRestan<<" puntos han sido canjeados para un descuento total de "<<floor(obj.getPuntos() / 15) * 5<<"%"<<endl;
 
-
         obj.setPuntos(obj.getPuntos() - puntosRestan); //Resta los puntos
         totalCuenta -= descuentoPesos; //Resta el descuento
 
         cout<<"                   -"<<descuentoPesos<<"$"<<endl; //Muestra el descuento en pesos
-
     }
 
     if (obj.getClientePref() == false && obj.getPuntos() >= 50) //Asciende al usuario a Cliente Preferencial en caso de no serlo y poseer 50 puntos o más
     {
         obj.setClientePref(true);
-         cout<<"Domicilio:         +2000$"<<endl;
-        totalCuenta += 2000;
-        cout<<"-------------------------------------"<<endl;
-        cout<<"Total a pagar:     "<<totalCuenta<<"$"<<endl;
-        system("pause");
-        obj.setTotalcuenta(totalCuenta);
-
         cout<<"Ha sido ascendido a Cliente Preferencial por haber gastado 50000$ con nosotros. ¡Muchas gracias!"<<endl
             <<"A partir de la siguiente compra, cada 15 puntos recibirá un descuento del 5%."<<endl<<endl;
         obj.setPuntos(obj.getPuntos() - 50);
     }
-       // cout<<"pene"<<endl;
 
-        /*cout<<"Domicilio:         +2000$"<<endl;
-        totalCuenta += 2000;
-        cout<<"-------------------------------------"<<endl;
-        cout<<"Total a pagar:     "<<totalCuenta<<"$"<<endl;
-        system("pause");
-        obj.setTotalcuenta(totalCuenta);*/
+    cout<<"Domicilio:         +2000$"<<endl;
+    totalCuenta += 2000;
+    cout<<"-------------------------------------"<<endl;
+    cout<<"Total a pagar:     "<<totalCuenta<<"$"<<endl;
+    system("pause");
+    obj.setTotalcuenta(totalCuenta);
 
 
     ofstream pedidos("pedidos.csv", ios::app); //Guardado del nuevo pedido en el archivo "pedidos.csv"
@@ -865,6 +928,55 @@ void hacer_pedido(Admin obj)
     F5_usuariosArchivo();
     F5_pedidos();
 }
+
+
+//Menú domiciliario
+void menuDomiciliario(Admin obj)
+{
+    char opc;
+    do
+    {
+        system("cls");
+        cout<<"¡Bienvenido, "<<obj.getUser()<<"! ¿Qué desea hacer?"<<endl<<endl
+            <<"1. Ver pedidos"<<endl
+            <<"2. Eliminar pedido"<<endl
+            <<"3. Modificar mi información"<<endl
+            <<"4. Ver mi información"<<endl
+            <<"0. Cerrar sesión"<<endl<<endl
+            <<"Seleccione una opción: ";
+        opc = getch();
+
+        switch(opc)
+        {
+        case '1':
+            system("cls");
+            imprimir_pedidos();
+            system("pause");
+            break;
+        case '2':
+            system("cls");
+            modificar_pedidos();
+            break;
+        case '3':
+            system("cls");
+            modificarUsuarioPROPIO(obj);
+            break;
+        case '4':
+            system("cls");
+            listaxCedula(obj);
+            break;
+        case '0':
+            system("cls");
+            break;
+        default:
+            system("cls");
+            cout<<"Opción incorrecta"<<endl<<endl;
+            system("pause");
+            system("cls");
+            break;
+        }
+    }
+    while(opc != '0');
 }
 
 
@@ -928,7 +1040,7 @@ void submenu_usuarios(Admin obj)
             break;
         case '2':
             system("cls");
-            listaxCedula();
+            listaxCedula(obj);
             break;
         case '3':
             system("cls");
@@ -993,28 +1105,50 @@ void submenu_comidas(Admin obj)
 }
 
 
-void listaxCedula()
+void listaxCedula(Admin obj)
 {
     F5_usuarios();
 
-    bool existe = false;
-    string cedula_buscar;
-    cout<<"Ingrese la cedula a buscar: ";
-    cin>>cedula_buscar;
-    cout<<endl;
-
-    int i;
-    Admin obj;
-    for (i=0; i<vUsers.size(); i++) //Busca si existe un usuario con dicha cédula
+    if (obj.getAdmin() == true) //Para saber si el usuario es admin o no
     {
-        obj = vUsers.at(i);
-        if(cedula_buscar.compare(obj.getCedula()) == 0)
+        bool existe = false;
+        string cedula_buscar;
+        cout<<"Ingrese la cedula a buscar: ";
+        cin>>cedula_buscar;
+        cout<<endl;
+
+        int i;
+        Admin obj;
+        for (i=0; i<vUsers.size(); i++) //Busca si existe un usuario con dicha cédula
         {
-            existe = true;
-            break; //Sale del bucle
+            obj = vUsers.at(i);
+            if(cedula_buscar.compare(obj.getCedula()) == 0)
+            {
+                existe = true;
+                break; //Sale del bucle
+            }
         }
+        if (existe == true) //Si existe, lo muestra
+        {
+            cout<<"Nombre del usuario: "<<obj.getUser()<<endl;
+            cout<<"Contraseña del usuario: "<<obj.getPass()<<endl;
+            cout<<"Nombre: "<<obj.getNombre()<<endl;
+            cout<<"Apellido: "<<obj.getApellido()<<endl;
+            cout<<"Cédula: "<<obj.getCedula()<<endl;
+            if (obj.getActivo() == true) cout<<"Estado: Activo"<<endl;
+            else cout<<"Estado: Inactivo"<<endl;
+            cout<<"Puntos: "<<obj.getPuntos()<<endl;
+            //Ifs anidados para determinar si es Administrador, domiciliario, usuarios estándar o cliente preferencial
+            if (obj.getAdmin() == true || obj.getDomiciliario() == true)
+                if (obj.getAdmin() == true) cout<<"Administrador"<<endl;
+                else cout<<"Domiciliario"<<endl;
+            else if (obj.getClientePref() == true) cout<<"Cliente preferencial"<<endl;
+            else cout<<"Usuario estándar"<<endl;
+            cout<<"Direccion: "<<obj.getDireccion()<<endl<<endl;
+        }
+        else cout<<"El cliente con CC "<<cedula_buscar<<" no existe en el archivo"<<endl<<endl;
     }
-    if (existe == true) //Si existe, pregunta qué desea cambiar
+    else
     {
         cout<<"Nombre del usuario: "<<obj.getUser()<<endl;
         cout<<"Contraseña del usuario: "<<obj.getPass()<<endl;
@@ -1024,11 +1158,14 @@ void listaxCedula()
         if (obj.getActivo() == true) cout<<"Estado: Activo"<<endl;
         else cout<<"Estado: Inactivo"<<endl;
         cout<<"Puntos: "<<obj.getPuntos()<<endl;
-        if (obj.getAdmin() == true) cout<<"Administrador"<<endl;
+        //Ifs anidados para determinar si es Administrador, domiciliario, usuarios estándar o cliente preferencial
+        if (obj.getAdmin() == true || obj.getDomiciliario() == true)
+            if (obj.getAdmin() == true) cout<<"Administrador"<<endl;
+            else cout<<"Domiciliario"<<endl;
+        else if (obj.getClientePref() == true) cout<<"Cliente preferencial"<<endl;
         else cout<<"Usuario estándar"<<endl;
         cout<<"Direccion: "<<obj.getDireccion()<<endl<<endl;
     }
-    else cout<<"El cliente con CC "<<cedula_buscar<<" no existe en el archivo"<<endl<<endl;
     system("pause");
 }
 
@@ -1117,7 +1254,11 @@ void modificarComida()
                     cout<<"Ya existe un menú en esa posición, elija una diferente."<<endl<<endl;
                     system("pause");
                 }
-                else if (pos < 1) cout<<"No ingrese un número menor que 1."<<endl;
+                else if (pos < 1)
+                {
+                    cout<<"No ingrese un número menor que 1."<<endl<<endl;
+                    system("pause");
+                }
                 else obj.setPosicion(pos);
 
                 break;
@@ -1207,8 +1348,14 @@ void modificarUsuarioADMIN()
                 cout<<"2. Apellido: "<<obj.getApellido()<<endl;
                 cout<<"3. Dirección: "<<obj.getDireccion()<<endl;
                 cout<<"4. Puntos: "<<obj.getPuntos()<<endl;
-                cout<<"5. Admin: "<<boolalpha<<obj.getAdmin()<<endl;
-                cout<<"6. Estado: "<<boolalpha<<obj.getActivo()<<endl;
+                if (obj.getAdmin() == true) cout<<"5. Admin: Sí"<<endl;
+                else cout<<"5. Admin: No"<<endl;
+                if (obj.getActivo() == true) cout<<"6. Estado: Activo"<<endl;
+                else cout<<"6. Estado: Inactivo"<<endl;
+                if (obj.getClientePref() == true) cout<<"7. Cliente preferencial: Sí"<<endl;
+                else cout<<"7. Cliente preferencial: No"<<endl;
+                if (obj.getDomiciliario() == true) cout<<"8. Domiciliario: Sí"<<endl;
+                else cout<<"8. Domiciliario: No"<<endl;
                 cout<<"0. Salir"<<endl<<endl;
 
                 cout<<"Seleccione el dato a modificar: ";
@@ -1217,7 +1364,6 @@ void modificarUsuarioADMIN()
 
                 string nom, ape, dir;
                 long puntos;
-                char admin, activ;
 
                 switch (opc)
                 {
@@ -1261,6 +1407,21 @@ void modificarUsuarioADMIN()
                     else obj.setActivo(true);
                     break;
 
+                case '7':
+                    mod = true;
+                    if (obj.getClientePref() == true) obj.setClientePref(false);
+                    else obj.setClientePref(true);
+                    break;
+
+                case '8':
+                    mod = true;
+                    if (obj.getDomiciliario() == true) obj.setDomiciliario(false);
+                    else obj.setDomiciliario(true);
+                    break;
+
+                case '0':
+                    break;
+
                 default:
                     cout<<endl<<"Ingrese una opción válida"<<endl;
                     break;
@@ -1274,9 +1435,12 @@ void modificarUsuarioADMIN()
     }
     else cout<<"El cliente con CC "<<cedula_buscar<<" no existe en el archivo"<<endl<<endl;
 
-    if (mod == true) F5_usuariosArchivo();
-    system("pause");
-    cout<<"Usuario modificado con éxito."<<endl<<endl;
+    if (mod == true)
+    {
+        F5_usuariosArchivo();
+        cout<<"Usuario modificado con éxito."<<endl<<endl;
+        system("pause");
+    }
 }
 
 void modificarUsuarioPROPIO(Admin _user)
@@ -1302,9 +1466,6 @@ void modificarUsuarioPROPIO(Admin _user)
         cout<<"1. Nombre: "<<obj.getNombre()<<endl;
         cout<<"2. Apellido: "<<obj.getApellido()<<endl;
         cout<<"3. Dirección: "<<obj.getDireccion()<<endl;
-        cout<<"4. Admin: "<<boolalpha<<obj.getAdmin()<<endl;
-        cout<<"5. Puntos: "<<obj.getPuntos()<<endl;
-        cout<<"6. Estado: "<<boolalpha<<obj.getActivo()<<endl;
         cout<<"0. Salir"<<endl<<endl;
 
         cout<<"Seleccione el dato a modificar: ";
@@ -1337,16 +1498,7 @@ void modificarUsuarioPROPIO(Admin _user)
             obj.setDireccion(dir);
             break;
 
-        case '4':
-            mod = true;
-            if (obj.getAdmin() == true) obj.setAdmin(false);
-            else obj.setAdmin(true);
-            break;
-
-        case '5':
-            mod = true;
-            if (obj.getActivo() == true) obj.setActivo(false);
-            else obj.setActivo(true);
+        case '0':
             break;
 
         default:
@@ -1359,9 +1511,12 @@ void modificarUsuarioPROPIO(Admin _user)
     while(opc != '0');
     system("cls");
 
-    if (mod == true) F5_usuariosArchivo();
-    system("pause");
-    cout<<"Usuario modificado con éxito."<<endl<<endl;
+    if (mod == true)
+    {
+        F5_usuariosArchivo();
+        system("pause");
+        cout<<"Usuario modificado con éxito."<<endl<<endl;
+    }
 }
 
 
@@ -1383,14 +1538,17 @@ void listaUsuarios ()
         if (obj.getActivo() == true) cout<<"Estado: Activo"<<endl;
         else cout<<"Estado: Inactivo"<<endl;
         cout<<"Puntos: "<<obj.getPuntos()<<endl;
-        if (obj.getAdmin() == true) cout<<"Administrador"<<endl;
+        //Ifs anidados para determinar si es Administrador, domiciliario, usuarios estándar o cliente preferencial
+        if (obj.getAdmin() == true || obj.getDomiciliario() == true)
+            if (obj.getAdmin() == true) cout<<"Administrador"<<endl;
+            else cout<<"Domiciliario"<<endl;
+        else if (obj.getClientePref() == true) cout<<"Cliente preferencial"<<endl;
         else cout<<"Usuario estándar"<<endl;
+
         cout<<"Direccion: "<<obj.getDireccion()<<endl<<endl;
     }
     system("pause");
 }
-
-
 
 
 ///Main
