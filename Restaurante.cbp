@@ -40,6 +40,8 @@
 		<Unit filename="Cliente.h" />
 		<Unit filename="Comidas.cpp" />
 		<Unit filename="Comidas.h" />
+		<Unit filename="Domiciliario.cpp" />
+		<Unit filename="Domiciliario.h" />
 		<Unit filename="Pedidos.cpp" />
 		<Unit filename="Pedidos.h" />
 		<Unit filename="Usuario.cpp" />
