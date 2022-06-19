@@ -2,10 +2,10 @@
 using namespace std;
 #ifndef CLIENTE_H
 #define CLIENTE_H
-#include "Usuario.h"
+#include "Domiciliario.h"
 #include "vector"
 
-class Cliente : public Usuario
+class Cliente : public Domiciliario
 {
     public:
         Cliente();
@@ -18,7 +18,6 @@ class Cliente : public Usuario
 
         ///Métodos
         //Setter
-       // void setPuntos(long);
         void setOrden(string);
         void setDireccion(string);
 
@@ -26,7 +25,6 @@ class Cliente : public Usuario
         virtual void setTotalcuenta(long); //Polimorfismo
 
         //Getter
-        //long getPuntos();
         string getOrden();
         string getDireccion();
         long getTotalcuenta();
