@@ -840,7 +840,6 @@ void hacer_pedido(Admin obj)
             pedidos.close();
 
             cout<<"Pedido registrado con éxito."<<endl<<endl;
-            system("pause");
         }
 
         for (int i=0; i<vUsers.size(); i++) //Busca en qué posición del vector está
@@ -1191,8 +1190,6 @@ void buscarxCedula(Admin obj)
         cout<<"Nombre: "<<obj.getNombre()<<endl;
         cout<<"Apellido: "<<obj.getApellido()<<endl;
         cout<<"Cédula: "<<obj.getCedula()<<endl;
-        if (obj.getActivo() == true) cout<<"Estado: Activo"<<endl;
-        else cout<<"Estado: Inactivo"<<endl;
         cout<<"Puntos: "<<obj.getPuntos()<<endl;
         //Ifs anidados para determinar si es Administrador, domiciliario, usuarios estándar o cliente preferencial
         if (obj.getAdmin() == true || obj.getDomiciliario() == true)
